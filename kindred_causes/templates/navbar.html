@@ -1,1 +1,14 @@
-<div>NAVBAR</div>
+<div class="navbar bg-base-100 shadow-sm">
+    <div class="flex-1">
+      <a class="btn btn-ghost text-xl" href="{% url 'landing' %}">Kindred Causes</a>
+    </div>
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1">
+        <li><a href="{% url 'landing' %}">Home</a></li>
+        <li><a href="{% url 'user_registration' %}">Sign Up</a></li>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'event_browser' %}">Browse Events</a></li>
+        <li><a href="{% url 'event_preview' %}">Preview Event</a></li>
+      </ul>
+    </div>
+</div>

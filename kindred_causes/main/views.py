@@ -2,15 +2,6 @@ from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    """ Default page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'root.html', context)
-
 def login(request: HttpRequest) -> HttpResponse:
     """ Login page.
 
@@ -19,3 +10,53 @@ def login(request: HttpRequest) -> HttpResponse:
     """
     
     return render(request, 'login.html')
+
+
+def landing(request: HttpRequest) -> HttpResponse:
+    """ Landing page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'landing.html', context)
+
+
+def event_browser(request: HttpRequest) -> HttpResponse:
+    """ Event browser page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'event_browser.html', context)
+
+
+def event_preview(request: HttpRequest) -> HttpResponse:
+    """ Event preview page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'event_preview.html', context)
+    
+
+def user_registration(request: HttpRequest) -> HttpResponse:
+    """ User registration page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'user_registration.html', context)
+
+
+def index(request: HttpRequest) -> HttpResponse:
+    """ Default page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'root.html', context)
