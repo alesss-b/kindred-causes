@@ -1677,6 +1677,21 @@
       }
     }
   }
+  .indicator {
+    position: relative;
+    display: inline-flex;
+    width: max-content;
+    :where(.indicator-item) {
+      z-index: 1;
+      position: absolute;
+      white-space: nowrap;
+      top: var(--inidicator-t, 0);
+      bottom: var(--inidicator-b, auto);
+      left: var(--inidicator-s, auto);
+      right: var(--inidicator-e, 0);
+      translate: var(--inidicator-x, 50%) var(--indicator-y, -50%);
+    }
+  }
   .avatar {
     position: relative;
     display: inline-flex;
@@ -2040,6 +2055,20 @@
       box-shadow: none;
     }
   }
+  .status {
+    display: inline-block;
+    aspect-ratio: 1 / 1;
+    width: calc(0.25rem * 2);
+    height: calc(0.25rem * 2);
+    border-radius: var(--radius-selector);
+    background-color: color-mix(in oklab, var(--color-base-content) 20%, transparent);
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    color: color-mix(in oklab, var(--color-black) 30%, transparent);
+    background-image: radial-gradient( circle at 35% 30%, oklch(1 0 0 / calc(var(--depth) * 0.5)), #0000 );
+    box-shadow: 0 2px 3px -1px color-mix(in oklab, currentColor calc(var(--depth) * 100%), #0000);
+  }
   .kbd {
     display: inline-flex;
     align-items: center;
@@ -2131,11 +2160,17 @@
     width: var(--size);
     height: var(--size);
   }
+  .h-20 {
+    height: calc(var(--spacing) * 20);
+  }
   .min-h-screen {
     min-height: 100vh;
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
+  }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
   }
   .w-52 {
     width: calc(var(--spacing) * 52);
@@ -2222,6 +2257,9 @@
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
+  .rounded-lg {
+    border-radius: var(--radius-lg);
+  }
   .rounded-t-none {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -2229,6 +2267,18 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .status-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  .status-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-secondary);
+  }
+  .status-success {
+    background-color: var(--color-success);
+    color: var(--color-success);
   }
   .bg-base-100 {
     background-color: var(--color-base-100);
@@ -2258,6 +2308,10 @@
   }
   .text-wrap {
     text-wrap: wrap;
+  }
+  .badge-secondary {
+    --badge-color: var(--color-secondary);
+    color: var(--color-secondary-content);
   }
   .text-neutral-content {
     color: var(--color-neutral-content);
@@ -2290,6 +2344,10 @@
   .underline {
     text-decoration-line: underline;
   }
+  .ring {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentColor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
   .shadow {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -2297,6 +2355,16 @@
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .ring-primary {
+    --tw-ring-color: var(--color-primary);
+  }
+  .ring-offset-2 {
+    --tw-ring-offset-width: 2px;
+    --tw-ring-offset-shadow: var(--tw-ring-inset,) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  }
+  .ring-offset-base-100 {
+    --tw-ring-offset-color: var(--color-base-100);
   }
   .outline {
     outline-style: var(--tw-outline-style);
@@ -2333,6 +2401,11 @@
   .ease-out {
     --tw-ease: var(--ease-out);
     transition-timing-function: var(--ease-out);
+  }
+  .indicator-start {
+    --inidicator-s: 0;
+    --inidicator-e: auto;
+    --inidicator-x: -50%;
   }
   .sm\:footer-horizontal {
     @media (width >= 40rem) {
