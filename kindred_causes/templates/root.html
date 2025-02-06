@@ -7,9 +7,11 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/output.css'%}">
 </head>
-<body>
+<body class="flex flex-col min-h-screen justify-between">
     {% include 'navbar.html' %}
+    <div class="grow">
     {% block content %}{% endblock content %}
+    </div>
     {% include 'footer.html' %}
 </body>
 </html>
