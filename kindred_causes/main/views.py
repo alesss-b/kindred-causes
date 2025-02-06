@@ -52,6 +52,36 @@ def user_registration(request: HttpRequest) -> HttpResponse:
     return render(request, 'user_registration.html', context)
 
 
+def home(request: HttpRequest) -> HttpResponse:
+    """ Home page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'home.html', context)
+
+
+def inbox(request: HttpRequest) -> HttpResponse:
+    """ Notifications inbox page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'inbox.html', context)
+
+
+def account(request: HttpRequest) -> HttpResponse:
+    """ Account page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'account.html', context)
+
+
 def index(request: HttpRequest) -> HttpResponse:
     """ Default page.
 

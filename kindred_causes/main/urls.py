@@ -10,5 +10,7 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('browse_events/', views.event_browser, name='event_browser'),
     path('preview_event/', views.event_preview, name='event_preview'),
-    path('login/', views.login, name='login'),
+    path('home/', views.home, name='home'),
+    path('inbox/', views.inbox, name='inbox'),
+    path('account/', views.account, name='account'),
 ]
