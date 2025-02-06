@@ -1,3 +1,4 @@
 virtual-environment/
 node_modules/
-*__pycache__/
+kindred_causes/main/__pycache__/
+kindred_causes/kindred_causes/__pycache__/
