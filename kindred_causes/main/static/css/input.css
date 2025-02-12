@@ -37,3 +37,29 @@
     --noise: 0;
   }
   
+
+
+
+  .input {
+
+    &:where(input) {
+      display: inline-block;
+    }
+    :where(input) {
+      border: none;
+      &:focus, &:focus-within {
+        outline-style: none;
+        @media (forced-colors: active) {
+          outline: none;
+          outline-offset: 0;
+        }
+      }
+    }
+    &:focus, &:focus-within {
+      --input-color: var(--color-base-content);
+      box-shadow: none;
+      outline: none;
+      outline-offset: 0;
+      isolation: isolate;
+    }
+  }
