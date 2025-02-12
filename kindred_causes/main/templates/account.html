@@ -3,15 +3,24 @@
 {% block title %}Account{% endblock title %}
 
 {% block content %}
-<div class="flex justify-center items-center h-screen">
-    <div class="card w-96 bg-base-100 shadow-xl">
-        <figure class="px-10 pt-10">
-            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Avatar" class="rounded-full w-11 h-11">
-        </figure>
-        <div class="card-body items-center text-center">
-            <div class="card-actions">
-                <button class="btn btn-primary">Edit Profile</button>
-                <button class="btn btn-secondary">Logout</button>
+<div class="flex grow justify-around items-center h-screen">
+    <div class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10 w-3/4">
+        <div class="text-2xl">Account</div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col items-center space-y-4">
+                <figure class="px-10 pt-10">
+                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Avatar" class="rounded-full w-24 h-24">
+                </figure>
+                <div class="card-actions flex flex-col space-y-2">
+                    <button class="btn btn-primary w-full">Edit Profile</button>
+                    <button class="btn btn-secondary w-full">Logout</button>
+                </div>
+            </div>
+            <div class="flex flex-col justify-center items-start space-y-4">
+                <h2 class="text-2xl font-bold">Account Information</h2>
+                <p class="text-lg"><span class="underline-dotted">Name:</span> John Doe</p>
+                <p class="text-lg"><span class="underline-dotted">Email:</span> john.doe@example.com</p>
+                <p class="text-lg"><span class="underline-dotted">Joined:</span> January 1, 2020</p>
             </div>
         </div>
     </div>
