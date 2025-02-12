@@ -15,4 +15,5 @@ urlpatterns = [
     path('account/', views.account, name='account'),
     path('volunteer_history/', views.volunteer_history, name='volunteer_history'),
     path('matching_form/', views.matching_form, name='matching_form'),
+    path('event_management/', views.event_management, name='event_management'),
 ]

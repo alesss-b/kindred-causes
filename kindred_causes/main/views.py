@@ -41,6 +41,15 @@ def event_preview(request: HttpRequest) -> HttpResponse:
     context: dict = {'test_key': 'test_value'}
     return render(request, 'event_preview.html', context)
     
+def event_management(request: HttpRequest) -> HttpResponse:
+    """ Event Management page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'event_management.html', context)
+    
 
 def user_registration(request: HttpRequest) -> HttpResponse:
     """ User registration page.
