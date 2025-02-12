@@ -52,6 +52,25 @@ def user_registration(request: HttpRequest) -> HttpResponse:
     return render(request, 'user_registration.html', context)
 
 
+def volunteer_history(request: HttpRequest) -> HttpResponse:
+    """ Default page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'volunteer_history.html', context)
+
+def matching_form(request: HttpRequest) -> HttpResponse:
+    """ Default page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'matching_form.html', context)
+
+
 def home(request: HttpRequest) -> HttpResponse:
     """ Home page.
 

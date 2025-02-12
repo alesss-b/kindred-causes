@@ -1,0 +1,25 @@
+{% extends 'root.html' %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Volunteer Matching Form</h2>
+    <form action="#" method="POST" class="bg-white p-6 rounded shadow-md">
+        {% csrf_token %}
+        <label class="block mb-2 font-bold">Select Volunteer:</label>
+        <select name="volunteer" class="w-full border p-2 rounded">
+            {% for volunteer in volunteers %}
+            <option value="{{ volunteer.id }}">{{ volunteer.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="block mt-4 mb-2 font-bold">Select Event:</label>
+        <select name="event" class="w-full border p-2 rounded">
+            {% for event in events %}
+            <option value="{{ event.id }}">{{ event.name }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Match Volunteer</button>
+    </form>
+</div>
+{% endblock %}
