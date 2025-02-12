@@ -5,7 +5,9 @@
 {% block content %}
 <div class="flex grow justify-around items-center h-screen">
     <div class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10 w-3/4">
+        <!--Grid-->
         <div class="grid grid-cols-2 gap-4">
+            <!--Profile-->
             <div class="flex flex-col items-center space-y-4">
                 <figure class="px-10 pt-10">
                     <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Avatar" class="rounded-full w-24 h-24">
@@ -15,7 +17,10 @@
                     <button class="btn btn-secondary w-full">Logout</button>
                 </div>
             </div>
+            <!--Account Info with expand-->
             <div class="flex flex-col justify-center items-start space-y-4">
+                <h2 class="text-2xl font-bold">My volunteer score: 550</h2>
+                <progress class="progress progress-accent w-56" value="550" max="1000" ></progress>
                 <h2 class="text-2xl font-bold">Account Information</h2>
                 <div class="collapse collapse-arrow bg-base-200">
                     <input type="radio" name="my-accordion-2" checked="checked" />
