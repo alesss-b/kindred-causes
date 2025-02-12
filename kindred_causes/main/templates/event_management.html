@@ -8,41 +8,44 @@
   <div> Event Name</div>
   <input type="text" placeholder="Event Name" class="input" />
 
-  <div> Event Name</div>
+  <div> Event Description</div>
   <input type="text" placeholder="Event Description" class="input" />
 
-  <div> Event Name</div>
+  <div> Event Location</div>
   <input type="text" placeholder="Location" class="input" />
 
   <div class="dropdown dropdown-right">
-    
+  
     <div tabindex="0" role="button" class="btn m-1">Required Skills</div>
     <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-      <li><a>skill 1 
-        <input type="checkbox" checked="checked" class="checkbox"  /> 
-      </a></li>
-      <li><a>skill 2
-        <input type="checkbox" checked="checked" class="checkbox" /> 
-      </a></li>
-      <li><a>skill 3 
-        <input type="checkbox" checked="checked" class="checkbox" /> 
-      </a></li>
-      <li><a>skill 4 
-        <input type="checkbox" checked="checked" class="checkbox" /> 
-      </a></li>
-      
+      <fieldset class="fieldset p-4 bg-base-100 border border-base-300 rounded-box w-64">
+        <legend class="fieldset-legend">Select Skills</legend>
+        <label class="fieldset-label">
+          <input type="checkbox" checked="checked" class="checkbox" />
+          Skill 1
+        </label>
+        <label class="fieldset-label">
+          <input type="checkbox" checked="checked" class="checkbox" />
+          Skill 2
+        </label>
+        <label class="fieldset-label">
+          <input type="checkbox" checked="checked" class="checkbox" />
+          Skill 3
+        </label>
+      </fieldset>
     </ul>
   </div>
 
   <div class="dropdown dropdown-right">
-    <div tabindex="0" role="button" class="btn m-1">Urgency</div>
+    <div tabindex="0" role="button" class="btn m-1">Select Urgency</div>
     <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
       <li><a>Urgent</a></li>
-      <li><a>Kinda Urgent</a></li>
+      <li><a>Semi-Urgent</a></li>
       <li><a>Not Urgent</a></li>
     </ul>
   </div>
 
+  <div> Start Time</div>
   <input type="datetime-local" class="input"/>
 
   <a role="button" class="btn btn-primary" type="submit" > Create Event</a>

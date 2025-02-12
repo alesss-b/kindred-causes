@@ -3,5 +3,49 @@
 {% block title %}Event Browser{% endblock title %}
 
 {% block content %}
+
+<div class="overflow-x-auto">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th></th>
+        <th>Event Name</th>
+        <th>Location</th>
+        <th>Sign Up (user only)</th>
+        <th>Volunteer Matching (Event Admin only)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      <tr>
+        <th>1</th>
+        <td>Event 1</td>
+        <td>The Church</td>
+        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
+        <td><a role="button" class="btn btn-secondary" type="submit" href="{% url 'matching_form' %}"> Volunteer Matching</a></td>
+      </tr>
+      <!-- row 2 -->
+      <tr>
+        <th>2</th>
+        <td>Event 2</td>
+        <td>Downtown</td>
+        <td><a role="button" class="btn btn-secondary" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
+        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Volunteer Matching</a></td>
+      </tr>
+      <!-- row 3 -->
+      <tr>
+        <th>3</th>
+        <td>Event 3</td>
+        <td>The School</td>
+        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
+        <td><a role="button" class="btn btn-secondary" type="submit" href="{% url 'matching_form' %}"> Volunteer Matching</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 <a role="button" class="btn btn-primary" type="submit" href="{% url 'event_management' %}"> Create a Event (admin only)</a>
+
+
 {% endblock content %}
