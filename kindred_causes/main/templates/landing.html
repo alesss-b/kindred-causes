@@ -1,7 +1,18 @@
 {% extends 'root.html' %}
 
-{% block title %}Landing{% endblock title %}
+{% block title %}Kindred Causes{% endblock title %}
 
 {% block content %}
-<div>Landing</div>
+{% load static %}
+<div class="hero min-h-full bg-base-300">
+    <div class="hero-content text-center">
+      <div class="max-w-md">
+        <h1 class="text-5xl font-bold">Welcome</h1>
+        <p class="py-6">
+          Welcome to Kindred Causes. This is a school project. Blah blah blah. Lorem ipsum dolor sit, dongus dingus solar schmidt.
+        </p>
+        <a class="btn btn-accent" href="{% url 'user_registration' %}">Get Started</a>
+      </div>
+    </div>
+  </div>
 {% endblock content %}
