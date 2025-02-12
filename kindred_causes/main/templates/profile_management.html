@@ -1,0 +1,60 @@
+{% extends 'root.html' %}
+
+{% block title %}Profile Management{% endblock title %}
+
+{% block content %}
+    <div class="flex grow justify-around items-center">
+        <form class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10">
+            <div class="text-2xl text-center">{% block form_title %}{% endblock form_title %}</div>
+            
+            <div class="flex flex-col space-y-3.5 items-center">
+                {% block form_content %}
+                
+                <!-- Name Field with Inner Label -->
+                <label class="input">
+                    <span class="label-text">Name</span>
+                    <input type="text" class="grow" placeholder="John Doe" value="John Doe" />
+                </label>
+
+                <!-- Email Field with Inner Label -->
+                <label class="input">
+                    <span class="label-text">Email</span>
+                    <input type="email" class="grow" placeholder="john.doe@example.com" value="john.doe@example.com" />
+                </label>
+
+                <!-- Joined Field (Disabled, non-editable) -->
+                <label class="input">
+                    <span class="label-text">Joined</span>
+                    <input type="text" class="grow" placeholder="January 1, 2020" value="January 1, 2020" disabled />
+                </label>
+
+                <!-- Address Field with Inner Label -->
+                <label class="input">
+                    <span class="label-text">Address</span>
+                    <input type="text" class="grow" placeholder="123 Main St" value="123 Main St" />
+                </label>
+
+                <!-- Phone Field with Inner Label -->
+                <label class="input">
+                    <span class="label-text">Phone</span>
+                    <input type="text" class="grow" placeholder="(123) 456-7890" value="(123) 456-7890" />
+                </label>
+
+                <!-- Birthday Field with Date Picker -->
+                <label class="input">
+                    <span class="label-text">Birthday</span>
+                    <input type="date" class="grow" />
+                </label>
+
+                {% endblock form_content %}
+            </div>
+
+            {% block form_buttons %}
+            <!-- Save Button -->
+            <div class="form-control mt-6">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+            {% endblock form_buttons %}
+        </form>
+    </div>
+{% endblock content %}
