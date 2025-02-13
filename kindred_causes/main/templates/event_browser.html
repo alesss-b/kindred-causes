@@ -8,13 +8,13 @@
   <table class="table">
     <!-- head -->
     <thead>
-      <tr>
-        <th></th>
+      <tr class="bg-primary">
         <th>Event Name</th>
         <th>Description</th>
         <th>Location</th>
+        <th>Skills Required</th>
         <th>Date</th>
-        <th>Status</th>
+        <th>Urgency Level</th>
         <th>(user only)</th>
         <th>(Event Admin only)</th>
       </tr>
@@ -22,34 +22,34 @@
     <tbody>
       <!-- row 1 -->
       <tr>
-        <th>1</th>
         <td>Event 1</td>
         <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum nisi, in pretium dolor pellentesque eu. Nullam pulvinar massa sapien, a tristique odio suscipit vel. Curabitur id dui id sem auctor efficitur quis ut sapien. Nullam sed ex blandit, finibus leo at, imperdiet lectus. Ut sollicitudin nisl nibh, et. </td>
         <td>The Church</td>
+        <td>Gardening, Physical Labor</td>
         <td>3/12/25</td>
-        <td>Urgent</td>
+        <td>High</td>
         <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
         <td><a role="button" class="btn btn-secondary" type="submit" > Manage</a></td>
       </tr>
       <!-- row 2 -->
       <tr>
-        <th>2</th>
         <td>Event 2</td>
         <td>This is the event field, where we write our information about the events that people can see</td>
         <td>Downtown</td>
+        <td>Physical Labor</td>
         <td>3/12/25</td>
-        <td>Semi-Urgent</td>
+        <td>Medium</td>
         <td><a role="button" class="btn btn-secondary" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
         <td><a role="button" class="btn btn-accent" type="submit" > Manage</a></td>
       </tr>
       <!-- row 3 -->
       <tr>
-        <th>3</th>
         <td>Event 3</td>
         <td>This is the event field, where we write our information about the events that people can see</td>
         <td>The School</td>
+        <td>None</td>
         <td>3/18/25</td>
-        <td>Not Urgent</td>
+        <td>Low</td>
         <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
         <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
       </tr>
