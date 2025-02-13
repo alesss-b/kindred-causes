@@ -4,57 +4,136 @@
 
 {% block content %}
     <div class="flex grow justify-around items-center">
-        <form class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10">
-            <div class="text-2xl text-center">{% block form_title %}{% endblock form_title %}</div>
+        <form class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-6 p-10 w-full max-w-lg">
+            <div class="text-2xl text-center font-bold">Profile Management</div>
             
-            <div class="flex flex-col space-y-3.5 items-center">
-                {% block form_content %}
+            <div class="flex flex-col space-y-4">
                 
-                <!-- Name Field with Inner Label -->
-                <label class="input">
-                    <span class="label-text">Name</span>
-                    <input type="text" class="grow" placeholder="John Doe" value="John Doe" />
+                <!-- Full Name -->
+                <label class="form-control w-full">
+                    <span class="label-text">Full Name</span>
+                    <input type="text" class="input input-bordered w-full" placeholder="John Doe" maxlength="50" required />
                 </label>
 
-                <!-- Email Field with Inner Label -->
-                <label class="input">
-                    <span class="label-text">Email</span>
-                    <input type="email" class="grow" placeholder="john.doe@example.com" value="john.doe@example.com" />
+                <!-- Address 1 -->
+                <label class="form-control w-full">
+                    <span class="label-text">Address 1</span>
+                    <input type="text" class="input input-bordered w-full" placeholder="123 Main St" maxlength="100" required />
                 </label>
 
-                <!-- Joined Field (Disabled, non-editable) -->
-                <label class="input">
-                    <span class="label-text">Joined</span>
-                    <input type="text" class="grow" placeholder="January 1, 2020" value="January 1, 2020" disabled />
+                <!-- Address 2 -->
+                <label class="form-control w-full">
+                    <span class="label-text">Address 2 (Optional)</span>
+                    <input type="text" class="input input-bordered w-full" placeholder="Apt 4B" maxlength="100" />
                 </label>
 
-                <!-- Address Field with Inner Label -->
-                <label class="input">
-                    <span class="label-text">Address</span>
-                    <input type="text" class="grow" placeholder="123 Main St" value="123 Main St" />
+                <!-- City -->
+                <label class="form-control w-full">
+                    <span class="label-text">City</span>
+                    <input type="text" class="input input-bordered w-full" placeholder="New York" maxlength="100" required />
                 </label>
 
-                <!-- Phone Field with Inner Label -->
-                <label class="input">
-                    <span class="label-text">Phone</span>
-                    <input type="text" class="grow" placeholder="(123) 456-7890" value="(123) 456-7890" />
+                <!-- State -->
+                <label class="form-control w-full">
+                    <span class="label-text">State</span>
+                    <select class="select w-full max-w-xs" required>
+                        <option disabled selected>Pick your state</option>
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option>
+                        <option value="AR">AR</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="IA">IA</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="ME">ME</option>
+                        <option value="MD">MD</option>
+                        <option value="MA">MA</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MS">MS</option>
+                        <option value="MO">MO</option>
+                        <option value="MT">MT</option>
+                        <option value="NE">NE</option>
+                        <option value="NV">NV</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NY">NY</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WV">WV</option>
+                        <option value="WI">WI</option>
+                        <option value="WY">WY</option>
+                    </select>
                 </label>
 
-                <!-- Birthday Field with Date Picker -->
-                <label class="input">
-                    <span class="label-text">Birthday</span>
-                    <input type="date" class="grow" />
+                <!-- Zip Code -->
+                <label class="form-control w-full">
+                    <span class="label-text">Zip Code</span>
+                    <input type="text" class="input input-bordered w-full" placeholder="12345" pattern="\d{5,9}" minlength="5" maxlength="9" required />
                 </label>
 
-                {% endblock form_content %}
+                <!-- Skills-->
+                <label class="form-control w-full">
+                    <span class="label-text">Skills</span>
+                    <select class="select w-full max-w-xs" required>
+                        <option disabled selected>Pick your skills</option>
+                        <option value="communication">Communication</option>
+                        <option value="teamwork">Teamwork</option>
+                        <option value="event_planning">Event Planning</option>
+                        <option value="fundraising">Fundraising</option>
+                        <option value="tutoring">Tutoring</option>
+                        <option value="web_dev">Web Development</option>
+                        <option value="first_aid">First Aid & CPR</option>
+                        <option value="gardening">Gardening</option>
+                        <option value="homeless_support">Homeless Shelter Support</option>
+                        <option value="disaster_relief">Disaster Relief Assistance</option>
+                    </select>
+                </label>
+
+                <!-- Preferences -->
+                <label class="form-control w-full">
+                    <span class="label-text">Preferences (Optional)</span>
+                    <textarea class="textarea textarea-bordered w-full" placeholder="Enter your preferences"></textarea>
+                </label>
+
+                <!-- Availability -->
+                <label class="form-control w-full">
+                    <span class="label-text">Availability</span>
+                    <input type="date" class="input input-bordered w-full" required />
+                    <input type="date" class="input input-bordered w-full mt-2" required />
+                </label>
+
             </div>
 
-            {% block form_buttons %}
             <!-- Save Button -->
             <div class="form-control mt-6">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary w-full">Save Changes</button>
             </div>
-            {% endblock form_buttons %}
         </form>
     </div>
 {% endblock content %}
