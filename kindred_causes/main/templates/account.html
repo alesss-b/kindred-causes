@@ -5,6 +5,64 @@
 {% block content %}
 <div class="flex grow justify-around items-center h-screen">
     <div class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10 w-3/4">
+        <div class="stats shadow">
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block h-8 w-8 stroke-current">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div class="stat-title">Downloads</div>
+              <div class="stat-value">31K</div>
+              <div class="stat-desc">Jan 1st - Feb 1st</div>
+            </div>
+          
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block h-8 w-8 stroke-current">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                </svg>
+              </div>
+              <div class="stat-title">New Users</div>
+              <div class="stat-value">4,200</div>
+              <div class="stat-desc">↗︎ 400 (22%)</div>
+            </div>
+          
+            <div class="stat">
+              <div class="stat-figure text-secondary">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  class="inline-block h-8 w-8 stroke-current">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                </svg>
+              </div>
+              <div class="stat-title">New Registers</div>
+              <div class="stat-value">1,200</div>
+              <div class="stat-desc">↘︎ 90 (14%)</div>
+            </div>
+          </div>
         <!--Grid-->
         <div class="grid grid-cols-2 gap-4">
             <!--Profile-->
@@ -19,14 +77,14 @@
             </div>
             <!--Account Info with expand-->
             <div class="flex flex-col justify-center items-start space-y-4">
-                <h2 class="text-2xl font-bold">My volunteer score: 550</h2>
-                <!--<div class="flex justify-center items-center gap-4">
-                    <div class="radial-progress" style="--value:90;" role="progressbar">Begin</div>
-                    <div class="radial-progress" style="--value:0;" role="progressbar">Medium</div>
+                <h2 class="text-2xl font-bold">My volunteer score: 180</h2>
+                <div class="flex justify-center items-center gap-4">
+                    <div class="radial-progress" style="--value:100;" role="progressbar">Begin</div>
+                    <div class="radial-progress" style="--value:80;" role="progressbar">Medium</div>
                     <div class="radial-progress" style="--value:0;" role="progressbar">Advance</div>
                     <div class="radial-progress" style="--value:0;" role="progressbar">Expert</div>
-                </div> -->
-                <progress class="progress w-56" value="550" max="1000"></progress>
+                </div>
+                <!--<progress class="progress w-56" value="550" max="1000"></progress>-->
                 <h2 class="text-2xl font-bold">Account Information</h2>
                 <div class="collapse collapse-arrow bg-base-200">
                     <input type="radio" name="my-accordion-2" checked="checked" />
