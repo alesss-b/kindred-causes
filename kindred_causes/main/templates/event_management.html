@@ -5,14 +5,22 @@
 
 
 {% block form_content %}
-  <div> Event Name</div>
-  <input type="text" placeholder="Event Name" class="input" />
+  
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Event Name</legend>
+    <input type="text" class="input" placeholder="Enter Event Name" />
+  </fieldset>
 
-  <div> Event Description</div>
-  <input type="text" placeholder="Event Description" class="input" />
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Event Description</legend>
+    <textarea class="textarea h-24 text-wrap" placeholder="Enter Event Description"></textarea>
+  </fieldset>
+  
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Event Location</legend>
+    <input type="text" class="input" placeholder="Enter Location" />
+  </fieldset>
 
-  <div> Event Location</div>
-  <input type="text" placeholder="Location" class="input" />
 
   <div class="dropdown dropdown-right">
   
