@@ -1,33 +1,71 @@
-{% extends 'root.html' %}
-
+{% extends 'table.html' %}
 {% block content %}
-<div class="container mx-auto p-6">
-    <h2 class="text-2xl font-bold mb-4">Volunteer History</h2>
-    <table class="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-            <tr class="bg-gray-100">
-                <th class="border p-2">Event Name</th>
-                <th class="border p-2">Description</th>
-                <th class="border p-2">Location</th>
-                <th class="border p-2">Skills Required</th>
-                <th class="border p-2">Participation Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in volunteer_events %}
-            <tr>
-                <td class="border p-2">{{ event.name }}</td>
-                <td class="border p-2">{{ event.description }}</td>
-                <td class="border p-2">{{ event.location }}</td>
-                <td class="border p-2">{{ event.required_skills }}</td>
-                <td class="border p-2">{{ event.get_status_display }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5" class="text-center p-4">No volunteer history available.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="flex flex-col grow">
+  <h1 class="text-center text-2xl font-bold my-4">Volunteer History</h1>
+  <table class="table w-full">
+    <thead>
+      <tr class="bg-primary">
+        <th class="border p-2">Event Name</th>
+        <th class="border p-2">Description</th>
+        <th class="border p-2">Location</th>
+        <th class="border p-2">Skills Required</th>
+        <th class="border p-2">Urgency Level</th>
+        <th class="border p-2">Participation Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in volunteer_events %}
+      <tr class="hover:bg-base-300">
+        <td class="border p-2">{{ event.name }}</td>
+        <td class="border p-2">{{ event.description }}</td>
+        <td class="border p-2">{{ event.location }}</td>
+        <td class="border p-2">{{ event.required_skills }}</td>
+        <td class="border p-2">{{ event.urgency }}</td>
+        <td class="border p-2">{{ event.get_status_display }}</td>
+      </tr>
+      {% empty %}
+      <tr class="hover:bg-base-300">
+        <td class="border p-2">Community Garden</td>
+        <td class="border p-2">Help plant and maintain community vegetable garden</td>
+        <td class="border p-2">Central Park</td>
+        <td class="border p-2">Gardening, Physical Labor</td>
+        <td class="border p-2">Medium</td>
+        <td class="border p-2">Completed</td>
+      </tr>
+      <tr class="hover:bg-base-300">
+        <td class="border p-2">Food Bank Drive</td>
+        <td class="border p-2">Sort and package donated food items</td>
+        <td class="border p-2">Local Food Bank</td>
+        <td class="border p-2">Organization, Lifting</td>
+        <td class="border p-2">High</td>
+        <td class="border p-2">Registered</td>
+      </tr>
+      <tr class="hover:bg-base-300">
+        <td class="border p-2">Senior Tech Help</td>
+        <td class="border p-2">Assist seniors with basic computer and smartphone usage</td>
+        <td class="border p-2">Community Center</td>
+        <td class="border p-2">Tech Knowledge, Patience</td>
+        <td class="border p-2">Low</td>
+        <td class="border p-2">In Progress</td>
+      </tr>
+      <tr class="hover:bg-base-300">
+        <td class="border p-2">Beach Cleanup</td>
+        <td class="border p-2">Remove trash and debris from local beach</td>
+        <td class="border p-2">Sunset Beach</td>
+        <td class="border p-2">None</td>
+        <td class="border p-2">Medium</td>
+        <td class="border p-2">Completed</td>
+      </tr>
+      <tr class="hover:bg-base-300">
+        <td class="border p-2">Animal Shelter</td>
+        <td class="border p-2">Walk dogs and socialize with shelter animals</td>
+        <td class="border p-2">Happy Paws Shelter</td>
+        <td class="border p-2">Animal Handling, Compassion</td>
+        <td class="border p-2">High</td>
+        <td class="border p-2">Registered</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
-{% endblock %}
+{% endblock content %}
