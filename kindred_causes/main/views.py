@@ -109,6 +109,14 @@ def account(request: HttpRequest) -> HttpResponse:
     context: dict = {'test_key': 'test_value'}
     return render(request, 'account.html', context)
 
+def account_management(request: HttpRequest) -> HttpResponse:
+    """ Account page.
+
+    :param HttpRequest reqest: The request from the client's browser.
+    :return HttpReponse: The response to the client.
+    """
+    context: dict = {'test_key': 'test_value'}
+    return render(request, 'profile_management.html', context)
 
 def index(request: HttpRequest) -> HttpResponse:
     """ Default page.

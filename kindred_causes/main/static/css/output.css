@@ -1445,6 +1445,13 @@
     min-height: 3.75rem;
     transition: background-color 0.2s ease-out;
   }
+  .stats {
+    position: relative;
+    display: inline-grid;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    border-radius: var(--radius-box);
+  }
   .static {
     position: static;
   }
@@ -1613,6 +1620,31 @@
       grid-column-start: 1;
       grid-row-start: 1;
     }
+  }
+  .stat-figure {
+    grid-column-start: 2;
+    grid-row: span 3 / span 3;
+    grid-row-start: 1;
+    place-self: center;
+    justify-self: flex-end;
+  }
+  .stat-desc {
+    grid-column-start: 1;
+    white-space: nowrap;
+    color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+    font-size: 0.75rem;
+  }
+  .stat-title {
+    grid-column-start: 1;
+    white-space: nowrap;
+    color: color-mix(in oklab, var(--color-base-content) 60%, transparent);
+    font-size: 0.75rem;
+  }
+  .stat-value {
+    grid-column-start: 1;
+    white-space: nowrap;
+    font-size: 2rem;
+    font-weight: 800;
   }
   .container {
     width: 100%;
@@ -1817,6 +1849,18 @@
       cursor: pointer;
     }
   }
+  .stat {
+    display: inline-grid;
+    width: 100%;
+    column-gap: calc(0.25rem * 4);
+    padding-inline: calc(0.25rem * 6);
+    padding-block: calc(0.25rem * 4);
+    grid-template-columns: repeat(1, 1fr);
+    &:not(:last-child) {
+      border-inline-end: var(--border) dashed color-mix(in oklab, currentColor 10%, #0000);
+      border-block-end: none;
+    }
+  }
   .fieldset-label {
     display: flex;
     align-items: center;
@@ -1851,6 +1895,9 @@
   .hidden {
     display: none;
   }
+  .inline-block {
+    display: inline-block;
+  }
   .table {
     display: table;
   }
@@ -1859,6 +1906,9 @@
     padding-inline: calc(0.25rem * 0);
     width: var(--size);
     height: var(--size);
+  }
+  .h-8 {
+    height: calc(var(--spacing) * 8);
   }
   .h-24 {
     height: calc(var(--spacing) * 24);
@@ -1880,6 +1930,9 @@
   }
   .w-3\/4 {
     width: calc(3/4 * 100%);
+  }
+  .w-8 {
+    width: calc(var(--spacing) * 8);
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
@@ -2052,6 +2105,9 @@
   .bg-white {
     background-color: var(--color-white);
   }
+  .stroke-current {
+    stroke: currentColor;
+  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -2114,6 +2170,9 @@
   }
   .text-neutral-content {
     color: var(--color-neutral-content);
+  }
+  .text-secondary {
+    color: var(--color-secondary);
   }
   .text-white {
     color: var(--color-white);
