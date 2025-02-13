@@ -1,7 +1,7 @@
 {% extends 'form.html' %}
-
+ 
 {% block title %}Event Management{% endblock title %}
-{% block form_title %}Create a Event{% endblock form_title %}
+{% block form_title %}Create an Event{% endblock form_title %}
 
 
 {% block form_content %}
@@ -21,7 +21,7 @@
     <input type="text" class="input" placeholder="Enter Location" />
   </fieldset>
 
-
+<div>
   <div class="dropdown dropdown-right">
   
     <div tabindex="0" role="button" class="btn m-1">Required Skills</div>
@@ -42,6 +42,7 @@
         </label>
       </fieldset>
     </ul>
+  
   </div>
 
   <div class="dropdown dropdown-right">
@@ -52,6 +53,8 @@
       <li><a>Not Urgent</a></li>
     </ul>
   </div>
+</div>
+
 
   <div> Start Time</div>
   <input type="datetime-local" class="input"/>
