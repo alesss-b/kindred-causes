@@ -1,8 +1,9 @@
-{% extends 'root.html' %}
+{% extends 'form.html' %}
 
-{% block title %}Event Browser{% endblock title %}
+{% block title %}Browse Events{% endblock title %}
+{% block form_title %}View Events{% endblock form_title %}
 
-{% block content %}
+{% block form_content %}
 
 <div class="overflow-x-auto">
   <table class="table">
@@ -48,4 +49,4 @@
 <a role="button" class="btn btn-primary" type="submit" href="{% url 'event_management' %}"> Create a Event (admin only)</a>
 
 
-{% endblock content %}
+{% endblock form_content%}
