@@ -5,10 +5,10 @@
 {% block content %}
     <div class="flex grow justify-around items-center my-15">
         <form class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10">
-            <div class="text-2xl">{% block form_title %}{% endblock form_title %}</div>
+            <div class="text-2xl font-bold">{% block form_title %}{% endblock form_title %}</div>
 
-            <div class="flex flex-col space-y-3.5 items-center">{% block form_content %}{% endblock form_content %}</div>
-            {% block form_buttons %}{% endblock form_buttons %}
+            <div class="flex flex-col justify-between items-center">{% block form_content %}{% endblock form_content %}</div>
+            <div class="flex flex-row gap-2 justify-around">{% block form_buttons %}{% endblock form_buttons %}</div>
         </form>
     </div>
 {% endblock content %}
