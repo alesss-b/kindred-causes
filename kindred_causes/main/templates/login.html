@@ -4,8 +4,11 @@
 {% block form_title %}Login{% endblock form_title %}
 
 {% block form_content %}
-    <label class="input validator">
-        <span class="label">Email</span>
+
+
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Email</legend>
+    <label class="input validator w-full">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
                 <rect width="20" height="16" x="2" y="4" rx="2"></rect>
@@ -15,8 +18,11 @@
         <input type="email" placeholder="mail@site.com" required />
     </label>
     <div class="validator-hint hidden">Enter valid email address</div>
-    <label class="input validator">
-        <span class="label">Password</span>
+</fieldset>
+
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Password</legend>
+    <label class="input w-full validator">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
                 <path
@@ -28,15 +34,17 @@
         <input type="password" required placeholder="Password" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
     </label>
-    <p class="validator-hint hidden">
-        Inncorect Password
-    </p>
-    <p>
-        New to Kindred Causes?
-    <a class="link link-primary type="submit" href="{% url 'user_registration' %}"">Create an Account</a>
-    </p>
+    <div class="validator-hint hidden">Inncorect Password</div>
+</fieldset>
 {% endblock form_content%}
 
 {% block form_buttons %}
-<button class="btn btn-primary" type="submit">Login</button>
+<button class=" btn w-full btn-primary" type="submit">Login</button>
 {% endblock form_buttons %}
+
+{% block form_messages%}
+<p>
+    New to Kindred Causes?
+    <a class="link link-primary type=" submit" href="{% url 'user_registration' %}"">Create an Account</a>
+</p>
+{% endblock form_messages%}

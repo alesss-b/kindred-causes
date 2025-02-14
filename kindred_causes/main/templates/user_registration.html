@@ -4,8 +4,11 @@
 {% block form_title %}Register{% endblock form_title %}
 
 {% block form_content %}
-    <label class="input validator">
-        <span class="label">Email</span>
+
+
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Email</legend>
+    <label class="input validator w-full">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
                 <rect width="20" height="16" x="2" y="4" rx="2"></rect>
@@ -15,9 +18,11 @@
         <input type="email" placeholder="mail@site.com" required />
     </label>
     <div class="validator-hint hidden">Enter valid email address</div>
+</fieldset>
 
-    <label class="input validator">
-        <span class="label">Password</span>
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Password</legend>
+    <label class="input w-full validator">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
                 <path
@@ -29,15 +34,12 @@
         <input type="password" required placeholder="Password" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
     </label>
-    <p class="validator-hint hidden">
-        Must be more than 8 characters, including
-        <br />At least one number
-        <br />At least one lowercase letter
-        <br />At least one uppercase letter
-    </p>
+    <div class="validator-hint hidden">Inncorect Password</div>
+</fieldset>
 
-    <label class="input validator">
-        <span class="label">Confirm Password</span>
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Repeat Password</legend>
+    <label class="input w-full validator">
         <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
                 <path
@@ -46,17 +48,20 @@
                 <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
             </g>
         </svg>
-        <input type="password" required placeholder="Password" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+        <input type="password" required placeholder="Repeat Password" minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="Must be more than 8 characters, including number, lowercase letter, uppercase letter" />
     </label>
-    <p class="validator-hint hidden">
-        Must be more than 8 characters, including
-        <br />At least one number
-        <br />At least one lowercase letter
-        <br />At least one uppercase letter
-    </p>
+    <div class="validator-hint hidden">Inncorect Password</div>
+</fieldset>
 {% endblock form_content%}
 
 {% block form_buttons %}
-<button class="btn btn-primary" type="submit">Sign Up</button>
+<button class=" btn w-full btn-primary" type="submit">Sign Up</button>
 {% endblock form_buttons %}
+
+{% block form_messages%}
+<p>
+    Already have an account?
+    <a class="link link-primary type=" submit" href="{% url 'login' %}"">Login</a>
+</p>
+{% endblock form_messages%}
