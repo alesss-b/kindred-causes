@@ -3,108 +3,80 @@
 {% block title %}Account{% endblock title %}
 
 {% block content %}
-<div class="flex grow justify-around items-center h-screen">
-    <div class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-10 p-10 w-3/4">
-        <div class="stats shadow">
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  class="inline-block h-8 w-8 stroke-current">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <div class="stat-title">Downloads</div>
-              <div class="stat-value">31K</div>
-              <div class="stat-desc">Jan 1st - Feb 1st</div>
-            </div>
-          
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  class="inline-block h-8 w-8 stroke-current">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                </svg>
-              </div>
-              <div class="stat-title">New Users</div>
-              <div class="stat-value">4,200</div>
-              <div class="stat-desc">↗︎ 400 (22%)</div>
-            </div>
-          
-            <div class="stat">
-              <div class="stat-figure text-secondary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  class="inline-block h-8 w-8 stroke-current">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                </svg>
-              </div>
-              <div class="stat-title">New Registers</div>
-              <div class="stat-value">1,200</div>
-              <div class="stat-desc">↘︎ 90 (14%)</div>
-            </div>
+<div class="flex grow justify-around items-center h-screen px-10">
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-2 gap-10 w-full max-w-5xl">
+        
+        <!-- Left Column: Avatar & Actions -->
+        <div class="flex flex-col items-center space-y-6">
+          <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Avatar" class="rounded-full w-60 h-60">
+          <div class="flex flex-col space-y-4 w-full">
+              <a href="/account_management" class="btn btn-primary w-2/3 mx-auto">Edit Profile</a>
+              <button class="btn btn-secondary w-2/3 mx-auto">Logout</button>
           </div>
-        <!--Grid-->
-        <div class="grid grid-cols-2 gap-4">
-            <!--Profile-->
-            <div class="flex flex-col items-center space-y-4">
-                <figure class="px-10 pt-10">
-                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Avatar" class="rounded-full w-46 h-46">
-                </figure>
-                <div class="card-actions flex flex-col space-y-6">
-                    <a href="/account_management" class="btn btn-primary w-full">Edit Profile</a> <!--Refer to profile management page-->
-                    <button class="btn btn-secondary w-full">Logout</button>
-                </div>
-            </div>
-            <!--Account Info with expand-->
-            <div class="flex flex-col justify-center items-start space-y-4">
-                <h2 class="text-2xl font-bold">My volunteer score: 180</h2>
-                <div class="flex justify-center items-center gap-4">
-                    <div class="radial-progress" style="--value:100;" role="progressbar">Begin</div>
-                    <div class="radial-progress" style="--value:80;" role="progressbar">Medium</div>
-                    <div class="radial-progress" style="--value:0;" role="progressbar">Advance</div>
-                    <div class="radial-progress" style="--value:0;" role="progressbar">Expert</div>
-                </div>
-                <!--<progress class="progress w-56" value="550" max="1000"></progress>-->
-                <h2 class="text-2xl font-bold">Account Information</h2>
-                <div class="collapse collapse-arrow bg-base-200">
-                    <input type="radio" name="my-accordion-2" checked="checked" />
-                    <div class="collapse-title text-xl font-medium">Public Information</div>
-                    <div class="collapse-content">
-                        <p class="text-lg"><span class="underline decoration-dotted">Name:</span> John Doe</p>
-                        <p class="text-lg"><span class="underline decoration-dotted">Joined:</span> January 1, 2020</p>
-                    </div>
-                </div>
-                <div class="collapse collapse-arrow bg-base-200">
-                    <input type="radio" name="my-accordion-2" />
-                    <div class="collapse-title text-xl font-medium">Private Information</div>
-                    <div class="collapse-content">
-                        <p class="text-lg"><span class="underline decoration-dotted">Email:</span> john.doe@example.com</p>
-                        <p class="text-lg"><span class="underline decoration-dotted">Address:</span> 123 Main St</p>
-                        <p class="text-lg"><span class="underline decoration-dotted">Phone:</span> (123) 456-7890</p>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <!-- Right Column: Stats & Account Info -->
+        <div class="flex flex-col space-y-6">
+            
+            <!-- Stats -->
+            <div class="stats shadow w-full">
+                <div class="stat">
+                    <div class="stat-title">Vistor</div>
+                    <div class="stat-value">31K</div>
+                    <div class="stat-desc">Jan 1st - Feb 1st</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Volunteer Record</div>
+                    <div class="stat-value">420</div>
+                    <div class="stat-desc text-green-500">↗︎ 20 (22%)</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">Volunteer Score</div>
+                    <div class="stat-value">180</div>
+                    <div class="stat-desc text-yellow-500">- 20 (0%)</div>
+                </div>
+            </div>
+
+            <!-- My Score -->
+            <h2 class="text-2xl font-bold">My Volunteer Score: 180</h2>
+            <div class="flex justify-start gap-4">
+                <div class="radial-progress text-primary" style="--value:100;">Begin</div>
+                <div class="radial-progress text-secondary" style="--value:80;">Medium</div>
+                <div class="radial-progress text-accent" style="--value:0;">Advance</div>
+                <div class="radial-progress text-error" style="--value:0;">Expert</div>
+            </div>
+
+            <!-- Account Information -->
+            <h2 class="text-2xl font-bold">Account Information</h2>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="radio" name="accordion-info" checked />
+              <div class="collapse-title text-xl font-medium">Public Information</div>
+              <div class="collapse-content">
+                  <p class="text-lg">Name: John Doe</p>
+                  <p class="text-lg">Joined: January 1, 2020</p>
+                  <p class="text-lg">Availability 1: January 1, 2020</p>
+                  <p class="text-lg">Availability 2: January 1, 2020</p>
+                  <p class="text-lg">City: New York</p>
+                  <p class="text-lg">State: NY</p>
+                  <p class="text-lg">Skills: Eating</p>
+              </div>
+          </div>
+          
+          <div class="collapse collapse-arrow bg-base-200">
+              <input type="radio" name="accordion-info" />
+              <div class="collapse-title text-xl font-medium">Private Information</div>
+              <div class="collapse-content">
+                  <p class="text-lg">Email: john.doe@example.com</p>
+                  <p class="text-lg">Address: 123 Main St</p>
+                  <p class="text-lg">Address 2: None</p>
+                  <p class="text-lg">Zip Code: 11223</p>
+                  <p class="text-lg">Phone: (123) 456-7890</p>
+              </div>
+          </div>
+
+        </div>
+
     </div>
 </div>
 {% endblock content %}
