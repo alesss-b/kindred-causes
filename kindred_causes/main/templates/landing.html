@@ -4,7 +4,7 @@
 
 {% block content %}
 {% load static %}
-<div class="hero min-h-full bg-base-300">
+<div class="hero min-h-full bg-base-200">
     <div class="hero-content text-center">
       <div class="max-w-md">
         <h1 class="text-5xl font-bold">Welcome to Kindred Causes</h1>
@@ -12,11 +12,11 @@
           Welcome to Kindred Causes. This is a school project. Blah blah blah. Lorem ipsum dolor sit, dongus dingus solar schmidt.
         </p>
         <div class="flex w-full flex-col">
-          <a class="btn btn-lg btn-accent" href="{% url 'user_registration' %}">Get Started</a>
+          <a class="btn btn-lg btn-secondary" href="{% url 'user_registration' %}">Get Started</a>
           <div class="divider my-8">OR</div>
           <p>
             Already have an account?
-            <a class="link link-primary type=" submit" href="{% url 'login' %}"">Login</a>
+            <a class="link text-primary-content link-primary type=" submit" href="{% url 'login' %}"">Login</a>
         </p>
         </div>
       </div>

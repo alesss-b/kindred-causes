@@ -39,12 +39,12 @@
 {% endblock form_content%}
 
 {% block form_buttons %}
-<button class=" btn w-full btn-primary" type="submit">Login</button>
+<button class=" btn w-full btn-neutral" type="submit">Login</button>
 {% endblock form_buttons %}
 
 {% block form_messages%}
 <p>
     New to Kindred Causes?
-    <a class="link link-primary type=" submit" href="{% url 'user_registration' %}"">Create an Account</a>
+    <a class="link text-primary-content link-primary type=" submit" href="{% url 'user_registration' %}"">Create an Account</a>
 </p>
 {% endblock form_messages%}
