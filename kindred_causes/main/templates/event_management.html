@@ -1,66 +1,74 @@
 {% extends 'form.html' %}
- 
+
 {% block title %}Event Management{% endblock title %}
-{% block form_title %}Create an Event{% endblock form_title %}
+{% block form_title %}Event Management Form{% endblock form_title %}
 
 
 {% block form_content %}
-  
-  <fieldset class="fieldset">
+
+<fieldset class="fieldset w-full">
     <legend class="fieldset-legend ">Event Name</legend>
-    <input type="text" class="input w-70" placeholder="Enter Event Name" />
-  </fieldset>
+    <input type="text" class="input" placeholder="Enter Event Name" />
+</fieldset>
 
-  <fieldset class="fieldset">
+<fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Event Description</legend>
-    <textarea class="textarea h-24 w-70 text-wrap" placeholder="Enter Event Description"></textarea>
-  </fieldset>
-  
-  <fieldset class="fieldset">
+    <textarea class="textarea h-24 text-wrap" placeholder="Enter Event Description"></textarea>
+</fieldset>
+
+<fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Event Location</legend>
-    <input type="text" class="input w-70" placeholder="Enter Location" />
-  </fieldset>
+    <input type="text" class="input" placeholder="Enter Location" />
+</fieldset>
 
-<div>
-  <div class="dropdown dropdown-right">
-  
-    <div tabindex="0" role="button" class="btn m-1">Required Skills</div>
-    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-      <fieldset class="fieldset p-4 bg-base-100 border border-base-300 rounded-box w-64">
-        <legend class="fieldset-legend">Select Skills</legend>
-        <label class="fieldset-label">
-          <input type="checkbox" checked="checked" class="checkbox" />
-          Skill 1
-        </label>
-        <label class="fieldset-label">
-          <input type="checkbox" checked="checked" class="checkbox" />
-          Skill 2
-        </label>
-        <label class="fieldset-label">
-          <input type="checkbox" checked="checked" class="checkbox" />
-          Skill 3
-        </label>
-      </fieldset>
-    </ul>
-  
-  </div>
+<div class="flex flex-row gap-2">
 
-  <div class="dropdown dropdown-right">
-    <div tabindex="0" role="button" class="btn m-1">Select Urgency</div>
-    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-      <li><a>High</a></li>
-      <li><a>Medium</a></li>
-      <li><a>Low</a></li>
-    </ul>
-  </div>
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Skills</legend>
+        <details class="dropdown">
+            <summary class="select m-1">Select Skills</summary>
+            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                <li>
+                    <label class="fieldset-label">
+                        <input type="checkbox" checked="checked" class="checkbox" />
+                        Juggling
+                    </label>
+                </li>
+                <li>
+                    <label class="fieldset-label">
+                        <input type="checkbox" checked="checked" class="checkbox" />
+                        Culinary
+                    </label>
+                </li>
+                <li>
+                    <label class="fieldset-label">
+                        <input type="checkbox" checked="checked" class="checkbox" />
+                        Empathy
+                    </label>
+                </li>
+            </ul>
+        </details>
+    </fieldset>
+
+
+
+    <fieldset class="fieldset">
+        <legend class="fieldset-legend">Urgency</legend>
+        <select class="select">
+            <option disabled selected>Choose Urgency</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>Low</option>
+        </select>
+    </fieldset>
 </div>
 
 
 <fieldset class="fieldset">
-  <legend class="fieldset-legend">Event Location</legend>
-  <input type="datetime-local" class="input"/>
+    <legend class="fieldset-legend">Event Location</legend>
+    <input type="datetime-local" class="input" />
 </fieldset>
 
-  <a role="button" class="btn btn-primary" type="submit" > Create Event</a>
+<a role="button" class="btn btn-primary" type="submit"> Create Event</a>
 
 {% endblock form_content%}
