@@ -40,7 +40,7 @@
 
 
 
-  .input, .textarea {
+  .input, .textarea, .select {
 
     &:where(input) {
       display: inline-block;
