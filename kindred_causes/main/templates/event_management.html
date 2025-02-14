@@ -7,22 +7,21 @@
 {% block form_content %}
 
 <fieldset class="fieldset w-full">
-    <legend class="fieldset-legend ">Event Name</legend>
-    <input type="text" class="input w-full" placeholder="Enter Event Name" />
+    <legend class="fieldset-legend">Event Name</legend>
+    <input type="text" class="input w-full" placeholder="Enter Event Name" maxlength="100" required />
 </fieldset>
 
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Event Description</legend>
-    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter Event Description"></textarea>
+    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter Event Description" required></textarea>
 </fieldset>
 
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Event Location</legend>
-    <input type="text" class="input w-full" placeholder="Enter Location" />
+    <input type="text" class="input w-full" placeholder="Enter Location" required/>
 </fieldset>
 
 <div class="flex flex-row gap-2 w-full">
-
     <fieldset class="fieldset w-1/2">
         <legend class="fieldset-legend">Skills</legend>
         <details class="dropdown w-full">
@@ -51,7 +50,6 @@
     </fieldset>
 
 
-
     <fieldset class="fieldset w-1/2">
         <legend class="fieldset-legend">Urgency</legend>
         <select class="select w-full">
@@ -66,7 +64,7 @@
 
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Date and Time</legend>
-    <input type="datetime-local" class="input w-full"/>
+    <input type="datetime-local" class="input w-full" required/>
 </fieldset>
 
 
