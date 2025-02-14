@@ -3,3 +3,6 @@ node_modules/
 kindred_causes/main/__pycache__/
 kindred_causes/kindred_causes/__pycache__/
 kindred_causes/main/static/css/output.css
+
+package-lock.json
+package.json
