@@ -2,7 +2,20 @@ virtual-environment/
 node_modules/
 kindred_causes/main/__pycache__/
 kindred_causes/kindred_causes/__pycache__/
+kindred_causes/main/migrations/__pycache__/
 kindred_causes/main/static/css/output.css
-
+*__pycache__/
 package-lock.json
 package.json
+
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+media
+
+# Backup files # 
+*.bak 
