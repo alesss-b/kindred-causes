@@ -49,7 +49,14 @@
             </div>
 
             <!-- Account Information -->
-            <h2 class="text-2xl font-bold">Account Information</h2>
+            <div class="flex items-center space-x-2">
+                <h2 class="text-2xl font-bold">Account Information</h2>
+                <div class="tooltip tooltip-right" data-tip="This is an Admin/Volunteer Account">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-gray-500 cursor-pointer">
+                        <path fill-rule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zM11 10a1 1 0 012 0v4a1 1 0 01-2 0v-4zm1 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+            </div>
             <div class="collapse collapse-arrow bg-base-200">
               <input type="radio" name="accordion-info" checked />
               <div class="collapse-title text-xl font-medium">Public Information</div>
