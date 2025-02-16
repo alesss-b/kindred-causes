@@ -1,139 +1,192 @@
-{% extends 'root.html' %}
+{% extends 'form.html' %}
 
-{% block title %}Profile Management{% endblock title %}
+{% block title %}Account Management{% endblock title %}
+{% block form_title %}Account Management{% endblock form_title %}
 
-{% block content %}
-    <div class="flex grow justify-around items-center">
-        <form class="accent bg-base-300 rounded-2xl h-fit flex flex-col space-y-6 p-10 w-full max-w-lg">
-            <div class="text-2xl text-center font-bold">Profile Management</div>
-            
-            <div class="flex flex-col space-y-4">
-                
-                <!-- Full Name -->
-                <label class="form-control w-full">
-                    <span class="label-text">Full Name</span>
-                    <input type="text" class="input input-bordered w-full" placeholder="John Doe" maxlength="50" required />
+{% block form_content %}
+<!-- Full Name -->
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Name</legend>
+    <input type="text" class="input w-full" placeholder="Enter Name" />
+</fieldset>
+
+<!-- Address 1 -->
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend">Address 1</legend>
+    <input type="text" class="input w-full" placeholder="123 Main St" maxlength="100" required />
+</fieldset>
+
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend">Address 2</legend>
+    <input type="text" class="input w-full" placeholder="Apt 4B" maxlength="100" />
+    <p class="fieldset-label">Optional</p>
+  </fieldset>
+
+<div class="flex flex-row gap-2 w-full">
+    <!-- City -->
+    <fieldset class="fieldset w-1/2">
+        <legend class="fieldset-legend">City</legend>
+        <input type="text" class="input w-full" placeholder="New York" maxlength="100" required />
+    </fieldset>
+
+    <!-- State -->
+    <fieldset class="fieldset w-1/2">
+        <legend class="fieldset-legend">State</legend>
+        <select class="select w-full">
+            <option disabled selected>Pick your state</option>
+            <option value="AL">AL</option>
+            <option value="AK">AK</option>
+            <option value="AZ">AZ</option>
+            <option value="AR">AR</option>
+            <option value="CA">CA</option>
+            <option value="CO">CO</option>
+            <option value="CT">CT</option>
+            <option value="DE">DE</option>
+            <option value="FL">FL</option>
+            <option value="GA">GA</option>
+            <option value="HI">HI</option>
+            <option value="ID">ID</option>
+            <option value="IL">IL</option>
+            <option value="IN">IN</option>
+            <option value="IA">IA</option>
+            <option value="KS">KS</option>
+            <option value="KY">KY</option>
+            <option value="LA">LA</option>
+            <option value="ME">ME</option>
+            <option value="MD">MD</option>
+            <option value="MA">MA</option>
+            <option value="MI">MI</option>
+            <option value="MN">MN</option>
+            <option value="MS">MS</option>
+            <option value="MO">MO</option>
+            <option value="MT">MT</option>
+            <option value="NE">NE</option>
+            <option value="NV">NV</option>
+            <option value="NH">NH</option>
+            <option value="NJ">NJ</option>
+            <option value="NM">NM</option>
+            <option value="NY">NY</option>
+            <option value="NC">NC</option>
+            <option value="ND">ND</option>
+            <option value="OH">OH</option>
+            <option value="OK">OK</option>
+            <option value="OR">OR</option>
+            <option value="PA">PA</option>
+            <option value="RI">RI</option>
+            <option value="SC">SC</option>
+            <option value="SD">SD</option>
+            <option value="TN">TN</option>
+            <option value="TX">TX</option>
+            <option value="UT">UT</option>
+            <option value="VT">VT</option>
+            <option value="VA">VA</option>
+            <option value="WA">WA</option>
+            <option value="WV">WV</option>
+            <option value="WI">WI</option>
+            <option value="WY">WY</option>
+        </select>
+    </fieldset>
+</div>
+ 
+<!-- Zip Code -->
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend ">Zip Code</legend>
+    <input type="text" class="input w-full" placeholder="12345" placeholder="12345" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
+</fieldset>
+
+<!-- Skills-->
+
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend">Skills</legend>
+    <details class="dropdown w-full">
+        <summary class="select">Select Skills</summary>
+        <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Communication
                 </label>
-
-                <!-- Address 1 -->
-                <label class="form-control w-full">
-                    <span class="label-text">Address 1</span>
-                    <input type="text" class="input input-bordered w-full" placeholder="123 Main St" maxlength="100" required />
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Teamwork
                 </label>
-
-                <!-- Address 2 -->
-                <label class="form-control w-full">
-                    <span class="label-text">Address 2 (Optional)</span>
-                    <input type="text" class="input input-bordered w-full" placeholder="Apt 4B" maxlength="100" />
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Event Planning
                 </label>
-
-                <!-- City -->
-                <label class="form-control w-full">
-                    <span class="label-text">City</span>
-                    <input type="text" class="input input-bordered w-full" placeholder="New York" maxlength="100" required />
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Fundraising
                 </label>
-
-                <!-- State -->
-                <label class="form-control w-full">
-                    <span class="label-text">State</span>
-                    <select class="select w-full max-w-xs" required>
-                        <option disabled selected>Pick your state</option>
-                        <option value="AL">AL</option>
-                        <option value="AK">AK</option>
-                        <option value="AZ">AZ</option>
-                        <option value="AR">AR</option>
-                        <option value="CA">CA</option>
-                        <option value="CO">CO</option>
-                        <option value="CT">CT</option>
-                        <option value="DE">DE</option>
-                        <option value="FL">FL</option>
-                        <option value="GA">GA</option>
-                        <option value="HI">HI</option>
-                        <option value="ID">ID</option>
-                        <option value="IL">IL</option>
-                        <option value="IN">IN</option>
-                        <option value="IA">IA</option>
-                        <option value="KS">KS</option>
-                        <option value="KY">KY</option>
-                        <option value="LA">LA</option>
-                        <option value="ME">ME</option>
-                        <option value="MD">MD</option>
-                        <option value="MA">MA</option>
-                        <option value="MI">MI</option>
-                        <option value="MN">MN</option>
-                        <option value="MS">MS</option>
-                        <option value="MO">MO</option>
-                        <option value="MT">MT</option>
-                        <option value="NE">NE</option>
-                        <option value="NV">NV</option>
-                        <option value="NH">NH</option>
-                        <option value="NJ">NJ</option>
-                        <option value="NM">NM</option>
-                        <option value="NY">NY</option>
-                        <option value="NC">NC</option>
-                        <option value="ND">ND</option>
-                        <option value="OH">OH</option>
-                        <option value="OK">OK</option>
-                        <option value="OR">OR</option>
-                        <option value="PA">PA</option>
-                        <option value="RI">RI</option>
-                        <option value="SC">SC</option>
-                        <option value="SD">SD</option>
-                        <option value="TN">TN</option>
-                        <option value="TX">TX</option>
-                        <option value="UT">UT</option>
-                        <option value="VT">VT</option>
-                        <option value="VA">VA</option>
-                        <option value="WA">WA</option>
-                        <option value="WV">WV</option>
-                        <option value="WI">WI</option>
-                        <option value="WY">WY</option>
-                    </select>
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Tutoring
                 </label>
-
-                <!-- Zip Code -->
-                <label class="form-control w-full">
-                    <span class="label-text">Zip Code</span>
-                    <input type="text" class="input input-bordered w-full" placeholder="12345" pattern="\d{5,9}" minlength="5" maxlength="9" required />
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Web Development
                 </label>
-
-                <!-- Skills-->
-                <label class="form-control w-full">
-                    <span class="label-text">Skills</span>
-                    <select class="select w-full max-w-xs" required>
-                        <option disabled selected>Pick your skills</option>
-                        <option value="communication">Communication</option>
-                        <option value="teamwork">Teamwork</option>
-                        <option value="event_planning">Event Planning</option>
-                        <option value="fundraising">Fundraising</option>
-                        <option value="tutoring">Tutoring</option>
-                        <option value="web_dev">Web Development</option>
-                        <option value="first_aid">First Aid & CPR</option>
-                        <option value="gardening">Gardening</option>
-                        <option value="homeless_support">Homeless Shelter Support</option>
-                        <option value="disaster_relief">Disaster Relief Assistance</option>
-                    </select>
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    First Aid & CPR
                 </label>
-
-                <!-- Preferences -->
-                <label class="form-control w-full">
-                    <span class="label-text">Preferences (Optional)</span>
-                    <textarea class="textarea textarea-bordered w-full" placeholder="Enter your preferences"></textarea>
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Gardening
                 </label>
-
-                <!-- Availability -->
-                <label class="form-control w-full">
-                    <span class="label-text">Availability</span>
-                    <input type="date" class="input input-bordered w-full" required />
-                    <input type="date" class="input input-bordered w-full mt-2" required />
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Homeless Shelter Support
                 </label>
+            </li>
+            <li>
+                <label class="fieldset-label">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Disaster Relief Assistance
+                </label>
+            </li>
+        </ul>
+    </details>
+</fieldset>
 
-            </div>
+<!-- Preferences -->
+<fieldset class="fieldset w-full">
+    <legend class="fieldset-legend">Preferences</legend>
+    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter your preferences" required></textarea>
+    <p class="fieldset-label">Optional</p>
+</fieldset>
 
-            <!-- Save Button -->
-            <div class="form-control mt-6">
-                <button type="submit" class="btn btn-primary w-full">Save Changes</button>
-            </div>
-        </form>
-    </div>
-{% endblock content %}
+<!-- Availability -->
+<div class="flex flex-row gap-2 w-full">
+    <fieldset class="fieldset w-full">
+        start of Availability
+        <input type="date" class="input"/>
+    </fieldset>
+    <fieldset class="fieldset w-full">
+        end of Availability
+        <input type="date" class="input"/>
+    </fieldset>
+</div>
+
+{% endblock form_content %}
+
+<!-- Save Button -->
+{% block form_buttons %}
+<a role="button" class="btn btn-primary w-full" type="submit"> Save Changes</a>
+{% endblock form_buttons %}
