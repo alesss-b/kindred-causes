@@ -33,7 +33,7 @@ class Event(Base):
     location = models.CharField(max_length=254,null=False, blank=False, verbose_name="Location", help_text="The location of the event.")
     urgency = models.IntegerField(null=False, blank=False, default=EventUrgency.MEDIUM, choices=EventUrgency.choices, verbose_name="Urgency", help_text="The urgency of the event.")
     date = models.DateTimeField(null=True, blank=True, verbose_name="Date", help_text="The date and time of the Event.")
-    required_skills = models.ManyToManyField(Skill)
+    required_skills = models.ManyToManyField(Skill, null=True, blank=True)
 
     def __str__(self):
         return "{}: {}".format(self.name, self.description)
@@ -64,24 +64,28 @@ class Notification(Base):
         return self.subject + " " + self.body
     
 
-class Rating(Base):
-    """ Base class for rating models
+class Review(Base):
+    """ Base class for review models
     """
-    rating = models.IntegerField(null=False, blank=False, choices=[(i,i) for i in range(5)], verbose_name="Urgency", help_text="The rating out of 5.")
-    comments = models.CharField(max_length=254,null=False, blank=True, verbose_name="Comments", help_text="Comments about the rating.")
+    rating = models.IntegerField(null=False, blank=False, choices=[(i,i) for i in range(1, 6)], verbose_name="Rating", help_text="The rating out of 5.")
+    comments = models.CharField(max_length=254,null=False, blank=True, verbose_name="Comments", help_text="Comments about the review.")
 
     class Meta:
         abstract = True
 
 
-class AttendeeRating(Rating):
-    """ A rating of an Event Attendee by an Event Administrator.
+class AttendeeReview(Review):
+    """ A Review of an Event Attendee by an Event Administrator.
     """
-    attendee = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name="attendee_ratings", verbose_name="Related Attendee", help_text="The attendee this rating is rating.")
-    event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE, related_name="attendee_ratings", verbose_name="Related Event", help_text="The event the attendee atteneded to recieve this rating.")
+    attendee = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name="attendee_reviews", verbose_name="Related Attendee", help_text="The attendee this review is reviewing.")
+    event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE, related_name="attendee_reviews", verbose_name="Related Event", help_text="The event the attendee atteneded to recieve this reviewing.")
 
 
-class EventRating(Rating):
-    """ A rating of an Event by an Event Attendee.
+class EventReview(Review):
+    """ A Review of an Event by an Event Attendee.
     """
-    event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE, related_name="event_ratings", verbose_name="Related Event", help_text="The event the attendee atteneded to recieve this rating.")
+    event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE, related_name="event_reviews", verbose_name="Related Event", help_text="The event the attendee atteneded to recieve this review.")
+
+
+    def __str__(self):
+        return self.event.name + " : " + str(self.rating)

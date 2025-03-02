@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-
+from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import DetailView
+from .models import EventReview
+from .forms import EventReviewForm
 
 def login(request: HttpRequest) -> HttpResponse:
     """ Login page.
@@ -160,3 +163,31 @@ def index(request: HttpRequest) -> HttpResponse:
     """
     context: dict = {'test_key': 'test_value'}
     return render(request, 'root.html', context)
+
+
+
+class EventReviewCreateView(CreateView):
+    model = EventReview
+    form_class = EventReviewForm
+    template_name = 'event_review_form.html'
+    extra_context = {'view_type': 'create'}
+
+    def get_success_url(self):
+        return redirect('home').url
+        # return redirect('event_detail', pk=self.object.pk).url
+
+# class EventReviewDetailView(DetailView):
+#     model = EventReview
+#     template_name = 'event_review_detail.html'
+#     context_object_name = 'event_review'
+
+
+class EventReviewUpdateView(UpdateView):
+    model = EventReview
+    form_class = EventReviewForm
+    template_name = 'event_review_form.html'
+    extra_context={'view_type': 'update'}
+
+    def get_success_url(self):
+        return redirect('home').url
+        # return redirect('event_detail', pk=self.object.pk).url

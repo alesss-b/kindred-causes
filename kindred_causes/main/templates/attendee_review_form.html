@@ -1,0 +1,39 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Attendee Review Form{% endblock page_title %}
+{% block form_title %}
+   {% if view_type == 'update' %}
+      Edit Attendee Review
+   {% elif view_type == 'create' %}
+      New Attendee Review
+   {% endif %}
+{% endblock form_title %}
+{% block form_action %}
+{% if view_type == 'update' %}
+      {% url 'new_attendee_review' %}
+   {% elif view_type == 'create' %}
+      {% url 'new_attendee_review' %}
+   {% endif %}
+{% endblock form_action %}
+{% block form_content %}
+<div class="form-row">
+   {{ form.event }}
+</div>
+<div class="form-row">
+   {{ form.rating }}
+</div>
+<div class="form-row">
+   {{ form.comments }}
+</div>
+{% endblock form_content%}
+
+{% block form_buttons%}
+<button type="reset" onclick="history.back()" class="btn btn-soft btn-error">Cancel</button>
+<button type="submit" class="btn btn-soft btn-success">
+   {% if view_type == 'update' %}
+      Save Changes
+   {% elif view_type == 'create' %}
+      Create Attendee Review
+   {% endif %}
+</button>
+{% endblock form_buttons%}

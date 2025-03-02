@@ -7,7 +7,8 @@
         <form class="accent bg-base-200 rounded-2xl h-fit flex flex-col space-y-10 p-10 min-w-md" 
             method="post" 
             action="{% block form_action %}{% endblock form_action %}"
-        >
+        >   
+            {% csrf_token %}
             <div class="text-2xl font-bold">{% block form_title %}{% endblock form_title %}</div>
 
             <div class="flex flex-col justify-between items-center">{% block form_content %}{% endblock form_content %}</div>
