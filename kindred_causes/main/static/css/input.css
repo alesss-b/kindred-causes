@@ -141,3 +141,19 @@
       isolation: isolate;
     }
   }
+
+  .fieldset {
+    flex-grow: 1;
+  }
+  
+  .input, .select, .textarea {
+    width: 100%;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 2rem;
+    width: 100%
+  }
