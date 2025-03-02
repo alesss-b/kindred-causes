@@ -111,8 +111,8 @@ def account(request: HttpRequest) -> HttpResponse:
         "name": request.session.get("name", "John Doe"),
         "city": request.session.get("city", "New York"),
         "state": request.session.get("state", "NY"),
-        "start_availability": request.session.get("availability_start", "January 1, 1989"),
-        "end_availability": request.session.get("availability_end", "January 1, 1999"),
+        "start_availability": request.session.get("start_availability", "January 1, 1989"),
+        "end_availability": request.session.get("start_availability", "January 1, 1999"),
         "skills": ", ".join(request.session.get("skills", ["Eating", "Sleeping", "Programming"])),
 
         # Private
@@ -135,8 +135,8 @@ def account_management(request: HttpRequest) -> HttpResponse:
         request.session["name"] = request.POST.get("name", "John Doe")
         request.session["city"] = request.POST.get("city", "New York")
         request.session["state"] = request.POST.get("state", "NY")
-        request.session["start_availability"] = request.POST.get("availability_start", "January 1, 1989")
-        request.session["end_availability"] = request.POST.get("availability_end", "January 1, 1999")
+        request.session["start_availability"] = request.POST.get("start_availability", "January 1, 1989")
+        request.session["end_availability"] = request.POST.get("end_availability", "January 1, 1999")
         request.session["skills"] = request.POST.getlist("skills")
 
         # Private
@@ -148,7 +148,7 @@ def account_management(request: HttpRequest) -> HttpResponse:
 
         request.session.modified = True
 
-        return redirect("account")
+        return redirect("account") # Redirect to the account page
     
     return render(request, "profile_management.html")
 

@@ -2,23 +2,25 @@
 
 {% block title %}Account Management{% endblock title %}
 {% block form_title %}Account Management{% endblock form_title %}
+{% block form_action %}{% url 'account_management' %}{% endblock form_action %}
 
 {% block form_content %}
+{% csrf_token %}
 <!-- Full Name -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend ">Name</legend>
-    <input type="text" class="input w-full" placeholder="Enter Name" />
+    <input type="text" name="name" class="input w-full" placeholder="Enter Name" />
 </fieldset>
 
 <!-- Address 1 -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Address 1</legend>
-    <input type="text" class="input w-full" placeholder="123 Main St" maxlength="100" required />
+    <input type="text" name="address1" class="input w-full" placeholder="123 Main St" maxlength="100" required />
 </fieldset>
 
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Address 2</legend>
-    <input type="text" class="input w-full" placeholder="Apt 4B" maxlength="100" />
+    <input type="text" name="address2" class="input w-full" placeholder="Apt 4B" maxlength="100" />
     <p class="fieldset-label">Optional</p>
   </fieldset>
 
@@ -26,13 +28,13 @@
     <!-- City -->
     <fieldset class="fieldset w-1/2">
         <legend class="fieldset-legend">City</legend>
-        <input type="text" class="input w-full" placeholder="New York" maxlength="100" required />
+        <input type="text" name="city" class="input w-full" placeholder="New York" maxlength="100" required />
     </fieldset>
 
     <!-- State -->
     <fieldset class="fieldset w-1/2">
         <legend class="fieldset-legend">State</legend>
-        <select class="select w-full">
+        <select name="state" class="select w-full">
             <option disabled selected>Pick your state</option>
             <option value="AL">AL</option>
             <option value="AK">AK</option>
@@ -91,7 +93,7 @@
 <!-- Zip Code -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend ">Zip Code</legend>
-    <input type="text" class="input w-full" placeholder="12345" placeholder="12345" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
+    <input type="text" name="zipcode" class="input w-full" placeholder="12345" placeholder="12345" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
 </fieldset>
 
 <!-- Skills-->
@@ -103,61 +105,61 @@
         <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Communication" class="checkbox" />
                     Communication
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Teamwork" class="checkbox" />
                     Teamwork
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Event Planning"  class="checkbox" />
                     Event Planning
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Fundraising" class="checkbox" />
                     Fundraising
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Tutoring" class="checkbox" />
                     Tutoring
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Web Development" class="checkbox" />
                     Web Development
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="First Aid & CPR" class="checkbox" />
                     First Aid & CPR
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Gardening" class="checkbox" />
                     Gardening
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Homeless Shelter Support" class="checkbox" />
                     Homeless Shelter Support
                 </label>
             </li>
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" checked="checked" class="checkbox" />
+                    <input type="checkbox" name="skills" value="Disaster Relief Assistance" class="checkbox" />
                     Disaster Relief Assistance
                 </label>
             </li>
@@ -168,25 +170,28 @@
 <!-- Preferences -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Preferences</legend>
-    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter your preferences" required></textarea>
+    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter your preferences"></textarea>
     <p class="fieldset-label">Optional</p>
 </fieldset>
 
 <!-- Availability -->
 <div class="flex flex-row gap-2 w-full">
     <fieldset class="fieldset w-full">
-        start of Availability
-        <input type="date" class="input"/>
+        <!--start of Availability -->
+        <legend class="fieldset-legend">Start of Availability</legend>
+        <input name="start_availability" type="date" class="input"/>
     </fieldset>
     <fieldset class="fieldset w-full">
-        end of Availability
-        <input type="date" class="input"/>
+       <!--end of Availability -->
+       <legend class="fieldset-legend">Start of Availability</legend>
+        <input name="end_availability" type="date" class="input"/>
     </fieldset>
 </div>
 
 {% endblock form_content %}
 
 <!-- Save Button -->
+ 
 {% block form_buttons %}
-<a role="button" class="btn btn-primary w-full" type="submit"> Save Changes</a>
+<button type="submit" class="btn btn-primary w-full">Save Changes</button>
 {% endblock form_buttons %}
