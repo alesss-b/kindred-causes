@@ -60,31 +60,31 @@
                 </div>
             </div>
             <div class="collapse collapse-arrow bg-base-200">
-              <input type="radio" name="accordion-info" checked />
-              <div class="collapse-title text-xl font-medium">Public Information</div>
-              <div class="collapse-content">
-                    <p class="text-lg">Name: John Doe</p>
+                <input type="radio" name="accordion-info" checked />
+                <div class="collapse-title text-xl font-medium">Public Information</div>
+                <div class="collapse-content">
+                    <p class="text-lg">Name: {{ name }}</p>
                     <p class="text-lg">Joined: January 1, 2020</p>
-                    <p class="text-lg">Start of Availability: January 1, 1989</p>
-                    <p class="text-lg">End of Availability: January 1, 1999</p>
-                    <p class="text-lg">City: New York</p>
-                    <p class="text-lg">State: NY</p>
-                    <p class="text-lg">Skills: Eating, Sleeping, Programming</p>
-              </div>
-          </div>
-          
-          <div class="collapse collapse-arrow bg-base-200">
-              <input type="radio" name="accordion-info" />
-              <div class="collapse-title text-xl font-medium">Private Information</div>
-              <div class="collapse-content">
-                  <p class="text-lg">Email: john.doe@example.com</p>
-                  <p class="text-lg">Address: 123 Main St</p>
-                  <p class="text-lg">Address 2: None</p>
-                  <p class="text-lg">Zip Code: 11223</p>
-                  <p class="text-lg">Phone: (123) 456-7890</p>
-                  <p class="text-lg">User ID: 223344</p>
-              </div>
-          </div>
+                    <p class="text-lg">Start of Availability: {{ start_availability }}</p>
+                    <p class="text-lg">End of Availability: {{ end_availability }}</p>
+                    <p class="text-lg">City: {{ city }}</p>
+                    <p class="text-lg">State: {{ state }}</p>
+                    <p class="text-lg">Skills: {{ skills }}</p>
+                </div>
+            </div>
+            
+            <div class="collapse collapse-arrow bg-base-200">
+                <input type="radio" name="accordion-info" />
+                <div class="collapse-title text-xl font-medium">Private Information</div>
+                <div class="collapse-content">
+                    <p class="text-lg">Email: {{ email }}</p>
+                    <p class="text-lg">Address: {{ address }}</p>
+                    <p class="text-lg">Address 2: {{ address2 }}</p>
+                    <p class="text-lg">Zip Code: {{ zip_code }}</p>
+                    <p class="text-lg">Phone: {{ phone }}</p>
+                    <p class="text-lg">User ID: 223344</p>
+                </div>
+            </div>
 
         </div>
 
