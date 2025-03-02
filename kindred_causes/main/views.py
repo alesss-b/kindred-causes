@@ -115,7 +115,7 @@ def account(request: HttpRequest) -> HttpResponse:
         "city": request.session.get("city", "New York"),
         "state": request.session.get("state", "NY"),
         "start_availability": request.session.get("start_availability", "January 1, 1989"),
-        "end_availability": request.session.get("start_availability", "January 1, 1999"),
+        "end_availability": request.session.get("end_availability", "January 1, 1999"),
         "skills": ", ".join(request.session.get("skills", ["Eating", "Sleeping", "Programming"])),
 
         # Private
