@@ -2,9 +2,6 @@
 @plugin "daisyui";
 
 
-
-
-
 @plugin "daisyui/theme" {
   name: "emerald";
   default: true;

@@ -69,7 +69,7 @@ class TailwindTextarea(Textarea):
     def render(self, name, value, attrs=None, renderer=None):
         if attrs is None:
             attrs = {}
-        attrs['class'] = 'textarea'
+        attrs['class'] = 'textarea h-24'
 
         verbose_name = attrs.get("verbose_name", name.replace("_", " ").title())
         input_html = super().render(name, value, attrs, renderer)
