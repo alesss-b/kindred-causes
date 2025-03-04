@@ -33,7 +33,7 @@ class Event(Base):
     location = models.CharField(max_length=254,null=False, blank=False, verbose_name="Location", help_text="The location of the event.")
     urgency = models.IntegerField(null=False, blank=False, default=EventUrgency.MEDIUM, choices=EventUrgency.choices, verbose_name="Urgency", help_text="The urgency of the event.")
     date = models.DateTimeField(null=True, blank=True, verbose_name="Date", help_text="The date and time of the Event.")
-    required_skills = models.ManyToManyField(Skill, null=True, blank=True)
+    required_skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
         return "{}: {}".format(self.name, self.description)
