@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView
-from .models import EventReview
-from .forms import EventReviewForm
+from .models import EventReview, Event
+from .forms import EventReviewForm, EventManagementForm
 
 def login(request: HttpRequest) -> HttpResponse:
     """ Login page.
@@ -191,3 +191,21 @@ class EventReviewUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('home').url
         # return redirect('event_detail', pk=self.object.pk).url
+
+class EventManagementCreateView(CreateView):
+        model = Event
+        form_class = EventManagementForm
+        template_name = 'event_management.html'
+        extra_context = {'view_type': 'create'}
+
+        def get_success_url(self):
+            return redirect('event_browser').url
+
+class EventManagementUpdateView(UpdateView):
+    model = Event
+    form_class = EventManagementForm
+    template_name = 'event_management.html'
+    extra_context = {'view_type': 'update'}
+
+    def get_success_url(self):
+        return redirect('event_browser').url
