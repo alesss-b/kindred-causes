@@ -1,5 +1,5 @@
 from django import forms
-from main.widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
+from main.widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating, TailwindPassword
 from django.contrib.auth.forms import AuthenticationForm, UsernameField
 
 
@@ -9,16 +9,10 @@ class UserLoginForm(AuthenticationForm):
         super(UserLoginForm, self).__init__(*args, **kwargs)
 
     username = UsernameField(widget=TailwindInput(
-        attrs={'placeholder': 'Email'}))
-    password = forms.CharField(widget=TailwindInput(
+        attrs={'placeholder': 'user_name'}))
+    
+    password = forms.CharField(widget=TailwindPassword(
         attrs={
             'placeholder': 'Password',
         }
     ))
-
-    comments = forms.CharField(
-        widget=TailwindTextarea(
-            attrs={
-            "placeholder": "Review Comments",
-        })
-    )
