@@ -1,0 +1,50 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$e3R0A0n4YDdjCME3b3ultJ$k9BIeDkcUa9/9Kc/Z91ijBA+wMVUgPLPF7aLbmqnKRw=",
+            "last_login": "2025-03-05T01:05:18.004Z",
+            "is_superuser": true,
+            "username": "alex.bradshaw",
+            "first_name": "Alex",
+            "last_name": "Bradshaw",
+            "email": "azbradshaw@uh.edu",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-03-02T20:23:19Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$hjTG6jEKqOqyEkWax6Z41g$sw5K8D5tiXc5AQaqbHVPFbzjuSfo8Ecetg80J0NqBO0=",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "Admin",
+            "last_name": "User",
+            "email": "admin.user@website.co.uk",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-03-05T01:11:28Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "main.skill",
+        "pk": 1,
+        "fields": {
+            "created_at": "2025-03-05T01:05:50.715Z",
+            "updated_at": "2025-03-05T01:05:50.715Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Empathy",
+            "description": "Know how to feel"
+        }
+    }
+]
