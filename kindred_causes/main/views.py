@@ -7,24 +7,82 @@ from .forms import EventReviewForm, EventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-def login(request: HttpRequest) -> HttpResponse:
-    """ Login page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
+class HomeView(LoginRequiredMixin, TemplateView):
+    """ Home View
+    Redirects unauthenticated users to landing page.
     """
-    
-    return render(request, 'login.html')
+    template_name = 'home.html'
+
+    login_url = '/'
+    def handle_no_permission(self):
+        return redirect(self.get_login_url())
 
 
-def landing(request: HttpRequest) -> HttpResponse:
-    """ Landing page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
+class LandingView(TemplateView):
+    """ Landing View
+    Redirects authenticated users to home page.
     """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'landing.html', context)
+    template_name = 'landing.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+
+# EventReview Model Forms:
+# class EventReviewDetailView(DetailView):
+#     model = EventReview
+#     template_name = 'event_review_detail.html'
+#     context_object_name = 'event_review'
+
+class EventReviewCreateView(LoginRequiredMixin, CreateView):
+    """ Event Review Create View
+    Redirects unauthenticated users to login page.
+    """
+    login_url = "/login/"
+    model = EventReview
+    form_class = EventReviewForm
+    template_name = 'event_review_form.html'
+    extra_context = {'view_type': 'create'}
+
+    def get_success_url(self):
+        return redirect('home').url
+        # return redirect('event_detail', pk=self.object.pk).url
+
+
+class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
+    """ Event Review Update View
+    Redirects unauthenticated users to login page.
+    """
+    login_url = "/login/"
+    model = EventReview
+    form_class = EventReviewForm
+    template_name = 'event_review_form.html'
+    extra_context={'view_type': 'update'}
+
+    def get_success_url(self):
+        return redirect('home').url
+        # return redirect('event_detail', pk=self.object.pk).url
+
+
+class EventManagementCreateView(CreateView):
+        model = Event
+        form_class = EventManagementForm
+        template_name = 'event_management.html'
+        extra_context = {'view_type': 'create'}
+
+        def get_success_url(self):
+            return redirect('event_browser').url
+
+
+class EventManagementUpdateView(UpdateView):
+    model = Event
+    form_class = EventManagementForm
+    template_name = 'event_management.html'
+    extra_context = {'view_type': 'update'}
+
+    def get_success_url(self):
+        return redirect('event_browser').url
 
 
 def event_browser(request: HttpRequest) -> HttpResponse:
@@ -83,33 +141,6 @@ def matching_form(request: HttpRequest) -> HttpResponse:
     """
     context: dict = {'test_key': 'test_value'}
     return render(request, 'matching_form.html', context)
-
-
-class HomeView(LoginRequiredMixin, TemplateView):
-    login_url = '/'
-    template_name = 'home.html'
-
-    def handle_no_permission(self):
-        return redirect(self.get_login_url())
-
-
-class LandingView(TemplateView):
-    template_name = 'landing.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('home')  # Redirect logged-in users to another page
-        return super().dispatch(request, *args, **kwargs)
-    
-
-def home(request: HttpRequest) -> HttpResponse:
-    """ Home page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'home.html', context)
 
 
 def inbox(request: HttpRequest) -> HttpResponse:
@@ -173,59 +204,3 @@ def account_management(request: HttpRequest) -> HttpResponse:
         return redirect("account") # Redirect to the account page
     
     return render(request, "profile_management.html")
-
-def index(request: HttpRequest) -> HttpResponse:
-    """ Default page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'root.html', context)
-
-
-class EventReviewCreateView(LoginRequiredMixin, CreateView):
-    login_url = "/login/"
-    redirect_field_name = "next"
-    model = EventReview
-    form_class = EventReviewForm
-    template_name = 'event_review_form.html'
-    extra_context = {'view_type': 'create'}
-
-    def get_success_url(self):
-        return redirect('home').url
-        # return redirect('event_detail', pk=self.object.pk).url
-
-# class EventReviewDetailView(DetailView):
-#     model = EventReview
-#     template_name = 'event_review_detail.html'
-#     context_object_name = 'event_review'
-
-
-class EventReviewUpdateView(UpdateView):
-    model = EventReview
-    form_class = EventReviewForm
-    template_name = 'event_review_form.html'
-    extra_context={'view_type': 'update'}
-
-    def get_success_url(self):
-        return redirect('home').url
-        # return redirect('event_detail', pk=self.object.pk).url
-
-class EventManagementCreateView(CreateView):
-        model = Event
-        form_class = EventManagementForm
-        template_name = 'event_management.html'
-        extra_context = {'view_type': 'create'}
-
-        def get_success_url(self):
-            return redirect('event_browser').url
-
-class EventManagementUpdateView(UpdateView):
-    model = Event
-    form_class = EventManagementForm
-    template_name = 'event_management.html'
-    extra_context = {'view_type': 'update'}
-
-    def get_success_url(self):
-        return redirect('event_browser').url
