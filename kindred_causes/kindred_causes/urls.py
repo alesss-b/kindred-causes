@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path('', include('main.urls')),
-    path('test/', views.LoginView.as_view(
+    path('login/', views.LoginView.as_view(
         template_name='registration/login.html',
         authentication_form=UserLoginForm
     ), 

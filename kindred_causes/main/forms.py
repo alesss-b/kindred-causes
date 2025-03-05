@@ -1,5 +1,5 @@
 from django import forms
-from .widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
+from kindred_causes.widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
 from .models import EventReview, Event, Skill
 from .choices import EventUrgency
 
