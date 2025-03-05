@@ -16,8 +16,8 @@ urlpatterns = [
     path('volunteer_history/', views.volunteer_history, name='volunteer_history'),
     path('matching_form/', views.matching_form, name='matching_form'),
 
-    path('event_management/new/', views.EventManagementCreateView.as_view(), name='new_event_management'),
-    path('event_management/edit/<int:pk>/', views.EventManagementUpdateView.as_view(), name='edit_event_management'),
+    path('event-management/new/', views.EventManagementCreateView.as_view(), name='new_event_management'),
+    path('event-management/edit/<int:pk>/', views.EventManagementUpdateView.as_view(), name='edit_event_management'),
     
     path('account_management/', views.account_management, name='account_management'),
     path('event-review/edit/<int:pk>/', views.EventReviewUpdateView.as_view(), name='edit_event_review'),

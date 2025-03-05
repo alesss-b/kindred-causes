@@ -88,12 +88,13 @@ class EventManagementForm(forms.ModelForm):
         )
     )
     
-    data = forms.DateTimeField(
-        widget=TailwindDateInput(
+    date = forms.CharField(
+        widget=TailwindInput(
             attrs={
-                "class": "input w-full",
-                "type": "datetime-local",
-                'required': True,
+                'type': "datetime-local",
+                'class': "input w-full",
+                'required': True
+
             }
         )
     )
