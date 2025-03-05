@@ -8,6 +8,7 @@
       New Event Review
    {% endif %}
 {% endblock form_title %}
+
 {% block form_action %}
 {% if view_type == 'update' %}
       {% url 'new_event_review' %}
@@ -15,6 +16,7 @@
       {% url 'new_event_review' %}
    {% endif %}
 {% endblock form_action %}
+
 {% block form_content %}
 <div class="form-row">
    {{ form.event }}

@@ -1,23 +1,33 @@
 {% extends 'form.html' %}
 
-{% block title %}Event Management{% endblock title %}
-{% block form_title %}Event Management Form{% endblock form_title %}
+{% block page_title %}Event Management{% endblock page_title %}
+{% block form_title %}
+    {% if view_type == 'update' %}
+    Edit Event
+    {% elif view_type == 'create' %}
+    Create Event
+    {% endif %}
+{% endblock form_title %}
 
+{% block form_action %}
+{% if view_type == 'update' %}
+      {% url 'edit_event_management' %}
+   {% elif view_type == 'create' %}
+      {% url 'new_event_management' %}
+   {% endif %}
+{% endblock form_action %}
 
 {% block form_content %}
-
 <fieldset class="fieldset w-full">
-    <legend class="fieldset-legend">Event Name</legend>
-    <input type="text" class="input w-full" placeholder="Enter Event Name" maxlength="100" required />
+    {{form.name}}
 </fieldset>
 
 <fieldset class="fieldset w-full">
-    <legend class="fieldset-legend">Event Description</legend>
-    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter Event Description" required></textarea>
+    {{form.description}}
 </fieldset>
 
 <fieldset class="fieldset w-full">
-    <legend class="fieldset-legend">Event Location</legend>
+    {{form.location}}
     <input type="text" class="input w-full" placeholder="Enter Location" required/>
 </fieldset>
 
@@ -71,5 +81,11 @@
 {% endblock form_content%}
 
 {% block form_buttons %}
-<a role="button" class="btn btn-primary w-full" type="submit"> Create Event</a>
+<a role="button" class="btn btn-primary w-full" type="submit">
+    {% if view_type == 'update' %}
+      Save Changes
+   {% elif view_type == 'create' %}
+      Create Event
+   {% endif %}
+</a>
 {% endblock form_buttons %}
