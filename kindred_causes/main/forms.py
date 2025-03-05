@@ -1,6 +1,6 @@
 from django import forms
 from .widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
-from .models import EventReview, Event
+from .models import EventReview, Event, Skill
 
 
 class EventReviewForm(forms.ModelForm):
@@ -57,30 +57,43 @@ class EventManagementForm(forms.ModelForm):
     )
 
     location = forms.CharField(
-        widget=TailwindTextarea(
+        widget=TailwindInput(
             attrs={
-            "placeholder": "Enter Name",
+            "placeholder": "Enter Location",
+            "type": "text",
+            "class": "input w-full",
+            "required": True,
         })
     )
 
     urgency = forms.ModelChoiceField(
         queryset=Event.objects.all(),
         label="Urgency",
-        empty_label=None,
+        empty_label="Select Urgency level",
         widget=TailwindSelect(
             attrs={
-                "placeholder": "Choose Urgency level of this events",
+                "class": "fieldset-legend",
             }
         )
     )
 
     required_skills = forms.ModelChoiceField(
-        queryset=Event.objects.all(),
+        queryset=Skill.objects.all(),
         label="Skills",
-        empty_label=None,
+        empty_label="Select required skills",
         widget=TailwindSelect(
             attrs={
-                "placeholder": "Choose required skills for this event",
+                "class": "fieldset w-1/2",
+            }
+        )
+    )
+    
+    data = forms.DateTimeField(
+        widget=TailwindDateInput(
+            attrs={
+                "class": "input w-full",
+                "type": "datetime-local",
+                'required': True,
             }
         )
     )

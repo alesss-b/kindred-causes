@@ -28,46 +28,15 @@
 
 <fieldset class="fieldset w-full">
     {{form.location}}
-    <input type="text" class="input w-full" placeholder="Enter Location" required/>
 </fieldset>
 
 <div class="flex flex-row gap-2 w-full">
     <fieldset class="fieldset w-1/2">
-        <legend class="fieldset-legend">Skills</legend>
-        <details class="dropdown w-full">
-            <summary class="select">Select Skills</summary>
-            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                <li>
-                    <label class="fieldset-label">
-                        <input type="checkbox" checked="checked" class="checkbox" />
-                        Juggling
-                    </label>
-                </li>
-                <li>
-                    <label class="fieldset-label">
-                        <input type="checkbox" checked="checked" class="checkbox" />
-                        Culinary
-                    </label>
-                </li>
-                <li>
-                    <label class="fieldset-label">
-                        <input type="checkbox" checked="checked" class="checkbox" />
-                        Empathy
-                    </label>
-                </li>
-            </ul>
-        </details>
+        {{form.required_skills}}
     </fieldset>
 
-
     <fieldset class="fieldset w-1/2">
-        <legend class="fieldset-legend">Urgency</legend>
-        <select class="select w-full">
-            <option disabled selected>Choose Urgency</option>
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-        </select>
+        {{form.urgency}}
     </fieldset>
 </div>
 
