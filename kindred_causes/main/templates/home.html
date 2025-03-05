@@ -8,5 +8,7 @@
     {% csrf_token %}
     <button type="submit">Log Out</button>
 </form>
+
+<div>{{ user.first_name }}</div>
   
 {% endblock content %}
