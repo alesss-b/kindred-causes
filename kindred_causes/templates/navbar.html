@@ -1,47 +1,46 @@
 <div class="navbar bg-base-100 shadow-sm">
     <div class="flex-1">
-      <a class="btn btn-ghost text-xl" href="{% url 'landing' %}">Kindred Causes</a>
+        <a class="btn btn-ghost text-xl" href="{% url 'landing' %}">Kindred Causes</a>
     </div>
     <div class="flex-none">
-      <ul class="menu menu-horizontal px-1 gap-2">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'user_registration' %}">Sign Up</a></li>
-        <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'event_browser' %}">Browse Events</a></li>
-        <li><a href="{% url 'event_preview' %}">Preview Event</a></li>
-        <li><a href="{% url 'volunteer_history' %}">Volunteer History</a></li>
-        <li><a href="{% url 'matching_form' %}">Matching Form</a></li>
-        
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar indicator">
-            <span class="indicator-item status indicator-start status-primary"></span>
-            <div class="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://i1.sndcdn.com/artworks-x8zI2HVC2pnkK7F5-4xKLyA-t1080x1080.jpg" />
+        <ul class="menu menu-horizontal px-1 gap-2">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'user_registration' %}">Sign Up</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'event_browser' %}">Browse Events</a></li>
+            <li><a href="{% url 'event_preview' %}">Preview Event</a></li>
+            <li><a href="{% url 'volunteer_history' %}">Volunteer History</a></li>
+            <li><a href="{% url 'matching_form' %}">Matching Form</a></li>
+
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar indicator">
+                    <span class="indicator-item status indicator-start status-primary"></span>
+                    <div class="w-10 rounded-full">
+                        <img alt="Tailwind CSS Navbar component"
+                            src="https://i1.sndcdn.com/artworks-x8zI2HVC2pnkK7F5-4xKLyA-t1080x1080.jpg" />
+                    </div>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                        <a class="justify-between" href="{% url 'account' %}">
+                            Account
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-between" href="{% url 'inbox' %}">
+                            Inbox
+                            <span class="badge">2</span>
+                        </a>
+                    </li>
+                    <li><a>Settings</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
-          </div>
-          <ul
-            tabindex="0"
-            class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-            <li>
-              <a class="justify-between" href="{% url 'account' %}">
-                Account
-              </a>
-            </li>
-            <li>
-              <a class="justify-between" href="{% url 'inbox' %}">
-                Inbox
-                <span class="badge">2</span>
-              </a>
-            </li>
-            <li><a>Settings</a></li>
-            <li><form action="{% url 'logout' %}" method="post">
-              {% csrf_token %}
-              <button type="submit">Logout</button>
-          </form></li>
-          </ul>
-        </div>
-      </ul>
+        </ul>
     </div>
 </div>
