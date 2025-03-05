@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from .models import EventReview, Event
 from .forms import EventReviewForm, EventManagementForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 def login(request: HttpRequest) -> HttpResponse:
     """ Login page.
@@ -81,6 +83,14 @@ def matching_form(request: HttpRequest) -> HttpResponse:
     """
     context: dict = {'test_key': 'test_value'}
     return render(request, 'matching_form.html', context)
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
+    login_url = '/'
+    template_name = 'home.html'
+
+    def handle_no_permission(self):
+        return redirect(self.get_login_url())
 
 
 def home(request: HttpRequest) -> HttpResponse:
@@ -165,8 +175,9 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'root.html', context)
 
 
-
-class EventReviewCreateView(CreateView):
+class EventReviewCreateView(LoginRequiredMixin, CreateView):
+    login_url = "/login/"
+    redirect_field_name = "next"
     model = EventReview
     form_class = EventReviewForm
     template_name = 'event_review_form.html'
