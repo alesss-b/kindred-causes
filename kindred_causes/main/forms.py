@@ -1,7 +1,7 @@
 from django import forms
 from .widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
 from .models import EventReview, Event, Skill
-
+from .choices import EventUrgency
 
 class EventReviewForm(forms.ModelForm):
     class Meta:
@@ -66,10 +66,10 @@ class EventManagementForm(forms.ModelForm):
         })
     )
 
-    urgency = forms.ModelChoiceField(
-        queryset=Event.objects.all(),
+    urgency = forms.ChoiceField(
+        choices=EventUrgency.choices,
         label="Urgency",
-        empty_label="Select Urgency level",
+        # empty_label="Select Urgency level",
         widget=TailwindSelect(
             attrs={
                 "class": "fieldset-legend",
