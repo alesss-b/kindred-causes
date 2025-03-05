@@ -93,6 +93,15 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return redirect(self.get_login_url())
 
 
+class LandingView(TemplateView):
+    template_name = 'landing.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')  # Redirect logged-in users to another page
+        return super().dispatch(request, *args, **kwargs)
+    
+
 def home(request: HttpRequest) -> HttpResponse:
     """ Home page.
 
