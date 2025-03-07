@@ -1,7 +1,42 @@
-{% extends 'root.html' %}
+{% extends 'table.html' %}
 
 {% block title %}Inbox{% endblock title %}
-
-{% block content %}
-<div>Inbox</div>
-{% endblock content %}
+{% block table_title %}Inbox{% endblock table_title %}
+{% block table_content %}
+<div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
+    <table class="table">
+      <!-- head -->
+      <thead>
+        <tr>
+          <th><input type="checkbox" class="checkbox" /></th>
+          <th>Date</th>
+          <th>Subject</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- row 1 -->
+        <tr class="hover:bg-base-300">
+          <th><input type="checkbox" class="checkbox" /></th>
+          <td>Feb 2</td>
+          <td>Event Update!</td>
+          <td>Thie event you signed up for has moved...</td>
+        </tr>
+        <!-- row 2 -->
+        <tr class="hover:bg-base-300">
+          <th><input type="checkbox" class="checkbox" /></th>
+          <td>Feb 2</td>
+          <td>Assignment Confirmation</td>
+          <td>Confirming your task assigment...</td>
+        </tr>
+        <!-- row 3 -->
+        <tr class="hover:bg-base-300">
+          <th><input type="checkbox" class="checkbox" /></th>
+          <td>Feb 3</td>
+          <td>Congratulations!</td>
+          <td>Great job on your hard work...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock table_content %}

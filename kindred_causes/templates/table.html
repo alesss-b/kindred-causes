@@ -4,9 +4,9 @@
 
 {% block content %}
     <div class="flex grow justify-around items-center">
-        <form class="accent bg-base-200 rounded-2xl h-fit flex flex-col space-y-10 p-10">
-
+        <div class="accent bg-base-200 rounded-2xl h-fit flex flex-col items-center space-y-5 pt-5">
+            <div class="text-2xl font-bold">{% block table_title %}{% endblock table_title %}</div>
             <div class="flex flex-col space-y-3.5 items-center">{% block table_content %}{% endblock table_content %}</div>
-        </form>
+        </div>
     </div>
 {% endblock content %}
