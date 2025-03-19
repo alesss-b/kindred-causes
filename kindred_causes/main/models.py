@@ -89,3 +89,19 @@ class EventReview(Review):
 
     def __str__(self):
         return self.event.name + " : " + str(self.rating)
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    name = models.CharField(max_length=100, default="John Doe")
+    address1 = models.CharField(max_length=255, default="123 Main St")
+    address2 = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=100, default="New York")
+    state = models.CharField(max_length=2, default="NY")
+    zipcode = models.CharField(max_length=10, default="11223")
+    preferences = models.TextField(blank=True, null=True)
+    start_availability = models.DateField(blank=True, null=True)
+    end_availability = models.DateField(blank=True, null=True)
+    skills = models.ManyToManyField(Skill, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Profile"
