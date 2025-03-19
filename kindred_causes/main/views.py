@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
-from .models import EventReview, Event
+from .models import EventReview, Event, UserProfile, Skill
 from .forms import EventReviewForm, EventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
