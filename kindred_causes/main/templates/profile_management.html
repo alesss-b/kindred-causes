@@ -9,18 +9,18 @@
 <!-- Full Name -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend ">Name</legend>
-    <input type="text" name="name" class="input w-full" placeholder="Enter Name" />
+    <input type="text" name="name" class="input w-full" placeholder="Enter Name" value = "{{ profile.name }}" />
 </fieldset>
 
 <!-- Address 1 -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Address 1</legend>
-    <input type="text" name="address1" class="input w-full" placeholder="123 Main St" maxlength="100" required />
+    <input type="text" name="address1" class="input w-full" placeholder="123 Main St" value="{{ profile.address1 }}" maxlength="100" required />
 </fieldset>
 
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Address 2</legend>
-    <input type="text" name="address2" class="input w-full" placeholder="Apt 4B" maxlength="100" />
+    <input type="text" name="address2" class="input w-full" placeholder="Apt 4B" value="{{ profile.address2 }}" maxlength="100" />
     <p class="fieldset-label">Optional</p>
   </fieldset>
 
@@ -28,7 +28,7 @@
     <!-- City -->
     <fieldset class="fieldset w-1/2">
         <legend class="fieldset-legend">City</legend>
-        <input type="text" name="city" class="input w-full" placeholder="New York" maxlength="100" required />
+        <input type="text" name="city" class="input w-full" placeholder="New York" value="{{ profile.city }}" maxlength="100" required />
     </fieldset>
 
     <!-- State -->
@@ -36,56 +36,56 @@
         <legend class="fieldset-legend">State</legend>
         <select name="state" class="select w-full">
             <option disabled selected>Pick your state</option>
-            <option value="AL">AL</option>
-            <option value="AK">AK</option>
-            <option value="AZ">AZ</option>
-            <option value="AR">AR</option>
-            <option value="CA">CA</option>
-            <option value="CO">CO</option>
-            <option value="CT">CT</option>
-            <option value="DE">DE</option>
-            <option value="FL">FL</option>
-            <option value="GA">GA</option>
-            <option value="HI">HI</option>
-            <option value="ID">ID</option>
-            <option value="IL">IL</option>
-            <option value="IN">IN</option>
-            <option value="IA">IA</option>
-            <option value="KS">KS</option>
-            <option value="KY">KY</option>
-            <option value="LA">LA</option>
-            <option value="ME">ME</option>
-            <option value="MD">MD</option>
-            <option value="MA">MA</option>
-            <option value="MI">MI</option>
-            <option value="MN">MN</option>
-            <option value="MS">MS</option>
-            <option value="MO">MO</option>
-            <option value="MT">MT</option>
-            <option value="NE">NE</option>
-            <option value="NV">NV</option>
-            <option value="NH">NH</option>
-            <option value="NJ">NJ</option>
-            <option value="NM">NM</option>
-            <option value="NY">NY</option>
-            <option value="NC">NC</option>
-            <option value="ND">ND</option>
-            <option value="OH">OH</option>
-            <option value="OK">OK</option>
-            <option value="OR">OR</option>
-            <option value="PA">PA</option>
-            <option value="RI">RI</option>
-            <option value="SC">SC</option>
-            <option value="SD">SD</option>
-            <option value="TN">TN</option>
-            <option value="TX">TX</option>
-            <option value="UT">UT</option>
-            <option value="VT">VT</option>
-            <option value="VA">VA</option>
-            <option value="WA">WA</option>
-            <option value="WV">WV</option>
-            <option value="WI">WI</option>
-            <option value="WY">WY</option>
+            <option value="AL" {% if profile.state == "AL" %}selected{% endif %}>Alabama</option>
+            <option value="AK" {% if profile.state == "AK" %}selected{% endif %}>Alaska</option>
+            <option value="AZ" {% if profile.state == "AZ" %}selected{% endif %}>Arizona</option>
+            <option value="AR" {% if profile.state == "AR" %}selected{% endif %}>Arkansas</option>
+            <option value="CA" {% if profile.state == "CA" %}selected{% endif %}>California</option>
+            <option value="CO" {% if profile.state == "CO" %}selected{% endif %}>Colorado</option>
+            <option value="CT" {% if profile.state == "CT" %}selected{% endif %}>Connecticut</option>
+            <option value="DE" {% if profile.state == "DE" %}selected{% endif %}>Delaware</option>
+            <option value="FL" {% if profile.state == "FL" %}selected{% endif %}>Florida</option>
+            <option value="GA" {% if profile.state == "GA" %}selected{% endif %}>Georgia</option>
+            <option value="HI" {% if profile.state == "HI" %}selected{% endif %}>Hawaii</option>
+            <option value="ID" {% if profile.state == "ID" %}selected{% endif %}>Idaho</option>
+            <option value="IL" {% if profile.state == "IL" %}selected{% endif %}>Illinois</option>
+            <option value="IN" {% if profile.state == "IN" %}selected{% endif %}>Indiana</option>
+            <option value="IA" {% if profile.state == "IA" %}selected{% endif %}>Iowa</option>
+            <option value="KS" {% if profile.state == "KS" %}selected{% endif %}>Kansas</option>
+            <option value="KY" {% if profile.state == "KY" %}selected{% endif %}>Kentucky</option>
+            <option value="LA" {% if profile.state == "LA" %}selected{% endif %}>Louisiana</option>
+            <option value="ME" {% if profile.state == "ME" %}selected{% endif %}>Maine</option>
+            <option value="MD" {% if profile.state == "MD" %}selected{% endif %}>Maryland</option>
+            <option value="MA" {% if profile.state == "MA" %}selected{% endif %}>Massachusetts</option>
+            <option value="MI" {% if profile.state == "MI" %}selected{% endif %}>Michigan</option>
+            <option value="MN" {% if profile.state == "MN" %}selected{% endif %}>Minnesota</option>
+            <option value="MS" {% if profile.state == "MS" %}selected{% endif %}>Mississippi</option>
+            <option value="MO" {% if profile.state == "MO" %}selected{% endif %}>Missouri</option>
+            <option value="MT" {% if profile.state == "MT" %}selected{% endif %}>Montana</option>
+            <option value="NE" {% if profile.state == "NE" %}selected{% endif %}>Nebraska</option>
+            <option value="NV" {% if profile.state == "NV" %}selected{% endif %}>Nevada</option>
+            <option value="NH" {% if profile.state == "NH" %}selected{% endif %}>New Hampshire</option>
+            <option value="NJ" {% if profile.state == "NJ" %}selected{% endif %}>New Jersey</option>
+            <option value="NM" {% if profile.state == "NM" %}selected{% endif %}>New Mexico</option>
+            <option value="NY" {% if profile.state == "NY" %}selected{% endif %}>New York</option>
+            <option value="NC" {% if profile.state == "NC" %}selected{% endif %}>North Carolina</option>
+            <option value="ND" {% if profile.state == "ND" %}selected{% endif %}>North Dakota</option>
+            <option value="OH" {% if profile.state == "OH" %}selected{% endif %}>Ohio</option>
+            <option value="OK" {% if profile.state == "OK" %}selected{% endif %}>Oklahoma</option>
+            <option value="OR" {% if profile.state == "OR" %}selected{% endif %}>Oregon</option>
+            <option value="PA" {% if profile.state == "PA" %}selected{% endif %}>Pennsylvania</option>
+            <option value="RI" {% if profile.state == "RI" %}selected{% endif %}>Rhode Island</option>
+            <option value="SC" {% if profile.state == "SC" %}selected{% endif %}>South Carolina</option>
+            <option value="SD" {% if profile.state == "SD" %}selected{% endif %}>South Dakota</option>
+            <option value="TN" {% if profile.state == "TN" %}selected{% endif %}>Tennessee</option>
+            <option value="TX" {% if profile.state == "TX" %}selected{% endif %}>Texas</option>
+            <option value="UT" {% if profile.state == "UT" %}selected{% endif %}>Utah</option>
+            <option value="VT" {% if profile.state == "VT" %}selected{% endif %}>Vermont</option>
+            <option value="VA" {% if profile.state == "VA" %}selected{% endif %}>Virginia</option>
+            <option value="WA" {% if profile.state == "WA" %}selected{% endif %}>Washington</option>
+            <option value="WV" {% if profile.state == "WV" %}selected{% endif %}>West Virginia</option>
+            <option value="WI" {% if profile.state == "WI" %}selected{% endif %}>Wisconsin</option>
+            <option value="WY" {% if profile.state == "WY" %}selected{% endif %}>Wyoming</option>
         </select>
     </fieldset>
 </div>
@@ -93,87 +93,40 @@
 <!-- Zip Code -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend ">Zip Code</legend>
-    <input type="text" name="zipcode" class="input w-full" placeholder="12345" placeholder="12345" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
+    <input type="text" name="zipcode" class="input w-full" placeholder="12345" placeholder="12345" value="{{ profile.zipcode }}" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
 </fieldset>
 
 <!-- Phone -->
 <fieldset class="fieldset w-full">
-    <legend class="fieldset-legend ">Phone number</legend>
-    <input type="text" name="phone" class="input w-full" placeholder="(123)-456-7890" placeholder="(123)-456-7890" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
+    <legend class="fieldset-legend">Phone Number</legend>
+    <input type="text" name="phone" class="input w-full" placeholder="(123)-456-7890" 
+           value="{{ profile.phone }}" 
+           pattern="\(\d{3}\)-\d{3}-\d{4}" 
+           title="Phone number must be in the format (123)-456-7890" 
+           required />
 </fieldset>
 
 <!-- Email -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend ">Email <Address></Address></legend>
-    <input type="text" name="email" class="input w-full" placeholder="abc@example.com" pattern="\d{5,9}" minlength="5" maxlength="9" required/>
-</fieldset>
-
+    <input type="email" name="email" class="input w-full" placeholder="abc@example.com" value="{{ profile.email }}" maxlength="100" required />
+    </fieldset>
+    
 <!-- Skills-->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Skills</legend>
     <details class="dropdown w-full">
         <summary class="select">Select Skills</summary>
         <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+            {% for skill in skills %}
             <li>
                 <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Communication" class="checkbox" />
-                    Communication
+                    <input type="checkbox" name="skills" value="{{ skill.id }}" 
+                           {% if skill in profile.skills.all %}checked{% endif %} class="checkbox" />
+                    {{ skill.name }}
                 </label>
             </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Teamwork" class="checkbox" />
-                    Teamwork
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Event Planning"  class="checkbox" />
-                    Event Planning
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Fundraising" class="checkbox" />
-                    Fundraising
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Tutoring" class="checkbox" />
-                    Tutoring
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Web Development" class="checkbox" />
-                    Web Development
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="First Aid & CPR" class="checkbox" />
-                    First Aid & CPR
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Gardening" class="checkbox" />
-                    Gardening
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Homeless Shelter Support" class="checkbox" />
-                    Homeless Shelter Support
-                </label>
-            </li>
-            <li>
-                <label class="fieldset-label">
-                    <input type="checkbox" name="skills" value="Disaster Relief Assistance" class="checkbox" />
-                    Disaster Relief Assistance
-                </label>
-            </li>
+            {% endfor %}
         </ul>
     </details>
 </fieldset>
@@ -181,7 +134,7 @@
 <!-- Preferences -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Preferences</legend>
-    <textarea class="textarea h-24 text-wrap w-full" placeholder="Enter your preferences"></textarea>
+    <textarea class="textarea h-24 text-wrap w-full" name="preferences" placeholder="Enter your preferences">{{ profile.preferences }}</textarea>
     <p class="fieldset-label">Optional</p>
 </fieldset>
 
@@ -190,12 +143,12 @@
     <fieldset class="fieldset w-full">
         <!--start of Availability -->
         <legend class="fieldset-legend">Start of Availability</legend>
-        <input name="start_availability" type="date" class="input"/>
+        <input name="start_availability" type="date" class="input" value="{{ profile.start_availability }}" required/>
     </fieldset>
     <fieldset class="fieldset w-full">
        <!--end of Availability -->
        <legend class="fieldset-legend">Start of Availability</legend>
-        <input name="end_availability" type="date" class="input"/>
+        <input name="end_availability" type="date" class="input" value="{{ profile.end_availability }}" required/>
     </fieldset>
 </div>
 

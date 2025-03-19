@@ -5,6 +5,7 @@ from django.views.generic import DetailView, TemplateView
 from .models import EventReview, Event, UserProfile, Skill
 from .forms import EventReviewForm, EventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -153,54 +154,55 @@ def inbox(request: HttpRequest) -> HttpResponse:
     return render(request, 'inbox.html', context)
 
 
-def account(request: HttpRequest) -> HttpResponse:
-    """ Account page.
+class AccountView(LoginRequiredMixin, TemplateView):
+    template_name = "account.html"
 
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context = {
-        # Public
-        "name": request.session.get("name", "John Doe"),
-        "city": request.session.get("city", "New York"),
-        "state": request.session.get("state", "NY"),
-        "start_availability": request.session.get("start_availability", "January 1, 1989"),
-        "end_availability": request.session.get("end_availability", "January 1, 1999"),
-        "skills": ", ".join(request.session.get("skills", ["Eating", "Sleeping", "Programming"])),
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile, created = UserProfile.objects.get_or_create(user=self.request.user)
 
-        # Private
-        "email": request.session.get("email", "john.doe@example.com"),
-        "address": request.session.get("address1", "123 Main St"),
-        "address2": request.session.get("address2", "None"),
-        "zip_code": request.session.get("zipcode", "11223"),
-        "phone": request.session.get("phone", "(123) 456-7890"),
-    }
-    return render(request, "account.html", context)
+        context.update({
+            "name": profile.name,
+            "address1": profile.address1,
+            "address2": profile.address2,
+            "city": profile.city,
+            "state": profile.state,
+            "zipcode": profile.zipcode,
+            "email": profile.email,  
+            "phone": profile.phone,  
+            "preferences": profile.preferences,
+            "start_availability": profile.start_availability,
+            "end_availability": profile.end_availability,
+            "skills": ", ".join(skill.name for skill in profile.skills.all()),
+        })
+        return context
 
-def account_management(request: HttpRequest) -> HttpResponse:
-    """ Account page.
+class AccountManagementView(LoginRequiredMixin, View):
 
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    if request.method == "POST":
-        # Public
-        request.session["name"] = request.POST.get("name", "John Doe")
-        request.session["city"] = request.POST.get("city", "New York")
-        request.session["state"] = request.POST.get("state", "NY")
-        request.session["start_availability"] = request.POST.get("start_availability", "January 1, 1989")
-        request.session["end_availability"] = request.POST.get("end_availability", "January 1, 1999")
-        request.session["skills"] = request.POST.getlist("skills")
+    def get(self, request):
+        skills = Skill.objects.all()  
+        profile, created = UserProfile.objects.get_or_create(user=request.user) 
+        return render(request, "profile_management.html", {"profile": profile, "skills": skills})
 
-        # Private
-        request.session["email"] = request.POST.get("email", "john.doe@example.com")
-        request.session["address"] = request.POST.get("address1", "123 Main St")
-        request.session["address2"] = request.POST.get("address2", "None")
-        request.session["zip_code"] = request.POST.get("zipcode", "11223")
-        request.session["phone"] = request.POST.get("phone", "(123) 456-7890")
+    def post(self, request):
+        profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-        request.session.modified = True
+        profile.name = request.POST.get("name", profile.name)
+        profile.address1 = request.POST.get("address1", profile.address1)
+        profile.address2 = request.POST.get("address2", profile.address2)
+        profile.city = request.POST.get("city", profile.city)
+        profile.state = request.POST.get("state", profile.state)
+        profile.zipcode = request.POST.get("zipcode", profile.zipcode)
+        profile.email = request.POST.get("email", profile.email)  
+        profile.phone = request.POST.get("phone", profile.phone)  
+        profile.preferences = request.POST.get("preferences", profile.preferences)
+        profile.start_availability = request.POST.get("start_availability", profile.start_availability)
+        profile.end_availability = request.POST.get("end_availability", profile.end_availability)
 
-        return redirect("account") # Redirect to the account page
-    
-    return render(request, "profile_management.html")
+        skill_ids = request.POST.getlist("skills")
+        skills = Skill.objects.filter(id__in=skill_ids)
+        profile.skills.set(skills)
+
+        profile.save()
+
+        return redirect("account") 
