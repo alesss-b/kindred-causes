@@ -117,7 +117,7 @@ class UserProfile(models.Model):
     )
     zipcode = models.CharField(max_length=10, default="11223")
     email = models.EmailField(max_length=255, default="john.doe@example.com")  
-    phone = models.CharField(max_length=15, default="(123)-456-7890")  
+    phone = models.CharField(max_length=15, blank=True, null=True) 
     preferences = models.TextField(blank=True, null=True)
     start_availability = models.DateField(blank=True, null=True)
     end_availability = models.DateField(blank=True, null=True)

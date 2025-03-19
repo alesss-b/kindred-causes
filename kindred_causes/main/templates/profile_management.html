@@ -143,12 +143,12 @@
     <fieldset class="fieldset w-full">
         <!--start of Availability -->
         <legend class="fieldset-legend">Start of Availability</legend>
-        <input name="start_availability" type="date" class="input" value="{{ profile.start_availability }}" required/>
+        <input name="start_availability" type="date" class="input" {% if profile.start_availability %}value="{{ profile.start_availability }}"{% else %}required{% endif %}/>
     </fieldset>
     <fieldset class="fieldset w-full">
        <!--end of Availability -->
        <legend class="fieldset-legend">Start of Availability</legend>
-        <input name="end_availability" type="date" class="input" value="{{ profile.end_availability }}" required/>
+        <input name="end_availability" type="date" class="input" {% if profile.end_availability %}value="{{ profile.end_availability }}"{% else %}required{% endif %}/>
     </fieldset>
 </div>
 

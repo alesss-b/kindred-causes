@@ -6,6 +6,7 @@ from .models import EventReview, Event, UserProfile, Skill
 from .forms import EventReviewForm, EventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+import re
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -196,8 +197,11 @@ class AccountManagementView(LoginRequiredMixin, View):
         profile.email = request.POST.get("email", profile.email)  
         profile.phone = request.POST.get("phone", profile.phone)  
         profile.preferences = request.POST.get("preferences", profile.preferences)
-        profile.start_availability = request.POST.get("start_availability", profile.start_availability)
-        profile.end_availability = request.POST.get("end_availability", profile.end_availability)
+        start_availability = request.POST.get("start_availability", "").strip()
+        end_availability = request.POST.get("end_availability", "").strip()
+
+        profile.start_availability = start_availability if start_availability else profile.start_availability
+        profile.end_availability = end_availability if end_availability else profile.end_availability
 
         skill_ids = request.POST.getlist("skills")
         skills = Skill.objects.filter(id__in=skill_ids)
