@@ -1,7 +1,7 @@
 {% extends 'table.html' %}
 
 {% block title %}Browse Events{% endblock title %}
-{% block table_title %}Broswe Events{% endblock table_title %}
+{% block table_title %}Browse Events{% endblock table_title %}
 {% block table_content %}
 
 <div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
@@ -21,23 +21,30 @@
       <!-- row 1 -->
       {% for event in events %}
         <tr class="hover:bg-base-300">
-          <th>{{event.name}}</th>
-          <th>{{event.description}}</th>
-          <th>{{event.location}}</th>
-          <th>
+          <td>{{event.name}}</td>
+          <td>{{event.description}}</td>
+          <td>{{event.location}}</td>
+          <td>
             {% for skill in event.skills.all %}
-               {{ skill.name }}
+            {% if forloop.last %}
+                {{ skill.name }}
+            {% else %}
+                {{ skill.name }}, 
+            {% endif %}
             {% endfor %}
-          </th>
-          <th>{{event.date}}</th>
-          <th>{{event.urgency}}</th>
+          </td>
+          <td>{{event.date}}</td>
+          <td>{{event.urgency}}</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+  <div class="w-full flex flex-row justify-around p-2"> 
+    <a role="button" class="btn btn-primary w-fit" type="submit" href="{% url 'new_event_management' %}">Create a Event</a>
+  </div>
 </div>
 
-<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event (admin only)</a>
+
 
 
 {% endblock table_content%}
