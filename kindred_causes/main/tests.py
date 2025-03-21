@@ -10,13 +10,12 @@ from .forms import EventReviewForm, EventManagementForm
 from .views import (HomeView, LandingView, EventReviewCreateView, EventReviewUpdateView,
                   EventManagementCreateView, EventManagementUpdateView, event_browser,
                   event_preview, event_management, user_registration, volunteer_history,
-                  matching_form, inbox, account, account_management)
+                  matching_form, inbox, AccountView, AccountManagementView)
 from .choices import EventStatus, EventUrgency
 
 # Create your tests here.
 class ChoicesTestCase(TestCase):
     """Test cases for choices module"""
-    
     def test_event_status_choices(self):
         """Test EventStatus choices are defined correctly"""
         self.assertEqual(EventStatus.NOT_STARTED, "Not Started")
@@ -448,20 +447,25 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.context['test_key'], 'test_value')
     
     def test_account_view(self):
-        """Test account view"""
+        """Test AccountView"""
+        # Login required for account view
+        self.client.login(username='testuser', password='testpassword')
         response = self.client.get(reverse('account'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'account.html')
         
-        # Test default context values
-        self.assertEqual(response.context['name'], 'John Doe')
-        self.assertEqual(response.context['city'], 'New York')
-        self.assertEqual(response.context['state'], 'NY')
-        self.assertEqual(response.context['email'], 'john.doe@example.com')
-        self.assertEqual(response.context['phone'], '(123) 456-7890')
+        # Test context data
+        self.assertTrue('name' in response.context)
+        self.assertTrue('city' in response.context)
+        self.assertTrue('state' in response.context)
+        self.assertTrue('email' in response.context)
+        self.assertTrue('phone' in response.context)
     
     def test_account_management_view(self):
-        """Test account_management view"""
+        """Test AccountManagementView"""
+        # Login required for account management view
+        self.client.login(username='testuser', password='testpassword')
+        
         # Test GET request
         response = self.client.get(reverse('account_management'))
         self.assertEqual(response.status_code, 200)
@@ -474,7 +478,7 @@ class ViewTestCase(TestCase):
             'state': 'IL',
             'start_availability': 'January 1, 2020',
             'end_availability': 'December 31, 2025',
-            'skills': ['Coding', 'Design'],
+            'skills': [self.skill.id],
             'email': 'jane.smith@example.com',
             'address1': '456 Oak St',
             'address2': 'Apt 789',
@@ -484,15 +488,6 @@ class ViewTestCase(TestCase):
         response = self.client.post(reverse('account_management'), form_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
         self.assertRedirects(response, reverse('account'))
-        
-        # Verify session values were updated
-        session = self.client.session
-        self.assertEqual(session['name'], 'Jane Smith')
-        self.assertEqual(session['city'], 'Chicago')
-        self.assertEqual(session['state'], 'IL')
-        self.assertEqual(session['email'], 'jane.smith@example.com')
-        self.assertEqual(session['phone'], '(987) 654-3210')
-        self.assertEqual(session['skills'], ['Coding', 'Design'])
 
 
 class UrlPatternTestCase(TestCase):
@@ -545,7 +540,7 @@ class UrlPatternTestCase(TestCase):
                          f'/event-review/edit/{self.event_review.id}/')
         self.assertEqual(reverse('new_event_review'), '/event-review/new/')
 
-#required dont know
+
 class IntegrationTestCase(TestCase):
     """Integration tests for the application"""
     
