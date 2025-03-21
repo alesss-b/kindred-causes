@@ -33,19 +33,11 @@ class Event(Base):
     location = models.CharField(max_length=254,null=False, blank=False, verbose_name="Location", help_text="The location of the event.")
     urgency = models.IntegerField(null=False, blank=False, default=EventUrgency.MEDIUM, choices=EventUrgency.choices, verbose_name="Urgency", help_text="The urgency of the event.")
     date = models.DateTimeField(null=True, blank=True, verbose_name="Date", help_text="The date and time of the Event.")
-    skills = models.ManyToManyField(Skill, blank=True)
+    required_skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
         return "{}: {}".format(self.name, self.description)
     
-
-# class ApplicationUser(User):
-#     """ Application User to store profile information
-#     """
-#     #TODO: Implement
-#     events = models.ManyToManyField(Event)
-
-
 
 class Task(Base):
     """ A Task to be performed by Volunteers at an Event.
@@ -98,7 +90,7 @@ class EventReview(Review):
     def __str__(self):
         return self.event.name + " : " + str(self.rating)
     
-class UserProfile(Base):
+class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     name = models.CharField(max_length=100, default="John Doe")
     address1 = models.CharField(max_length=255, default="123 Main St")
@@ -125,7 +117,7 @@ class UserProfile(Base):
     )
     zipcode = models.CharField(max_length=10, default="11223")
     email = models.EmailField(max_length=255, default="john.doe@example.com")  
-    phone = models.CharField(max_length=15, blank=True, null=True) 
+    phone = models.CharField(max_length=15, default="1234567890") 
     preferences = models.TextField(blank=True, null=True)
     start_availability = models.DateField(blank=True, null=True)
     end_availability = models.DateField(blank=True, null=True)
