@@ -24,7 +24,11 @@
           <th>{{event.name}}</th>
           <th>{{event.description}}</th>
           <th>{{event.location}}</th>
-          <th>TODO SKILLS</th>
+          <th>
+            {% for skill in event.skills.all %}
+               {{ skill.name }}
+            {% endfor %}
+          </th>
           <th>{{event.date}}</th>
           <th>{{event.urgency}}</th>
         </tr>
