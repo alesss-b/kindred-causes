@@ -1,153 +1,39 @@
 {% extends 'table.html' %}
 
 {% block title %}Browse Events{% endblock title %}
-
+{% block table_title %}Broswe Events{% endblock table_title %}
 {% block table_content %}
 
-<div class="overflow-x-auto">
+<div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
   <table class="table">
     <!-- head -->
     <thead>
-      <tr class="bg-primary">
+      <tr>
         <th>Event Name</th>
         <th>Description</th>
         <th>Location</th>
         <th>Skills Required</th>
         <th>Date</th>
         <th>Urgency Level</th>
-        <th>(user only)</th>
-        <th>(Event Admin only)</th>
       </tr>
     </thead>
     <tbody>
       <!-- row 1 -->
-      <tr>
-        <td>Event 1</td>
-        <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur interdum nisi, in pretium dolor pellentesque eu. Nullam pulvinar massa sapien, a tristique odio suscipit vel. Curabitur id dui id sem auctor efficitur quis ut sapien. Nullam sed ex blandit, finibus leo at, imperdiet lectus. Ut sollicitudin nisl nibh, et. </td>
-        <td>The Church</td>
-        <td>Gardening, Physical Labor</td>
-        <td>3/12/25</td>
-        <td>High</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit" > Manage</a></td>
-      </tr>
-      <!-- row 2 -->
-      <tr>
-        <td>Event 2</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>Downtown</td>
-        <td>Physical Labor</td>
-        <td>3/12/25</td>
-        <td>Medium</td>
-        <td><a role="button" class="btn btn-secondary" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-accent" type="submit" > Manage</a></td>
-      </tr>
-      <!-- row 3 -->
-      <tr>
-        <td>Event 3</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 4</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 5</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 6</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 7</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 8</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 9</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 10</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 11</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
-      <tr>
-        <td>Event 12</td>
-        <td>This is the event field, where we write our information about the events that people can see</td>
-        <td>The School</td>
-        <td>None</td>
-        <td>3/18/25</td>
-        <td>Low</td>
-        <td><a role="button" class="btn btn-accent" type="submit" href="{% url 'matching_form' %}"> Sign Up</a></td>
-        <td><a role="button" class="btn btn-secondary" type="submit"> Manage</a></td>
-      </tr>
+      {% for event in events %}
+        <tr class="hover:bg-base-300">
+          <th>{{event.name}}</th>
+          <th>{{event.description}}</th>
+          <th>{{event.location}}</th>
+          <th>TODO SKILLS</th>
+          <th>{{event.date}}</th>
+          <th>{{event.urgency}}</th>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
 
-<a role="button" class="btn btn-primary" type="submit" href="{% url 'event_management' %}"> Create a Event (admin only)</a>
+<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event (admin only)</a>
 
 
 {% endblock table_content%}

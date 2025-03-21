@@ -38,7 +38,7 @@
                     <li>
                         <form action="{% url 'logout' %}" method="post">
                             {% csrf_token %}
-                            <button type="submit">Logout</button>
+                            <button type="submit" class="hover: cursor-pointer">Logout</button>
                         </form>
                     </li>
                 </ul>

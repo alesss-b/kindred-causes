@@ -93,7 +93,7 @@ def event_browser(request: HttpRequest) -> HttpResponse:
     :param HttpRequest reqest: The request from the client's browser.
     :return HttpReponse: The response to the client.
     """
-    context: dict = {'test_key': 'test_value'}
+    context: dict = {'events': Event.objects.all}
     return render(request, 'event_browser.html', context)
 
 
