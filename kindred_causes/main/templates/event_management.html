@@ -31,8 +31,15 @@
 </fieldset>
 
 <div class="flex flex-row gap-2 w-full">
-    <fieldset class="fieldset w-1/2">
-        {{form.required_skills}}
+    
+    <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Skills</legend>
+        <details class="dropdown w-full">
+            <summary class="select">Select Skills</summary>
+            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                {{form.required_skills}}
+            </ul>
+        </details>
     </fieldset>
 
     <fieldset class="fieldset w-1/2">

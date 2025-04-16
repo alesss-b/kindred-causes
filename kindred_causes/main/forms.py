@@ -76,16 +76,12 @@ class EventManagementForm(forms.ModelForm):
             }
         )
     )
-
-    required_skills = forms.ModelChoiceField(
+    
+    required_skills = forms.ModelMultipleChoiceField(
         queryset=Skill.objects.all(),
-        label="Skills",
-        empty_label="Select required skills",
-        widget=TailwindSelect(
-            attrs={
-                "class": "fieldset w-1/2",
-            }
-        )
+        label="Required Skills",
+        widget=forms.CheckboxSelectMultiple
+
     )
     
     date = forms.CharField(

@@ -24,7 +24,15 @@
           <th>{{event.name}}</th>
           <th>{{event.description}}</th>
           <th>{{event.location}}</th>
-          <th>TODO SKILLS</th>
+          <th>
+            <ul class="list-disc list-inside">
+              {% for skill in event.required_skills.all %}
+                <li>{{ skill.name }}</li>
+              {% empty %}
+                <li>None</li>
+              {% endfor %}
+            </ul>
+          </th>
           <th>{{event.date}}</th>
           <th>{{event.urgency}}</th>
         </tr>
@@ -33,7 +41,9 @@
   </table>
 </div>
 
-<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event (admin only)</a>
 
+{% if user.is_staff %}
+<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event (admin only)</a>
+{% endif %}
 
 {% endblock table_content%}
