@@ -93,7 +93,18 @@ def event_browser(request: HttpRequest) -> HttpResponse:
     :param HttpRequest reqest: The request from the client's browser.
     :return HttpReponse: The response to the client.
     """
-    context: dict = {'events': Event.objects.all}
+    sort = request.GET.get('sort', 'date')
+    allowed_sorts = ['name', '-name', 'date', '-date', 'urgency', '-urgency']
+
+    if sort not in allowed_sorts:
+        sort = 'date'
+
+    events = Event.objects.all().order_by(sort)
+    context = {
+        'events': events,
+        'current_sort': sort
+    }
+
     return render(request, 'event_browser.html', context)
 
 
