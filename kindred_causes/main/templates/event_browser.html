@@ -33,6 +33,9 @@
         {% if user.is_staff %}
         <th></th>
         {% endif %}
+        {% if not user.is_staff %}
+        <th></th>
+        {% endif %}
 
       </tr>
     </thead>
@@ -62,6 +65,15 @@
               </a>
             </td> 
           {% endif %}
+          {% if not user.is_staff %}
+          <td>
+            <a role="button" class="btn btn-primary" type="submit"
+              href="{% url 'edit_event_management' event.pk %}">
+              Sign Up to Event (in progress)
+            </a>
+          </td> 
+          {% endif %}
+
         </tr>
       {% endfor %}
     </tbody>

@@ -1,0 +1,41 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Skill Management{% endblock page_title %}
+{% block form_title %}
+   {% if view_type == 'update' %}
+      Edit Skills
+   {% elif view_type == 'create' %}
+      New Skills
+   {% endif %}
+{% endblock form_title %}
+
+{% block form_action %}
+{% if view_type == 'update' %}
+        {% url 'edit_skill_management' form.instance.pk %}
+    {% elif view_type == 'create' %}
+        {% url 'new_skill_management' %}
+    {% endif %}
+{% endblock form_action %}
+
+{% block form_content %}
+
+<fieldset class="fieldset w-full">
+   {{form.name}}
+</fieldset>
+
+<fieldset class="fieldset w-full">
+   {{form.description}}
+</fieldset>
+
+{% endblock form_content%}
+
+{% block form_buttons%}
+<button type="reset" onclick="history.back()" class="btn btn-soft btn-error">Cancel</button>
+<button type="submit" class="btn btn-soft btn-success">
+   {% if view_type == 'update' %}
+      Save Changes
+   {% elif view_type == 'create' %}
+      Create Skill
+   {% endif %}
+</button>
+{% endblock form_buttons%}

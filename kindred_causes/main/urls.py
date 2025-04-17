@@ -21,9 +21,12 @@ urlpatterns = [
     path('event-management/new/', views.EventManagementCreateView.as_view(), name='new_event_management'),
     path('event-management/edit/<int:pk>/', views.EventManagementUpdateView.as_view(), name='edit_event_management'),
         
-
-
     path('account_management/', views.AccountManagementView.as_view(), name='account_management'),    
     path('event-review/edit/<int:pk>/', views.EventReviewUpdateView.as_view(), name='edit_event_review'),
     path('event-review/new/', views.EventReviewCreateView.as_view(), name='new_event_review'),
+
+    path('skill-management/', views.SkillManagementCreateView.as_view(), name="new_skill_management"),
+    path('skill-management/edit/<int:pk>/', views.SkillManagementUpdateView.as_view(), name='edit_skill_management'),
+    path('browse_skills/', views.skill_browser, name='skill_browser'),
+    
 ]

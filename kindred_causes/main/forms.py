@@ -83,17 +83,6 @@ class EventManagementForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple
 
     )
-    
-    # date = forms.CharField(
-    #     widget=TailwindInput(
-    #         attrs={
-    #             'type': "datetime-local",
-    #             'class': "input w-full",
-    #             'required': True
-
-    #         }
-    #     )
-    # )
 
     date = forms.DateTimeField(
         input_formats=['%Y-%m-%dT%H:%M'],  # Match the datetime-local format
@@ -104,4 +93,30 @@ class EventManagementForm(forms.ModelForm):
                 'required': True,
             }
         )
+    )
+
+class SkillManagementForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name', 'description']
+
+    name = forms.CharField(
+        widget=TailwindInput(
+            attrs={
+            "title": "Enter Name",
+            "placeholder": "Enter Skill Name",
+            "type": "text",
+            "class": "input w-full",
+            "maxLength": "100",
+            "required": True,
+        })
+    )
+
+    description = forms.CharField(
+        widget=TailwindTextarea(
+            attrs={
+            "placeholder": "Enter Skill Description",
+            "class": "textarea h-24 text-wrap w-full",
+            "required": True,
+        })
     )
