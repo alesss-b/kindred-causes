@@ -20,7 +20,9 @@ urlpatterns = [
 
     path('event-management/new/', views.EventManagementCreateView.as_view(), name='new_event_management'),
     path('event-management/edit/<int:pk>/', views.EventManagementUpdateView.as_view(), name='edit_event_management'),
-    
+        
+
+
     path('account_management/', views.AccountManagementView.as_view(), name='account_management'),    
     path('event-review/edit/<int:pk>/', views.EventReviewUpdateView.as_view(), name='edit_event_review'),
     path('event-review/new/', views.EventReviewCreateView.as_view(), name='new_event_review'),

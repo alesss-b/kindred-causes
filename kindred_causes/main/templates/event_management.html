@@ -11,10 +11,10 @@
 
 {% block form_action %}
 {% if view_type == 'update' %}
-      {% url 'edit_event_management' %}
-   {% elif view_type == 'create' %}
-      {% url 'new_event_management' %}
-   {% endif %}
+        {% url 'edit_event_management' form.instance.pk %}
+    {% elif view_type == 'create' %}
+        {% url 'new_event_management' %}
+    {% endif %}
 {% endblock form_action %}
 
 {% block form_content %}

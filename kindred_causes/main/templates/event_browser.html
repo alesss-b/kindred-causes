@@ -15,6 +15,10 @@
         <th>Skills Required</th>
         <th>Date</th>
         <th>Urgency Level</th>
+        {% if user.is_staff %}
+        <th>Update Event</th>
+        {% endif %}
+
       </tr>
     </thead>
     <tbody>
@@ -34,7 +38,15 @@
             </ul>
           </th>
           <th>{{event.date}}</th>
-          <th>{{event.urgency}}</th>
+          <th>{{event.get_urgency_display}}</th>
+          {% if user.is_staff %}
+            <th>
+              <a role="button" class="btn btn-primary" type="submit"
+                href="{% url 'edit_event_management' event.pk %}">
+                Update Event
+              </a>
+            </th> 
+          {% endif %}
         </tr>
       {% endfor %}
     </tbody>
@@ -43,7 +55,7 @@
 
 
 {% if user.is_staff %}
-<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event (admin only)</a>
+<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event</a>
 {% endif %}
 
 {% endblock table_content%}
