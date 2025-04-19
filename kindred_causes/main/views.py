@@ -3,7 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
 from .models import EventReview, Event, UserProfile, Skill
-from .forms import EventReviewForm, EventManagementForm
+from .forms import EventReviewForm, EventManagementForm, SkillManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 import re
@@ -86,6 +86,24 @@ class EventManagementUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('event_browser').url
 
+class SkillManagementCreateView(CreateView):
+        model = Skill
+        form_class = SkillManagementForm
+        template_name = 'skill_management.html'
+        extra_context = {'view_type': 'create'}
+
+        def get_success_url(self):
+            return redirect('skill_browser').url #idk where to redirect yet will change later
+
+
+class SkillManagementUpdateView(UpdateView):
+    model = Skill
+    form_class = SkillManagementForm
+    template_name = 'skill_management.html'
+    extra_context = {'view_type': 'update'}
+
+    def get_success_url(self):
+        return redirect('skill_browser').url #idk where to redirect yet will change later
 
 def event_browser(request: HttpRequest) -> HttpResponse:
     """ Event browser page.
@@ -93,8 +111,29 @@ def event_browser(request: HttpRequest) -> HttpResponse:
     :param HttpRequest reqest: The request from the client's browser.
     :return HttpReponse: The response to the client.
     """
-    context: dict = {'events': Event.objects.all}
+    sort = request.GET.get('sort', 'date')
+    allowed_sorts = ['name', '-name', 'date', '-date', 'urgency', '-urgency']
+
+    if sort not in allowed_sorts:
+        sort = 'date'
+
+    events = Event.objects.all().order_by(sort)
+    context = {
+        'events': events,
+        'current_sort': sort
+    }
+
     return render(request, 'event_browser.html', context)
+
+def skill_browser(request: HttpRequest) -> HttpResponse:
+    """ Skill browser page.
+
+    :param HttpRequest request: The request from the client's browser.
+    :return HttpResponse: The response to the client.
+    """
+    skills = Skill.objects.all()  # fetch all Skill objects
+    context: dict = {'skills': skills}  # pass them to the template
+    return render(request, 'skill_browser.html', context)
 
 
 def event_preview(request: HttpRequest) -> HttpResponse:

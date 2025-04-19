@@ -1,0 +1,44 @@
+{% extends 'table.html' %}
+
+{% block title %}Browse Skills{% endblock title %}
+{% block table_title %}Broswe Skills{% endblock table_title %}
+{% block table_content %}
+
+<div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>Event Name</th>
+        <th>Description</th>
+        {% if user.is_staff %}
+        <th></th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      {% for skill in skills %}
+        <tr class="hover:bg-base-300">
+          <td>{{skill.name}}</td>
+          <td>{{skill.description}}</td>
+          {% if user.is_staff %}
+          <td>
+            <a role="button" class="btn btn-primary" type="submit"
+              href="{% url 'edit_skill_management' skill.pk %}">
+              Update Skill
+            </a>
+          </td> 
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% if user.is_staff %}
+<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_skill_management' %}"> Create a Skill</a>
+{% endif %}
+
+{% endblock table_content%}

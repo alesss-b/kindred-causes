@@ -11,10 +11,10 @@
 
 {% block form_action %}
 {% if view_type == 'update' %}
-      {% url 'edit_event_management' %}
-   {% elif view_type == 'create' %}
-      {% url 'new_event_management' %}
-   {% endif %}
+        {% url 'edit_event_management' form.instance.pk %}
+    {% elif view_type == 'create' %}
+        {% url 'new_event_management' %}
+    {% endif %}
 {% endblock form_action %}
 
 {% block form_content %}
@@ -31,8 +31,15 @@
 </fieldset>
 
 <div class="flex flex-row gap-2 w-full">
-    <fieldset class="fieldset w-1/2">
-        {{form.required_skills}}
+    
+    <fieldset class="fieldset w-full">
+        <legend class="fieldset-legend">Skills</legend>
+        <details class="dropdown w-full">
+            <summary class="select">Select Skills</summary>
+            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                {{form.required_skills}}
+            </ul>
+        </details>
     </fieldset>
 
     <fieldset class="fieldset w-1/2">
@@ -48,12 +55,12 @@
 {% endblock form_content%}
 
 {% block form_buttons %}
-<button type="reset" onclick="history.back()" class="btn btn-soft btn-error">Cancel</button>
+<a href="{% url 'event_browser' %}" class="btn btn-soft btn-success">Cancel</a>
 <button type="submit" class="btn btn-soft btn-success">
-    {% if view_type == 'update' %}
+    {% if view_type == 'update' %} 
       Save Changes
    {% elif view_type == 'create' %}
       Create Event
    {% endif %}
-</a>
+</button>
 {% endblock form_buttons %}

@@ -76,25 +76,47 @@ class EventManagementForm(forms.ModelForm):
             }
         )
     )
-
-    required_skills = forms.ModelChoiceField(
+    
+    required_skills = forms.ModelMultipleChoiceField(
         queryset=Skill.objects.all(),
-        label="Skills",
-        empty_label="Select required skills",
-        widget=TailwindSelect(
+        label="Required Skills",
+        widget=forms.CheckboxSelectMultiple
+
+    )
+
+    date = forms.DateTimeField(
+        input_formats=['%Y-%m-%dT%H:%M'],  # Match the datetime-local format
+        widget=TailwindInput(
             attrs={
-                "class": "fieldset w-1/2",
+                'type': 'datetime-local',
+                'class': 'input w-full',
+                'required': True,
             }
         )
     )
-    
-    date = forms.CharField(
+
+class SkillManagementForm(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name', 'description']
+
+    name = forms.CharField(
         widget=TailwindInput(
             attrs={
-                'type': "datetime-local",
-                'class': "input w-full",
-                'required': True
+            "title": "Enter Name",
+            "placeholder": "Enter Skill Name",
+            "type": "text",
+            "class": "input w-full",
+            "maxLength": "100",
+            "required": True,
+        })
+    )
 
-            }
-        )
+    description = forms.CharField(
+        widget=TailwindTextarea(
+            attrs={
+            "placeholder": "Enter Skill Description",
+            "class": "textarea h-24 text-wrap w-full",
+            "required": True,
+        })
     )

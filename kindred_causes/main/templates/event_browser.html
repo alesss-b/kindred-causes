@@ -9,12 +9,34 @@
     <!-- head -->
     <thead>
       <tr>
-        <th>Event Name</th>
+        <th>
+          <a href="?sort={% if current_sort == 'name' %}-name{% else %}name{% endif %}">
+            Event Name
+            {% if current_sort == 'name' %}▲{% elif current_sort == '-name' %}▼{% endif %}
+          </a>
+        </th>
         <th>Description</th>
         <th>Location</th>
         <th>Skills Required</th>
-        <th>Date</th>
-        <th>Urgency Level</th>
+        <th>
+          <a href="?sort={% if current_sort == 'date' %}-date{% else %}date{% endif %}">
+            Date
+            {% if current_sort == 'date' %}▲{% elif current_sort == '-date' %}▼{% endif %}
+          </a>
+        </th>
+        <th>
+          <a href="?sort={% if current_sort == 'urgency' %}-urgency{% else %}urgency{% endif %}">
+            Urgency
+            {% if current_sort == 'urgency' %}▲{% elif current_sort == '-urgency' %}▼{% endif %}
+          </a>
+        </th>
+        {% if user.is_staff %}
+        <th></th>
+        {% endif %}
+        {% if not user.is_staff %}
+        <th></th>
+        {% endif %}
+
       </tr>
     </thead>
     <tbody>
@@ -25,16 +47,33 @@
           <td>{{event.description}}</td>
           <td>{{event.location}}</td>
           <td>
-            {% for skill in event.skills.all %}
-            {% if forloop.last %}
-                {{ skill.name }}
-            {% else %}
-                {{ skill.name }}, 
-            {% endif %}
-            {% endfor %}
+            <ul class="list-disc list-inside">
+              {% for skill in event.required_skills.all %}
+                <li>{{ skill.name }}</li>
+              {% empty %}
+                <li>None</li>
+              {% endfor %}
+            </ul>
           </td>
           <td>{{event.date}}</td>
-          <td>{{event.urgency}}</td>
+          <td>{{event.get_urgency_display}}</td>
+          {% if user.is_staff %}
+            <td>
+              <a role="button" class="btn btn-primary" type="submit"
+                href="{% url 'edit_event_management' event.pk %}">
+                Update Event
+              </a>
+            </td> 
+          {% endif %}
+          {% if not user.is_staff %}
+          <td>
+            <a role="button" class="btn btn-primary" type="submit"
+              href="{% url 'edit_event_management' event.pk %}">
+              Sign Up to Event (in progress)
+            </a>
+          </td> 
+          {% endif %}
+
         </tr>
       {% endfor %}
     </tbody>
@@ -45,6 +84,8 @@
 </div>
 
 
-
+{% if user.is_staff %}
+<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create a Event</a>
+{% endif %}
 
 {% endblock table_content%}
