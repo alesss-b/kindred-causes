@@ -16,7 +16,7 @@ urlpatterns = [
     path('matching_form/', views.matching_form, name='matching_form'),
 
     path('', views.LandingView.as_view(), name='landing'),
-    # path('home/', views.HomeView.as_view(), name='home'),
+    path('home/', views.HomeView.as_view(), name='home'),
 
     path('event-management/new/', views.EventManagementCreateView.as_view(), name='new_event_management'),
     path('event-management/edit/<int:pk>/', views.EventManagementUpdateView.as_view(), name='edit_event_management'),
