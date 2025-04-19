@@ -8,7 +8,14 @@
         <li><a href="{% url 'register' %}">Sign Up</a></li>
         <li><a href="{% url 'login' %}">Login</a></li>
         {% else %}
-            {% comment %} <li><a href="{% url 'home' %}">Home</a></li> {% endcomment %}
+            {% for group in user.groups.all %}
+                {% if group.name == "Volunteer" %}
+                    <li><a href="{% url 'home' %}">Volunteer Home</a></li>
+                {% elif group.name == "Admin" %}
+                    <li><a href="{% url 'home' %}">Admin Home</a></li>
+                    <li><a href="{% url 'new_event_management' %}">Create Event</a></li>
+                {% endif %}
+            {% endfor %}
             <li><a href="{% url 'event_browser' %}">Browse Events</a></li>
             <li><a href="{% url 'event_preview' %}">Preview Event</a></li>
             <li><a href="{% url 'volunteer_history' %}">Volunteer History</a></li>
