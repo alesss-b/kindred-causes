@@ -30,9 +30,11 @@
             {% if current_sort == 'urgency' %}▲{% elif current_sort == '-urgency' %}▼{% endif %}
           </a>
         </th>
-        {% if user.is_staff %}
-        <th></th>
-        {% endif %}
+        {% for group in user.groups.all %}
+          {% if group.name == "Admin" %}
+            <th></th>
+          {% endif %}
+        {% endfor %}
         <th></th>
       </tr>
     </thead>
@@ -54,33 +56,33 @@
           </td> {% endcomment %}
           <td>{{event.date}}</td>
           <td>{{event.get_urgency_display}}</td>
-          {% if user.is_staff %}
+          {% for group in user.groups.all %}
+            {% if group.name == "Admin" %}
             <td>
               <a role="button" class="btn btn-primary" type="submit"
                 href="{% url 'edit_event_management' event.pk %}">
                 Update Event
               </a>
-            </td> 
-          {% endif %}
+            </td>
+            {% endif %}
+          {% endfor %}
           <td>
             <a role="button" class="btn btn-primary" type="submit"
               href="{% url 'view_event' event.pk %}">
               View Event
             </a>
           </td> 
-          
         </tr>
       {% endfor %}
     </tbody>
   </table>
-  <div class="w-full flex flex-row justify-around p-2"> 
-    <a role="button" class="btn btn-primary w-fit" type="submit" href="{% url 'new_event_management' %}">Create a Event</a>
-  </div>
 </div>
 
 
-{% if user.is_staff %}
-<a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create an Event</a>
-{% endif %}
+{% for group in user.groups.all %}
+  {% if group.name == "Admin" %}
+    <a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create an Event</a>
+  {% endif %}
+{% endfor %}
 
 {% endblock table_content%}

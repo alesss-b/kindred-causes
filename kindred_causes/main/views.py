@@ -13,7 +13,6 @@ class HomeView(LoginRequiredMixin, TemplateView):
     """ Home View
     Redirects unauthenticated users to landing page.
     """
-    
     template_name = 'home.html'
 
     login_url = '/'

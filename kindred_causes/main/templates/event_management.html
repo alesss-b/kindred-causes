@@ -20,39 +20,61 @@
 {% endblock form_action %}
 
 {% block form_content %}
-<fieldset class="fieldset w-full">
-    {{form.name}}
-</fieldset>
-
-<fieldset class="fieldset w-full">
-    {{form.description}}
-</fieldset>
-
-<fieldset class="fieldset w-full">
-    {{form.location}}
-</fieldset>
-
-<div class="flex flex-row gap-2 w-full">
-    
-    {% comment %} <fieldset class="fieldset w-full">
-        <legend class="fieldset-legend">Skills</legend>
-        <details class="dropdown w-full">
-            <summary class="select">Select Skills</summary>
-            <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                {{form.required_skills}}
-            </ul>
-        </details>
-    </fieldset> {% endcomment %}
-
-    <fieldset class="fieldset w-1/2">
-        {{form.urgency}}
+{% if view_type == 'view' %}
+    <div class="flex flex-row gap-2 w-full">
+        <h2 class="font-bold"> Name: </h2>
+        {{form.instance.name}}
+    </div>
+    <div class="flex flex-row gap-2 w-full">
+        <h2 class="font-bold"> Description: </h2>
+        {{form.instance.description}}
+    </div>
+    <div class="flex flex-row gap-2 w-full">
+        <h2 class="font-bold"> Location: </h2>
+        {{form.instance.location}}
+    </div>
+    <div class="flex flex-row gap-2 w-full">
+        <h2 class="font-bold"> Urgency: </h2>
+        {{form.instance.get_urgency_display}}
+    </div>
+    <div class="flex flex-row gap-2 w-full">
+        <h2 class="font-bold"> Date: </h2>
+        {{form.instance.date}}
+    </div>
+{% else %}
+    <fieldset class="fieldset w-full">
+        {{form.name}}
     </fieldset>
-</div>
 
-<fieldset class="fieldset w-full">
-    {{form.date}}
-</fieldset>
+    <fieldset class="fieldset w-full">
+        {{form.description}}
+    </fieldset>
 
+    <fieldset class="fieldset w-full">
+        {{form.location}}
+    </fieldset>
+
+    <div class="flex flex-row gap-2 w-full">
+        
+        {% comment %} <fieldset class="fieldset w-full">
+            <legend class="fieldset-legend">Skills</legend>
+            <details class="dropdown w-full">
+                <summary class="select">Select Skills</summary>
+                <ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    {{form.required_skills}}
+                </ul>
+            </details>
+        </fieldset> {% endcomment %}
+
+        <fieldset class="fieldset w-1/2">
+            {{form.urgency}}
+        </fieldset>
+    </div>
+
+    <fieldset class="fieldset w-full">
+        {{form.date}}
+    </fieldset>
+{% endif %}
 
 {% endblock form_content%}
 
