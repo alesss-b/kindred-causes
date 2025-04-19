@@ -33,7 +33,6 @@ class Event(Base):
     location = models.CharField(max_length=254,null=False, blank=False, verbose_name="Location", help_text="The location of the event.")
     urgency = models.IntegerField(null=False, blank=False, default=EventUrgency.MEDIUM, choices=EventUrgency.choices, verbose_name="Urgency", help_text="The urgency of the event.")
     date = models.DateTimeField(null=True, blank=True, verbose_name="Date", help_text="The date and time of the Event.")
-    skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
         return "{}: {}".format(self.name, self.description)
@@ -47,6 +46,7 @@ class Task(Base):
     description = models.CharField(max_length=254, null=False, blank=False, verbose_name="Description", help_text="The description of the task.")
     capacity = models.IntegerField(null=False, blank=False, default=-1, verbose_name="Capacity", help_text="The maximum number of Volunteers the Task can hold.")
     location = models.CharField(max_length=254,null=False, blank=True, verbose_name="Location", help_text="The location of the task.")
+    skills = models.ManyToManyField(Skill, blank=True)
 
     def __str__(self):
         return self.name
