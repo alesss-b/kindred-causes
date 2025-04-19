@@ -17,7 +17,7 @@
         </th>
         <th>Description</th>
         <th>Location</th>
-        <th>Skills Required</th>
+        {% comment %} <th>Skills Required</th> {% endcomment %}
         <th>
           <a href="?sort={% if current_sort == 'date' %}-date{% else %}date{% endif %}">
             Date
@@ -33,10 +33,7 @@
         {% if user.is_staff %}
         <th></th>
         {% endif %}
-        {% if not user.is_staff %}
         <th></th>
-        {% endif %}
-
       </tr>
     </thead>
     <tbody>
@@ -46,7 +43,7 @@
           <td>{{event.name}}</td>
           <td>{{event.description}}</td>
           <td>{{event.location}}</td>
-          <td>
+          {% comment %} <td>
             <ul class="list-disc list-inside">
               {% for skill in event.required_skills.all %}
                 <li>{{ skill.name }}</li>
@@ -54,7 +51,7 @@
                 <li>None</li>
               {% endfor %}
             </ul>
-          </td>
+          </td> {% endcomment %}
           <td>{{event.date}}</td>
           <td>{{event.get_urgency_display}}</td>
           {% if user.is_staff %}
@@ -65,15 +62,13 @@
               </a>
             </td> 
           {% endif %}
-          {% if not user.is_staff %}
           <td>
             <a role="button" class="btn btn-primary" type="submit"
-              href="{% url 'edit_event_management' event.pk %}">
-              Sign Up to Event (in progress)
+              href="{% url 'view_event' event.pk %}">
+              View Event
             </a>
           </td> 
-          {% endif %}
-
+          
         </tr>
       {% endfor %}
     </tbody>

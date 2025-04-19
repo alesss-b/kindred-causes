@@ -3,9 +3,10 @@ from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
 from .models import EventReview, Event, UserProfile, Skill
-from .forms import EventReviewForm, EventManagementForm, SkillManagementForm
+from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
+from django.contrib.auth.models import Group
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -84,6 +85,16 @@ class EventManagementUpdateView(UpdateView):
 
     def get_success_url(self):
         return redirect('home')
+
+class EventDetailView(DetailView):
+    model = Event
+    template_name = 'event_management.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ReadOnlyEventManagementForm(instance=self.object)
+        context['view_type'] = 'view'
+        return context
 
 class SkillManagementCreateView(CreateView):
         model = Skill

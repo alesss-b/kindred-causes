@@ -95,6 +95,12 @@ class EventManagementForm(forms.ModelForm):
         )
     )
 
+class ReadOnlyEventManagementForm(EventManagementForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.disabled = True
+
 class SkillManagementForm(forms.ModelForm):
     class Meta:
         model = Skill
