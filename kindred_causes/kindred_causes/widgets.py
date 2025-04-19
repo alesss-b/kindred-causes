@@ -186,13 +186,15 @@ class TailwindPassword(PasswordInput):
         }
         if attrs:
             default_attrs.update(attrs)
+            self.verbose_name = attrs.get("verbose_name", None)
         super().__init__(attrs=default_attrs)
 
     def render(self, name, value, attrs=None, renderer=None):
         if attrs is None:
             attrs = {}
 
-        verbose_name = attrs.get("verbose_name", name.replace("_", " ").title())
+        verbose_name = self.verbose_name if self.verbose_name else name.replace("_", " ").title() 
+
         input_html = super().render(name, value, attrs, renderer)
         
         html = f'''

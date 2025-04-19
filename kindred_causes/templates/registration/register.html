@@ -1,0 +1,26 @@
+{% extends 'form.html' %}
+
+{% block title %}Register{% endblock title %}
+{% block form_title %}Register{% endblock form_title %}
+
+{% block form_content %}
+{{ form.email }}
+{{ form.username }}
+{{ form.first_name }}
+{{ form.last_name }}
+{{ form.password1 }}
+{{ form.password2 }}
+{% endblock form_content%}
+
+{% block form_buttons %}
+<button class=" btn w-full btn-neutral" type="submit">Register</button>
+{% endblock form_buttons %}
+
+{% block form_messages %}
+<div class="flex flex-col justify-around items-center">
+<p>
+    Already have an account?
+    <a class="link text-primary-content link-primary type=" submit" href="{% url 'login' %}"">Login</a>
+</p>
+</div>
+{% endblock form_messages %}
