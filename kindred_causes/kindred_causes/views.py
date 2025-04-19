@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy
+from django.contrib.auth.models import Group
 from django.views.generic.edit import FormView
 from django.contrib.auth import login
 from .forms import UserRegistrationForm
@@ -11,5 +12,9 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)  # Automatically log in the user
+
+        volunteer_group = Group.objects.get(name="Volunteer")
+        user.groups.add(volunteer_group)
+
+        login(self.request, user) 
         return super().form_valid(form)
