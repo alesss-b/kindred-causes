@@ -92,10 +92,10 @@ class EventReview(Review):
     
 class UserProfile(Base):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    name = models.CharField(max_length=100, default="John Doe")
-    address1 = models.CharField(max_length=255, default="123 Main St")
-    address2 = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=100, default="New York")
+    name = models.CharField(max_length=100)  
+    address1 = models.CharField(max_length=255) 
+    address2 = models.CharField(max_length=255, blank=True, null=True)  
+    city = models.CharField(max_length=100) 
     state = models.CharField(
         max_length=2,
         choices=[
@@ -111,17 +111,16 @@ class UserProfile(Base):
             ("TX", "Texas"), ("UT", "Utah"), ("VT", "Vermont"), ("VA", "Virginia"), ("WA", "Washington"),
             ("WV", "West Virginia"), ("WI", "Wisconsin"), ("WY", "Wyoming")
         ],
-        default="NY",
         verbose_name="State",
         help_text="Select your state of residence."
-    )
-    zipcode = models.CharField(max_length=10, default="11223")
-    email = models.EmailField(max_length=255, default="john.doe@example.com")  
+    )  
+    zipcode = models.CharField(max_length=10) 
+    email = models.EmailField(max_length=255)
     phone = models.CharField(max_length=15, blank=True, null=True) 
-    preferences = models.TextField(blank=True, null=True)
-    start_availability = models.DateField(blank=True, null=True)
-    end_availability = models.DateField(blank=True, null=True)
-    skills = models.ManyToManyField(Skill, blank=True)
+    preferences = models.TextField(blank=True, null=True) 
+    start_availability = models.DateField(blank=True, null=True) 
+    end_availability = models.DateField(blank=True, null=True) 
+    skills = models.ManyToManyField(Skill, blank=True) 
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
