@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "event_browser"
 LOGOUT_REDIRECT_URL = "login"
 
 WSGI_APPLICATION = 'kindred_causes.wsgi.application'

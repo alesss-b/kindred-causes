@@ -6,7 +6,6 @@ from .models import EventReview, Event, UserProfile, Skill
 from .forms import EventReviewForm, EventManagementForm, SkillManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
-import re
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -28,7 +27,7 @@ class LandingView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('event_browser')
         return super().dispatch(request, *args, **kwargs)
 
 # EventReview Model Forms:
@@ -48,7 +47,7 @@ class EventReviewCreateView(LoginRequiredMixin, CreateView):
     extra_context = {'view_type': 'create'}
 
     def get_success_url(self):
-        return redirect('home').url
+        return redirect('event_browser').url
         # return redirect('event_detail', pk=self.object.pk).url
 
 
@@ -63,7 +62,7 @@ class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
     extra_context={'view_type': 'update'}
 
     def get_success_url(self):
-        return redirect('home').url
+        return redirect('event_browser').url
         # return redirect('event_detail', pk=self.object.pk).url
 
 

@@ -8,7 +8,7 @@
         <li><a href="{% url 'user_registration' %}">Sign Up</a></li>
         <li><a href="{% url 'login' %}">Login</a></li>
         {% else %}
-            <li><a href="{% url 'home' %}">Home</a></li>
+            {% comment %} <li><a href="{% url 'home' %}">Home</a></li> {% endcomment %}
             <li><a href="{% url 'event_browser' %}">Browse Events</a></li>
             <li><a href="{% url 'event_preview' %}">Preview Event</a></li>
             <li><a href="{% url 'volunteer_history' %}">Volunteer History</a></li>
