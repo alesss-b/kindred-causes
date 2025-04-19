@@ -94,7 +94,7 @@ class UserProfile(Base):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     name = models.CharField(max_length=100)  
     address1 = models.CharField(max_length=255) 
-    address2 = models.CharField(max_length=255, blank=True, null=True)  
+    address2 = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=100) 
     state = models.CharField(
         max_length=2,
