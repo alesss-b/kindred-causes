@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
@@ -7,13 +7,28 @@ from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, Re
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib.auth.models import Group
+from django.contrib import messages
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
     """ Home View
     Redirects unauthenticated users to landing page.
     """
+    
     template_name = 'home.html'
+
+    def get_context_data(self,*args, **kwargs):
+        context = super(HomeView, self).get_context_data(*args,**kwargs)
+        if self.request.user.groups.filter(name='Volunteer').exists():
+            context['events'] = Event.objects.filter(tasks__contains=self.request.user)
+            context['events_fields'] = ["name","description","location","date","urgency"]
+            context['events_headers'] = ["Name","Description","Location","Date","Urgency"]
+        elif self.request.user.groups.filter(name='Admin').exists():
+            context['events'] = Event.objects.filter(admin=self.request.user)
+            context['events_fields'] = ["name","description","location","date","urgency"]
+            context['events_headers'] = ["Name","Description","Location","Date","Urgency"]
+        return context
+
 
     login_url = '/'
     def handle_no_permission(self):
@@ -51,6 +66,11 @@ class EventReviewCreateView(LoginRequiredMixin, CreateView):
         return redirect('home')
         # return redirect('event_detail', pk=self.object.pk).url
 
+    def form_invalid(self, form):
+        print("FORM INVALID")
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
+
 
 class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
     """ Event Review Update View
@@ -68,13 +88,19 @@ class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class EventManagementCreateView(CreateView):
-        model = Event
-        form_class = EventManagementForm
-        template_name = 'event_management.html'
-        extra_context = {'view_type': 'create'}
+    model = Event
+    form_class = EventManagementForm
+    template_name = 'event_management.html'
+    extra_context = {'view_type': 'create'}
 
-        def get_success_url(self):
-            return redirect('home')
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('home')
+
 
 
 class EventManagementUpdateView(UpdateView):

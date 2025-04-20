@@ -1,7 +1,9 @@
 from django import forms
+from django.contrib.auth.models import User
 from kindred_causes.widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
 from .models import EventReview, Event, Skill
 from .choices import EventUrgency
+
 
 class EventReviewForm(forms.ModelForm):
     class Meta:
@@ -33,7 +35,13 @@ class EventReviewForm(forms.ModelForm):
 class EventManagementForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ['name', 'description', 'location', 'urgency', 'date', 'required_skills']
+        fields = ['name', 'description', 'location', 'admin', 'urgency', 'date']
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['admin'].label_from_instance = lambda obj: obj.get_full_name()
+        if user is not None:
+            self.fields['admin'].initial = user
 
     name = forms.CharField(
         widget=TailwindInput(
@@ -66,6 +74,18 @@ class EventManagementForm(forms.ModelForm):
         })
     )
 
+    admin = forms.ModelChoiceField(
+        queryset=User.objects.filter(groups__name="Admin"),
+        label="Event Admin",
+        empty_label=None,
+        widget=TailwindSelect(
+            attrs={
+                "class": "fieldset-legend",
+                "placeholder": "Choose event admin",
+            }
+        )
+    )
+
     urgency = forms.ChoiceField(
         choices=EventUrgency.choices,
         label="Urgency",
@@ -75,13 +95,6 @@ class EventManagementForm(forms.ModelForm):
                 "class": "fieldset-legend",
             }
         )
-    )
-    
-    required_skills = forms.ModelMultipleChoiceField(
-        queryset=Skill.objects.all(),
-        label="Required Skills",
-        widget=forms.CheckboxSelectMultiple
-
     )
 
     date = forms.DateTimeField(

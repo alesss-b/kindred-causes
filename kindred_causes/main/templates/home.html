@@ -3,12 +3,23 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-<div>Home</div>
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-</form>
-
-<div>{{ user.first_name }}</div>
-  
+    <div class="bg-blue-600 grow grid grid-cols-3">
+        <div class="bg-green-500 col-span-1">
+            TEST
+        </div>
+        <div class="bg-red-500 col-span-2">
+            {% comment %} {% include "events_by_admin_table.html" with events=events %} {% endcomment %}
+            {% include "partials/table.html" with records=events fields=events_fields headers=events_headers table_title="My Events" view_page="view_event" %}
+            
+        </div>
+    </div>
+    
+    
+    {% for group in user.groups.all %}
+        {% if group.name == "Volunteer" %}
+            Volunteer Home
+        {% elif group.name == "Admin" %}
+            
+        {% endif %}
+    {% endfor %}
 {% endblock content %}
