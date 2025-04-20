@@ -12,6 +12,8 @@
         <!--Optional Profile picture src https://i1.sndcdn.com/artworks-x8zI2HVC2pnkK7F5-4xKLyA-t1080x1080.jpg -->
         <div class="flex flex-col items-center space-y-6">
           <img src="https://i1.sndcdn.com/artworks-x8zI2HVC2pnkK7F5-4xKLyA-t1080x1080.jpg" alt="Avatar" class="rounded-full w-60 h-60">
+          <legend class="fieldset-legend">Pick a file to Change profile photo</legend>
+          <input type="file" class="file-input file-input-neutral"/>
           <div class="flex flex-col space-y-4 w-full">
               <a href="/account_management" class="btn btn-primary w-2/3 mx-auto">Edit Profile</a>
               <a href="/volunteer_history" class="btn btn-accent w-2/3 mx-auto">Volunteer History</a>
@@ -23,7 +25,7 @@
         <div class="flex flex-col space-y-6">
             
             <!-- Stats -->
-            <div class="stats shadow w-full">
+            <div class="stats shadow w-full bg-base-100">
                 <div class="stat">
                     <div class="stat-title"># Of Users</div>
                     <div class="stat-value">31K</div>
@@ -59,7 +61,7 @@
                     </svg>
                 </div>
             </div>
-            <div class="collapse collapse-arrow bg-base-200">
+            <div class="collapse collapse-arrow bg-base-100">
                 <input type="radio" name="accordion-info" checked />
                 <div class="collapse-title text-xl font-medium">Public Information</div>
                 <div class="collapse-content">
@@ -73,7 +75,7 @@
                 </div>
             </div>
             
-            <div class="collapse collapse-arrow bg-base-200">
+            <div class="collapse collapse-arrow bg-base-100">
                 <input type="radio" name="accordion-info" />
                 <div class="collapse-title text-xl font-medium">Private Information</div>
                 <div class="collapse-content">
