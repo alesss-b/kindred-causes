@@ -20,7 +20,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self,*args, **kwargs):
         context = super(HomeView, self).get_context_data(*args,**kwargs)
         if self.request.user.groups.filter(name='Volunteer').exists():
-            context['events'] = Event.objects.filter(tasks__contains=self.request.user)
+            context['events'] = Event.objects.filter(admin=self.request.user)
         elif self.request.user.groups.filter(name='Admin').exists():
             context['events'] = Event.objects.filter(admin=self.request.user)
         context['events_fields'] = ["name","description","location","date","admin","urgency"]
