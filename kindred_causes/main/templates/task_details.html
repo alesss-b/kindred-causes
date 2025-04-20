@@ -1,0 +1,19 @@
+{% extends 'root.html' %}
+
+{% block page_title %}Event Details{% endblock page_title %}
+
+{% block content %}
+    <div class="bg-blue-600 grow grid grid-cols-3">
+        <div class="bg-green-500 col-span-1">
+            {{ object.name }}
+            {{ object.descriptiong }}
+            {{ object.capacity }}
+            {{ object.atendees.count }}
+            {{ object.location }}
+        </div>
+        <div class="bg-red-500 col-span-2">
+            {% comment %} {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Event Tasks" view_page="view_task" %} {% endcomment %}
+            
+        </div>
+    </div>
+{% endblock content %}

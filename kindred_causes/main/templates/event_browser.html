@@ -45,15 +45,6 @@
           <td>{{event.name}}</td>
           <td>{{event.description}}</td>
           <td>{{event.location}}</td>
-          {% comment %} <td>
-            <ul class="list-disc list-inside">
-              {% for skill in event.required_skills.all %}
-                <li>{{ skill.name }}</li>
-              {% empty %}
-                <li>None</li>
-              {% endfor %}
-            </ul>
-          </td> {% endcomment %}
           <td>{{event.date}}</td>
           <td>{{event.get_urgency_display}}</td>
           {% for group in user.groups.all %}
@@ -71,12 +62,5 @@
     </tbody>
   </table>
 </div>
-
-
-{% for group in user.groups.all %}
-  {% if group.name == "Admin" %}
-    <a role="button" class="btn btn-primary" type="submit" href="{% url 'new_event_management' %}"> Create an Event</a>
-  {% endif %}
-{% endfor %}
 
 {% endblock table_content%}

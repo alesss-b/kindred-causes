@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
-from .models import EventReview, Event, UserProfile, Skill
+from .models import EventReview, Event, Task, UserProfile, Skill
 from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
@@ -21,12 +21,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
         context = super(HomeView, self).get_context_data(*args,**kwargs)
         if self.request.user.groups.filter(name='Volunteer').exists():
             context['events'] = Event.objects.filter(tasks__contains=self.request.user)
-            context['events_fields'] = ["name","description","location","date","urgency"]
-            context['events_headers'] = ["Name","Description","Location","Date","Urgency"]
         elif self.request.user.groups.filter(name='Admin').exists():
             context['events'] = Event.objects.filter(admin=self.request.user)
-            context['events_fields'] = ["name","description","location","date","urgency"]
-            context['events_headers'] = ["Name","Description","Location","Date","Urgency"]
+        context['events_fields'] = ["name","description","location","date","admin","urgency"]
+        context['events_headers'] = ["Name","Description","Location","Date","Organizer", "Urgency"]
         return context
 
 
@@ -102,7 +100,6 @@ class EventManagementCreateView(CreateView):
         return reverse('home')
 
 
-
 class EventManagementUpdateView(UpdateView):
     model = Event
     form_class = EventManagementForm
@@ -112,15 +109,30 @@ class EventManagementUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('home')
 
+
 class EventDetailView(DetailView):
     model = Event
-    template_name = 'event_management.html'
+    template_name = 'event_details.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = ReadOnlyEventManagementForm(instance=self.object)
-        context['view_type'] = 'view'
+        context['tasks'] = Task.objects.filter(event=self.get_object())
+        context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
+        context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
+    
+
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = 'task_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['skills'] = self.get_object().skills
+        context['skills_fields'] = ["name","description"]
+        context['skills_headers'] = ["Name","Description"]
+        return context
+
 
 class SkillManagementCreateView(CreateView):
         model = Skill
