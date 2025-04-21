@@ -133,6 +133,23 @@ class TaskDetailView(DetailView):
         context['skills_headers'] = ["Name","Description"]
         return context
 
+class TaskHistoryView(TemplateView):
+    
+    template_name = 'task_history.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        # All tasks the user attended
+        user_tasks = user.tasks.select_related('event').all()
+
+        # Corresponding events (deduplicated)
+        attended_events = Event.objects.filter(tasks__attendees=user).distinct()
+
+        context['user_tasks'] = user_tasks
+        context['attended_events'] = attended_events
+        return context
 
 class SkillManagementCreateView(CreateView):
         model = Skill
