@@ -128,10 +128,8 @@ class TaskCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if 'event_id' in self.kwargs:
-            print("In context data")
             context['event'] = Event.objects.get(id=self.kwargs['event_id'])
-        else:
-            print("not in context data")
+            
         return context
     
     
@@ -162,17 +160,13 @@ class TaskHistoryView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
-
-        # All tasks the user attended
-        user_tasks = user.tasks.select_related('event').all()
-
-        # Corresponding events (deduplicated)
-        attended_events = Event.objects.filter(tasks__attendees=user).distinct()
-
-        context['user_tasks'] = user_tasks
-        context['attended_events'] = attended_events
+     
+        context['tasks'] = self.request.user.tasks.all()
+        context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
+        context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
+    
+
 
 class SkillManagementCreateView(CreateView):
         model = Skill

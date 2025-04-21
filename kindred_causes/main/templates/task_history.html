@@ -1,36 +1,9 @@
-{% extends 'table.html' %}
+{% extends 'root.html' %}
 
 {% block title %}Task History{% endblock title %}
-{% block table_title %}My Task History{% endblock table_title %}
-{% block table_content %}
 
-<div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Task Name</th>
-        <th>Description</th>
-        <th>Event Date</th>
-        <th>Location</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for task in user_tasks %}
-      <tr class="hover:bg-base-300 cursor-pointer" onclick="window.location='{% url 'view_task' task.pk %}'">
-        <td>{{ task.event.name }}</td>
-        <td>{{ task.name }}</td>
-        <td>{{ task.description }}</td>
-        <td>{{ task.event.date|date:"M d, Y" }}</td>
-        <td>{{ task.location }}</td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="6" class="text-center">You haven't participated in any tasks yet.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-{% endblock table_content %}
+{% block content %}
+    <div class="grow flex justify-around h-fit">
+        {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Attendance History" view_page="view_task" %}
+    </div>
+{% endblock content %}
