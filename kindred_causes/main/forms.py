@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from kindred_causes.widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
-from .models import EventReview, Event, Skill, Task
+from .models import EventReview, Event, Skill, Task, Notification
 from .choices import EventUrgency
 
 
@@ -190,3 +190,50 @@ class SkillManagementForm(forms.ModelForm):
             "required": True,
         })
     )
+
+class NotificationManagementForm(forms.ModelForm):
+    class Meta:
+        model = Notification
+        fields = ['event', 'subject', 'body', 'is_read']
+    
+    event = forms.ModelChoiceField(
+        queryset=Event.objects.all(),
+        label="Event",
+        empty_label=None,
+        widget=TailwindSelect(
+            attrs={
+                "placeholder": "Choose related Event",
+            }
+        )
+    )
+
+    subject = forms.CharField(
+        widget=TailwindInput(
+            attrs={
+            "title": "Enter Subject",
+            "placeholder": "Enter Subject Name",
+            "type": "text",
+            "class": "input w-full",
+            "maxLength": "100",
+            "required": True,
+        })
+    )
+
+    body = forms.CharField(
+        widget=TailwindTextarea(
+            attrs={
+            "placeholder": "Enter Body",
+            "class": "textarea h-24 text-wrap w-full",
+            "required": True,
+        })
+    )
+
+    is_read = forms.BooleanField(
+    required=False,  # Important: allows the checkbox to be unchecked
+    label="Mark as Read",
+    widget=forms.CheckboxInput(
+        attrs={
+            "class": "checkbox checkbox-success",  # Tailwind classes
+        }
+    )
+)

@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
-from .models import AvatarOption, EventReview, Event, Task, UserProfile, Skill
-from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm, TaskForm
+from .models import AvatarOption, EventReview, Event, Task, UserProfile, Skill, Notification
+from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm, TaskForm, NotificationManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib.auth.models import Group
@@ -191,6 +191,14 @@ class TaskHistoryView(TemplateView):
         context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
     
+class NotificationCreateView(CreateView):
+        model = Notification
+        form_class = NotificationManagementForm
+        template_name = 'notification_management.html'
+        extra_context = {'view_type': 'create'}
+
+        def get_success_url(self):
+            return redirect('home').url #idk where to redirect yet will change later
 
 
 class SkillManagementCreateView(CreateView):
@@ -222,6 +230,30 @@ class event_browser(TemplateView):
         context['events_fields'] = ["name","description","location","date","admin","urgency_display"]
         context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
         return context
+
+class NotificationInboxView(TemplateView):
+    template_name = 'inbox.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user
+
+        # Only notifications for events the user is attending
+        notifications = Notification.objects.filter(event__attendees=user).distinct()
+
+        context['notifications'] = notifications
+        return context
+
+# def inbox(request: HttpRequest) -> HttpResponse:
+#     """ Notifications inbox page.
+
+#     :param HttpRequest reqest: The request from the client's browser.
+#     :return HttpReponse: The response to the client.
+#     """
+#     context: dict = {'test_key': 'test_value'}
+#     return render(request, 'inbox.html', context)
+
 
 def skill_browser(request: HttpRequest) -> HttpResponse:
     """ Skill browser page.
@@ -280,17 +312,6 @@ def matching_form(request: HttpRequest) -> HttpResponse:
     """
     context: dict = {'test_key': 'test_value'}
     return render(request, 'matching_form.html', context)
-
-
-def inbox(request: HttpRequest) -> HttpResponse:
-    """ Notifications inbox page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'inbox.html', context)
-
 
 class AccountView(LoginRequiredMixin, TemplateView):
     template_name = "account.html"
@@ -356,4 +377,4 @@ class AccountManagementView(LoginRequiredMixin, View):
 
         profile.save()
 
-        return redirect("account") 
+        return redirect("account")

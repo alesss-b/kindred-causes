@@ -12,6 +12,8 @@
             {% for group in user.groups.all %}
                 {% if group.name == "Admin" %}
                     <li><a href="{% url 'new_event_management' %}">Create Event</a></li>
+                    <li><a href="{% url 'new_notification' %}">Create Notification</a></li>
+                    
                 {% endif %}
             {% endfor %}
             <li><a href="{% url 'event_browser' %}">Browse Events</a></li>

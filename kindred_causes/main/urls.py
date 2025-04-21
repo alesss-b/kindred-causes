@@ -8,7 +8,9 @@ urlpatterns = [
     path('browse_events/', views.event_browser.as_view(), name='event_browser'),
     path('preview_event/', views.event_preview, name='event_preview'),
     
-    path('inbox/', views.inbox, name='inbox'),
+    path('notification/new/', views.NotificationCreateView.as_view(), name='new_notification'),
+    path('inbox/', views.NotificationInboxView.as_view(), name='inbox'),
+    
     path('account/', views.AccountView.as_view(), name='account'),
     path('volunteer_history/', views.TaskHistoryView.as_view(), name='volunteer_history'),
     path('matching_form/', views.matching_form, name='matching_form'),
