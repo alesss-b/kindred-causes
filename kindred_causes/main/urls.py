@@ -21,6 +21,7 @@ urlpatterns = [
     path('event/view/<int:pk>/', views.EventDetailView.as_view(), name='view_event'),
 
     path('task/new/<int:event_id>', views.TaskCreateView.as_view(), name='new_task'),
+    path('task/edit/<int:pk>', views.TaskUpdateView.as_view(), name='edit_task'),
     path('task/view/<int:pk>/', views.TaskDetailView.as_view(), name='view_task'),
         
     path('account_management/', views.AccountManagementView.as_view(), name='account_management'),    

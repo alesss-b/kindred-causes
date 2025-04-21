@@ -3,17 +3,59 @@
 {% block page_title %}Event Details{% endblock page_title %}
 
 {% block content %}
-    <div class="bg-blue-600 grow grid grid-cols-3">
-        <div class="bg-green-500 col-span-1">
-            {{ object.name }}
-            {{ object.descriptiong }}
-            {{ object.capacity }}
-            {{ object.atendees.count }}
-            {{ object.location }}
-        </div>
-        <div class="bg-red-500 col-span-2">
-            {% comment %} {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Event Tasks" view_page="view_task" %} {% endcomment %}
+    <div class="grow grid grid-cols-3 h-fit gap-5">
+        <div class="col-span-1">
+            <div class="flex flex-col justify-between items-center h-full w-full m-5 overflow-x-auto border border-base-content/5 accent bg-base-100 rounded-2xl">
+                <div class="flex justify-between items-center px-2 w-full bg-neutral text-neutral-content">
+                    <div class="size-6"></div>
+                    <div class="text-2xl font-bold text-center py-2">Task Details</div>
+                    <a class="btn btn-circle btn-ghost" href="{% url 'edit_task' object.pk %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                        </svg>
+                        
+                    </a>
+                </div>
             
+                <div class="grow w-full p-5 flex flex-col justify-between gap-1">
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Event: </h2>
+                        <a class="link link-hover" href="{% url 'view_event' object.event.id %}">
+                        {{ object.event.name }}
+                        </a>
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Task: </h2>
+                        {{ object.name }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Description: </h2>
+                        {{ object.description }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Capacity: </h2>
+                        {{ object.capacity }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Location: </h2>
+                        {{ object.location }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Organizer: </h2>
+                        {{ object.admin }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Attendee Count: </h2>
+                        {{ object.attendee_count }}
+                    </div>
+                    <a href="{% url 'new_task' object.id %}" class="btn">
+                        Add Attendee
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-2 flex justify-around h-fit">
+            {% include "partials/table.html" with records=attendees fields=attendees_fields headers=attendees_headers table_title="Assigned Attendees" view_page="view_task" %}
         </div>
     </div>
 {% endblock content %}

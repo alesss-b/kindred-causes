@@ -151,7 +151,22 @@ class TaskCreateView(CreateView):
         else:
             return reverse('home')
 
-    
+
+
+class TaskUpdateView(UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_form.html'
+    extra_context = {'view_type': 'update'}
+
+    def get_success_url(self):
+        if 'pk' in self.kwargs:
+            kwargs = {'pk': self.kwargs['pk']}
+            return reverse('view_task', kwargs=kwargs)
+        else:
+            return reverse('home')
+ 
+
 
 class TaskDetailView(DetailView):
     model = Task
@@ -159,9 +174,9 @@ class TaskDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['skills'] = self.get_object().skills
-        context['skills_fields'] = ["name","description"]
-        context['skills_headers'] = ["Name","Description"]
+        context['attendees'] = self.get_object().attendees.all()
+        context['attendees_fields'] = ["first_name","last_name"]
+        context['attendees_headers'] = ["First Name","Last Name"]
         return context
 
 class TaskHistoryView(TemplateView):
