@@ -1,6 +1,6 @@
 {% extends 'form.html' %}
 
-{% block page_title %}Event Management{% endblock page_title %}
+{% block page_title %}Event Form{% endblock page_title %}
 {% block form_title %}
     {% if view_type == 'update' %}
     Edit Event
@@ -13,9 +13,9 @@
 
 {% block form_action %}
 {% if view_type == 'update' %}
-        {% url 'edit_event_management' form.instance.pk %}
+        {% url 'edit_event' form.instance.pk %}
     {% elif view_type == 'create' %}
-        {% url 'new_event_management' %}
+        {% url 'new_event' %}
     {% endif %}
 {% endblock form_action %}
 

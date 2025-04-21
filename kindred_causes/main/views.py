@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpRequest, HttpResponse
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, TemplateView
 from .models import AvatarOption, EventReview, Event, Task, UserProfile, Skill, Notification
-from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm, TaskForm, NotificationManagementForm
+from .forms import EventReviewForm, EventForm, SkillManagementForm, ReadOnlyEventForm, TaskForm, NotificationManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib.auth.models import Group
@@ -82,10 +82,10 @@ class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
         return redirect('home')
 
 
-class EventManagementCreateView(CreateView):
+class EventCreateView(CreateView):
     model = Event
-    form_class = EventManagementForm
-    template_name = 'event_management.html'
+    form_class = EventForm
+    template_name = 'event_form.html'
     extra_context = {'view_type': 'create'}
 
     def get_form_kwargs(self):
@@ -97,10 +97,10 @@ class EventManagementCreateView(CreateView):
         return reverse('home')
 
 
-class EventManagementUpdateView(UpdateView):
+class EventUpdateView(UpdateView):
     model = Event
-    form_class = EventManagementForm
-    template_name = 'event_management.html'
+    form_class = EventForm
+    template_name = 'event_form.html'
     extra_context = {'view_type': 'update'}
 
     def get_success_url(self):
@@ -110,6 +110,13 @@ class EventManagementUpdateView(UpdateView):
         else:
             return reverse('home')
 
+
+class EventDeleteView(DeleteView):
+    model = Event
+    template_name = 'event_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('home')
 
 
 class EventDetailView(DetailView):
@@ -151,6 +158,13 @@ class TaskCreateView(CreateView):
         else:
             return reverse('home')
 
+
+class TaskDeleteView(DeleteView):
+    model = Task
+    template_name = 'task_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse('home')
 
 
 class TaskUpdateView(UpdateView):
@@ -274,16 +288,6 @@ def event_preview(request: HttpRequest) -> HttpResponse:
     """
     context: dict = {'test_key': 'test_value'}
     return render(request, 'event_preview.html', context)
-    
-def event_management(request: HttpRequest) -> HttpResponse:
-    """ Event Management page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'event_management.html', context)
-    
 
 def user_registration(request: HttpRequest) -> HttpResponse:
     """ User registration page.

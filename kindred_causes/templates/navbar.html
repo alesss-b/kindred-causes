@@ -11,7 +11,7 @@
             <li><a href="{% url 'home' %}">Home</a></li>
             {% for group in user.groups.all %}
                 {% if group.name == "Admin" %}
-                    <li><a href="{% url 'new_event_management' %}">Create Event</a></li>
+                    <li><a href="{% url 'new_event' %}">Create Event</a></li>
                     <li><a href="{% url 'new_notification' %}">Create Notification</a></li>
                     
                 {% endif %}
