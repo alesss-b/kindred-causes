@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
-from .models import EventReview, Event, Task, UserProfile, Skill
+from .models import AvatarOption, EventReview, Event, Task, UserProfile, Skill
 from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
@@ -250,6 +250,7 @@ class AccountView(LoginRequiredMixin, TemplateView):
         profile, created = UserProfile.objects.get_or_create(user=self.request.user)
 
         context.update({
+            "profile": profile,
             "name": profile.name,
             "address1": profile.address1,
             "address2": profile.address2,
@@ -270,7 +271,8 @@ class AccountManagementView(LoginRequiredMixin, View):
     def get(self, request):
         skills = Skill.objects.all()  
         profile, created = UserProfile.objects.get_or_create(user=request.user) 
-        return render(request, "profile_management.html", {"profile": profile, "skills": skills})
+        avatars = AvatarOption.objects.all()
+        return render(request, "profile_management.html", {"profile": profile, "skills": skills, "avatars": avatars})
 
     def post(self, request):
         profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -293,6 +295,14 @@ class AccountManagementView(LoginRequiredMixin, View):
         skill_ids = request.POST.getlist("skills")
         skills = Skill.objects.filter(id__in=skill_ids)
         profile.skills.set(skills)
+
+        avatar_id = request.POST.get("avatar")
+        if avatar_id:
+            try:
+                avatar = AvatarOption.objects.get(id=avatar_id)
+                profile.avatar = avatar
+            except AvatarOption.DoesNotExist:
+                pass
 
         profile.save()
 
