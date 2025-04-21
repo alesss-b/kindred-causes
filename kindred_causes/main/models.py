@@ -82,6 +82,8 @@ class Notification(Base):
     """ A notification to be sent to users.
     """
     event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE, related_name="notifications", verbose_name="Related Event", help_text="The parent Event record this notification is for.")
+    recipient = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name="notifications", verbose_name="Recipient", help_text="The user who is receiving the notification.")
+    is_read = models.BooleanField(default=False)
     # type = models.CharField(max_length=254, null=False, blank=False, verbose_name="Name", help_text="The name of the task.")
     subject = models.CharField(max_length=254, null=False, blank=False, verbose_name="Subject", help_text="The subject of the message.")
     body = models.CharField(max_length=254,null=False, blank=True, verbose_name="Body", help_text="The content of the message.")

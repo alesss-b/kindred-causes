@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from kindred_causes.widgets import TailwindDateInput, TailwindEmailInput, TailwindInput, TailwindSelect, TailwindTextarea, TailwindRating
-from .models import EventReview, Event, Skill
+from .models import EventReview, Event, Skill, Task
 from .choices import EventUrgency
 
 
@@ -31,6 +31,57 @@ class EventReviewForm(forms.ModelForm):
             "placeholder": "Review Comments",
         })
     )
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['name', 'description', 'capacity', 'location', 'skills']
+
+
+    name = forms.CharField(
+        widget=TailwindInput(
+            attrs={
+            "title": "Enter Name",
+            "placeholder": "Enter Task Name",
+            "type": "text",
+            "class": "input w-full",
+            "maxLength": "100",
+            "required": True,
+        })
+    )
+
+    capacity = forms.IntegerField(
+        widget=TailwindInput(
+            attrs={
+            "title": "Enter Capacity",
+            "placeholder": "Enter Task Capacity",
+            "type": "number",
+            "class": "input w-full",
+            "min": "1",
+            "required": True,
+        })
+    )
+
+    description = forms.CharField(
+        widget=TailwindTextarea(
+            attrs={
+            "placeholder": "Enter Task Description",
+            "class": "textarea h-24 text-wrap w-full",
+            "required": True,
+        })
+    )
+
+    location = forms.CharField(
+        widget=TailwindInput(
+            attrs={
+            "placeholder": "Enter Location",
+            "type": "text",
+            "class": "input w-full",
+            "required": True,
+        })
+    )
+
 
 class EventManagementForm(forms.ModelForm):
     class Meta:

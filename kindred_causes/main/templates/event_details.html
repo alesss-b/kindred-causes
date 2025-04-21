@@ -3,44 +3,47 @@
 {% block page_title %}Event Details{% endblock page_title %}
 
 {% block content %}
-    <div class="grow grid grid-cols-3 h-fit">
+    <div class="grow grid grid-cols-3 h-fit gap-5">
         <div class="col-span-1">
-            <div class="justify-between items-center accent bg-base-100 rounded-2xl h-fit flex flex-col space-y-1 py-5 px-10 min-w-md">
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Name: </h2>
-                {{ object.name }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Description: </h2>
-                {{ object.description }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Location: </h2>
-                {{ object.location }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Organizer: </h2>
-                {{ object.admin }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Capacity: </h2>
-                {{ object.capacity }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Attendee Count: </h2>
-                {{ object.attendee_count }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Unassigned Attendees: </h2>
-                {{ object.unassigned_attendee_count }}
-            </div>
-            <div class="flex flex-row gap-2 w-full">
-                <h2 class="font-bold"> Urgency: </h2>
-                {{ object.get_urgency_display }}
-            </div>
-            <a href="new_task" class="btn">
-                Add Task
-            </a>
+            <div class="flex flex-col justify-between items-center h-full w-full m-5 overflow-x-auto border border-base-content/5 accent bg-base-100 rounded-2xl">
+                <div class="text-2xl font-bold w-full text-center py-2 bg-neutral text-neutral-content">Event Details</div>
+                <div class="grow w-full p-5 flex flex-col justify-between gap-1">
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Name: </h2>
+                        {{ object.name }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Description: </h2>
+                        {{ object.description }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Location: </h2>
+                        {{ object.location }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Organizer: </h2>
+                        {{ object.admin }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Capacity: </h2>
+                        {{ object.capacity }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Attendee Count: </h2>
+                        {{ object.attendee_count }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Unassigned Attendees: </h2>
+                        {{ object.unassigned_attendee_count }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Urgency: </h2>
+                        {{ object.get_urgency_display }}
+                    </div>
+                    <a href="{% url 'new_task' object.id %}" class="btn">
+                        Add Task
+                    </a>
+                </div>
             </div>
         </div>
         <div class="col-span-2 flex justify-around h-fit">

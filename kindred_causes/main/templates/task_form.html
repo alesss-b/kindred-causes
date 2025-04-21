@@ -1,0 +1,51 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Task Form{% endblock page_title %}
+{% block form_title %}
+    {% if view_type == 'update' %}
+    Edit Task
+    {% elif view_type == 'create' %}
+    Create Task for: {{ event.name }}
+    {% endif %}
+{% endblock form_title %}
+
+{% block form_action %}
+    {% if view_type == 'update' %}
+        {% url 'new_task' event.id %}
+    {% elif view_type == 'create' %}
+        {% url 'new_task' event.id %}
+    {% endif %}
+{% endblock form_action %}
+
+{% block form_content %}
+    <fieldset class="fieldset w-full">
+        {{form.name}}
+    </fieldset>
+
+    <fieldset class="fieldset w-full">
+        {{form.description}}
+    </fieldset>
+
+    <fieldset class="fieldset w-full">
+        {{form.capacity}}
+    </fieldset>
+
+    <fieldset class="fieldset w-full">
+        {{form.location}}
+    </fieldset>
+{% endblock form_content%}
+
+{% block form_buttons %}
+    {% if view_type == 'view' %}
+        <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Back</a>
+    {% else %}
+        <a href="{% url 'event_browser' %}" class="btn btn-soft btn-success">Cancel</a>
+        <button type="submit" class="btn btn-soft btn-success">
+            {% if view_type == 'update' %} 
+                Save Changes
+            {% elif view_type == 'create' %}
+                Create Task
+            {% endif %}
+        </button>
+    {% endif %}
+{% endblock form_buttons %}

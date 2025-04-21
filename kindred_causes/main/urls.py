@@ -19,7 +19,8 @@ urlpatterns = [
     path('event-management/new/', views.EventManagementCreateView.as_view(), name='new_event_management'),
     path('event-management/edit/<int:pk>/', views.EventManagementUpdateView.as_view(), name='edit_event_management'),
     path('event/view/<int:pk>/', views.EventDetailView.as_view(), name='view_event'),
-    path('task/new/', views.TaskDetailView.as_view(), name='new_task'),
+
+    path('task/new/<int:event_id>', views.TaskCreateView.as_view(), name='new_task'),
     path('task/view/<int:pk>/', views.TaskDetailView.as_view(), name='view_task'),
         
     path('account_management/', views.AccountManagementView.as_view(), name='account_management'),    

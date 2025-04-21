@@ -3,7 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView, TemplateView
 from .models import EventReview, Event, Task, UserProfile, Skill
-from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm
+from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm, TaskForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.contrib.auth.models import Group
@@ -23,10 +23,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
             context['events'] = Event.objects.filter(admin=self.request.user)
         elif self.request.user.groups.filter(name='Admin').exists():
             context['events'] = Event.objects.filter(admin=self.request.user)
-        context['events_fields'] = ["name","description","location","date","admin","urgency"]
-        context['events_headers'] = ["Name","Description","Location","Date","Organizer", "Urgency"]
-        return context
 
+        context['events_fields'] = ["name","description","location","date","admin","urgency"]
+        context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
+        return context
 
     login_url = '/'
     def handle_no_permission(self):
@@ -62,10 +62,8 @@ class EventReviewCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return redirect('home')
-        # return redirect('event_detail', pk=self.object.pk).url
 
     def form_invalid(self, form):
-        print("FORM INVALID")
         messages.error(self.request, self.error_message)
         return super().form_invalid(form)
 
@@ -82,7 +80,6 @@ class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return redirect('home')
-        # return redirect('event_detail', pk=self.object.pk).url
 
 
 class EventManagementCreateView(CreateView):
@@ -120,6 +117,32 @@ class EventDetailView(DetailView):
         context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
         context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
+    
+
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_form.html'
+    extra_context = {'view_type': 'create'}
+     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'event_id' in self.kwargs:
+            print("In context data")
+            context['event'] = Event.objects.get(id=self.kwargs['event_id'])
+        else:
+            print("not in context data")
+        return context
+    
+    
+    def form_valid(self, form):
+        form.instance.event = Event.objects.get(id=self.kwargs['event_id'])
+        return super().form_valid(form)
+
+
+    def get_success_url(self):
+        return reverse('home')
+
     
 
 class TaskDetailView(DetailView):
