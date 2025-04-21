@@ -2,7 +2,7 @@
 
 {% block page_title %}Event Deletion Form{% endblock page_title %}
 {% block form_title %}
-    <div class="text-error">Delete Event "{{ event.name }}"</div>
+    <div class="text-error">Delete Event "{{ event.name }}"?</div>
 {% endblock form_title %}
 
 {% block form_action %}
@@ -15,6 +15,6 @@
 {% endblock form_content%}
 
 {% block form_buttons %}
-    <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Cancel</a>
-    <button type="submit" class="btn btn-soft btn-error">Delete Event Forever</button>
+    <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+    <button type="submit" class="btn btn-outline btn-error">Delete Event Forever</button>
 {% endblock form_buttons %}

@@ -3,7 +3,10 @@
 {% block page_title %}Event Form{% endblock page_title %}
 {% block form_title %}
     {% if view_type == 'update' %}
-    Edit Event
+    <div class="flex justify-between">
+        <div>Edit Event</div>
+        <a class="btn btn-outline btn-error" href="{% url 'delete_event' event.pk %}">Delete Event</a>
+    </div>
     {% elif view_type == 'create' %}
     Create Event
     {% elif view_type == 'view' %}
@@ -77,10 +80,10 @@
 
 {% block form_buttons %}
     {% if view_type == 'view' %}
-        <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Back</a>
+        <a onClick="javascript:history.go(-1);" class="btn">Back</a>
     {% else %}
-        <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Cancel</a>
-        <button type="submit" class="btn btn-soft btn-success">
+        <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+        <button type="submit" class="btn btn-success">
             {% if view_type == 'update' %} 
                 Save Changes
             {% elif view_type == 'create' %}
