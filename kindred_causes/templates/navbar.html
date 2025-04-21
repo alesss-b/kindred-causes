@@ -23,8 +23,11 @@
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar indicator">
                     <span class="indicator-item status indicator-start status-primary"></span>
                     <div class="w-10 rounded-full">
-                        <img alt="Tailwind CSS Navbar component"
-                            src="https://i1.sndcdn.com/artworks-x8zI2HVC2pnkK7F5-4xKLyA-t1080x1080.jpg" />
+                        {% if profile.avatar %}
+                            <img src="{{ profile.avatar.image_url }}" alt="Avatar" class="rounded-full w-10 h-10">
+                        {% else %}
+                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Default Avatar" class="rounded-full w-10 h-10">
+                        {% endif %}
                     </div>
                 </div>
                 <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">

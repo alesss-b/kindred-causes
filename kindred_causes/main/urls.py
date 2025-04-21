@@ -10,7 +10,7 @@ urlpatterns = [
     
     path('inbox/', views.inbox, name='inbox'),
     path('account/', views.AccountView.as_view(), name='account'),
-    path('volunteer_history/', views.volunteer_history, name='volunteer_history'),
+    path('volunteer_history/', views.TaskHistoryView.as_view(), name='volunteer_history'),
     path('matching_form/', views.matching_form, name='matching_form'),
 
     path('', views.LandingView.as_view(), name='landing'),
