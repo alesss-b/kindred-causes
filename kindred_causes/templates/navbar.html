@@ -3,7 +3,7 @@
         <a class="btn btn-ghost text-xl font-bold" href="{% url 'landing' %}">Kindred Causes</a>
     </div>
     <div class="flex-none">
-        <ul class="menu menu-horizontal text-black px-1 gap-2">
+        <ul class="menu menu-horizontal text-black px-1 gap-2 items-center">
         {% if not user.is_authenticated %}
         <li><a href="{% url 'register' %}">Sign Up</a></li>
         <li><a href="{% url 'login' %}">Login</a></li>
