@@ -28,6 +28,8 @@ class Skill(Base):
 class Event(Base):
     """ An Event.
     """
+    admin = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name="admin_events", verbose_name="Event Admin", help_text="The admin who is in charge of the Event.")
+    attendees = models.ManyToManyField(User, blank=True, related_name="events")
     name = models.CharField(max_length=100, null=False, blank=False, verbose_name="Name", help_text="The name of the Event.")
     description = models.CharField(max_length=254,null=False, blank=False, verbose_name="Description", help_text="A detailed description of the Event.")
     location = models.CharField(max_length=254,null=False, blank=False, verbose_name="Location", help_text="The location of the event.")
@@ -36,12 +38,34 @@ class Event(Base):
 
     def __str__(self):
         return "{}: {}".format(self.name, self.description)
+    
+     
+    @property
+    def capacity(self):
+        count = 0
+        for task in self.tasks.all():
+            count += task.capacity
+
+        return count
+
+    @property
+    def attendee_count(self):
+        return self.attendees.count()
+
+    @property
+    def unassigned_attendee_count(self):
+        count = 0
+        for task in self.tasks.all():
+            count += task.attendee_count
+
+        return count
 
 
 class Task(Base):
     """ A Task to be performed by Volunteers at an Event.
     """
     event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE, related_name="tasks", verbose_name="Related Event", help_text="The parent Event record this task is for.")
+    attendees = models.ManyToManyField(User, blank=True, related_name="tasks")
     name = models.CharField(max_length=254, null=False, blank=False, verbose_name="Name", help_text="The name of the task.")
     description = models.CharField(max_length=254, null=False, blank=False, verbose_name="Description", help_text="The description of the task.")
     capacity = models.IntegerField(null=False, blank=False, default=-1, verbose_name="Capacity", help_text="The maximum number of Volunteers the Task can hold.")
@@ -50,6 +74,10 @@ class Task(Base):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def attendee_count(self):
+        return self.attendees.count()
     
 
 class Notification(Base):
