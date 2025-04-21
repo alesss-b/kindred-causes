@@ -82,7 +82,7 @@ class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
         return redirect('home')
 
 
-class EventCreateView(CreateView):
+class EventCreateView(LoginRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'event_form.html'
@@ -97,7 +97,7 @@ class EventCreateView(CreateView):
         return reverse('home')
 
 
-class EventUpdateView(UpdateView):
+class EventUpdateView(LoginRequiredMixin, UpdateView):
     model = Event
     form_class = EventForm
     template_name = 'event_form.html'
@@ -111,7 +111,7 @@ class EventUpdateView(UpdateView):
             return reverse('home')
 
 
-class EventDeleteView(DeleteView):
+class EventDeleteView(LoginRequiredMixin, DeleteView):
     model = Event
     template_name = 'event_confirm_delete.html'
 
@@ -119,7 +119,7 @@ class EventDeleteView(DeleteView):
         return reverse('home')
 
 
-class EventDetailView(DetailView):
+class EventDetailView(LoginRequiredMixin, DetailView):
     model = Event
     template_name = 'event_details.html'
 
@@ -131,7 +131,7 @@ class EventDetailView(DetailView):
         return context
     
 
-class TaskCreateView(CreateView):
+class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     template_name = 'task_form.html'
@@ -159,7 +159,7 @@ class TaskCreateView(CreateView):
             return reverse('home')
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     template_name = 'task_confirm_delete.html'
 
@@ -167,7 +167,7 @@ class TaskDeleteView(DeleteView):
         return reverse('home')
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'task_form.html'
@@ -182,7 +182,7 @@ class TaskUpdateView(UpdateView):
  
 
 
-class TaskDetailView(DetailView):
+class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task_details.html'
 
@@ -193,7 +193,7 @@ class TaskDetailView(DetailView):
         context['attendees_headers'] = ["First Name","Last Name"]
         return context
 
-class TaskHistoryView(TemplateView):
+class TaskHistoryView(LoginRequiredMixin, TemplateView):
     
     template_name = 'task_history.html'
 
@@ -205,7 +205,7 @@ class TaskHistoryView(TemplateView):
         context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
     
-class NotificationCreateView(CreateView):
+class NotificationCreateView(LoginRequiredMixin, CreateView):
         model = Notification
         form_class = NotificationManagementForm
         template_name = 'notification_management.html'
@@ -215,7 +215,7 @@ class NotificationCreateView(CreateView):
             return redirect('home').url #idk where to redirect yet will change later
 
 
-class SkillManagementCreateView(CreateView):
+class SkillManagementCreateView(LoginRequiredMixin, CreateView):
         model = Skill
         form_class = SkillManagementForm
         template_name = 'skill_management.html'
@@ -225,7 +225,7 @@ class SkillManagementCreateView(CreateView):
             return redirect('skill_browser').url #idk where to redirect yet will change later
 
 
-class SkillManagementUpdateView(UpdateView):
+class SkillManagementUpdateView(LoginRequiredMixin, UpdateView):
     model = Skill
     form_class = SkillManagementForm
     template_name = 'skill_management.html'
@@ -234,7 +234,7 @@ class SkillManagementUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('skill_browser').url #idk where to redirect yet will change later
 
-class event_browser(TemplateView):
+class event_browser(LoginRequiredMixin, TemplateView):
     
     template_name = 'event_browser.html'
 
@@ -245,7 +245,7 @@ class event_browser(TemplateView):
         context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
         return context
 
-class NotificationInboxView(TemplateView):
+class NotificationInboxView(LoginRequiredMixin, TemplateView):
     template_name = 'inbox.html'
 
     def get_context_data(self, **kwargs):
@@ -278,25 +278,6 @@ def skill_browser(request: HttpRequest) -> HttpResponse:
     skills = Skill.objects.all()  # fetch all Skill objects
     context: dict = {'skills': skills}  # pass them to the template
     return render(request, 'skill_browser.html', context)
-
-
-def event_preview(request: HttpRequest) -> HttpResponse:
-    """ Event preview page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'event_preview.html', context)
-
-def user_registration(request: HttpRequest) -> HttpResponse:
-    """ User registration page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'user_registration.html', context)
 
 
 def volunteer_history(request: HttpRequest) -> HttpResponse:

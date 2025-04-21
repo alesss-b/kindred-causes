@@ -6,7 +6,6 @@ from . import views
 
 urlpatterns = [
     path('browse_events/', views.event_browser.as_view(), name='event_browser'),
-    path('preview_event/', views.event_preview, name='event_preview'),
     
     path('notification/new/', views.NotificationCreateView.as_view(), name='new_notification'),
     path('inbox/', views.NotificationInboxView.as_view(), name='inbox'),

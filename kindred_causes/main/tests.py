@@ -9,7 +9,7 @@ from .models import Skill, Event, Task, Notification, AttendeeReview, EventRevie
 from .forms import EventReviewForm, EventForm
 from .views import (HomeView, LandingView, EventReviewCreateView, EventReviewUpdateView,
                   EventCreateView, EventUpdateView, event_browser,
-                  event_preview, user_registration, volunteer_history,
+                  event_preview, volunteer_history,
                   matching_form, inbox, AccountView, AccountManagementView)
 from .choices import EventStatus, EventUrgency
 
@@ -414,12 +414,6 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('event_browser'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'event_browser.html')
-        self.assertEqual(response.context['test_key'], 'test_value')
-        
-        # Test event_preview view
-        response = self.client.get(reverse('event_preview'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'event_preview.html')
         self.assertEqual(response.context['test_key'], 'test_value')
         
         # Test user_registration view
