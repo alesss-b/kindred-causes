@@ -5,7 +5,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('browse_events/', views.event_browser, name='event_browser'),
+    path('browse_events/', views.event_browser.as_view(), name='event_browser'),
     path('preview_event/', views.event_preview, name='event_preview'),
     
     path('inbox/', views.inbox, name='inbox'),
