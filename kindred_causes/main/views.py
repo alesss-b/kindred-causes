@@ -197,25 +197,16 @@ class SkillManagementUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('skill_browser').url #idk where to redirect yet will change later
 
-def event_browser(request: HttpRequest) -> HttpResponse:
-    """ Event browser page.
+class event_browser(TemplateView):
+    
+    template_name = 'event_browser.html'
 
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    sort = request.GET.get('sort', 'date')
-    allowed_sorts = ['name', '-name', 'date', '-date', 'urgency', '-urgency']
-
-    if sort not in allowed_sorts:
-        sort = 'date'
-
-    events = Event.objects.all().order_by(sort)
-    context = {
-        'events': events,
-        'current_sort': sort
-    }
-
-    return render(request, 'event_browser.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['events'] = Event.objects.all()
+        context['events_fields'] = ["name","description","location","date","admin","urgency_display"]
+        context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
+        return context
 
 def skill_browser(request: HttpRequest) -> HttpResponse:
     """ Skill browser page.

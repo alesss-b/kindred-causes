@@ -1,0 +1,66 @@
+{% extends 'table.html' %}
+
+{% block title %}Browse Events{% endblock title %}
+{% block table_title %}Browse Events{% endblock table_title %}
+{% block table_content %}
+
+<div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr> 
+        <th>
+          <a href="?sort={% if current_sort == 'name' %}-name{% else %}name{% endif %}">
+            Event Name
+            {% if current_sort == 'name' %}▲{% elif current_sort == '-name' %}▼{% endif %}
+          </a>
+        </th>
+        <th>Description</th>
+        <th>Location</th>
+        {% comment %} <th>Skills Required</th> {% endcomment %}
+        <th>
+          <a href="?sort={% if current_sort == 'date' %}-date{% else %}date{% endif %}">
+            Date
+            {% if current_sort == 'date' %}▲{% elif current_sort == '-date' %}▼{% endif %}
+          </a>
+        </th>
+        <th>
+          <a href="?sort={% if current_sort == 'urgency' %}-urgency{% else %}urgency{% endif %}">
+            Urgency
+            {% if current_sort == 'urgency' %}▲{% elif current_sort == '-urgency' %}▼{% endif %}
+          </a>
+        </th>
+        {% for group in user.groups.all %}
+          {% if group.name == "Admin" %}
+            <th></th>
+          {% endif %}
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <!-- row 1 -->
+      {% for event in events %}
+      <tr class="hover:bg-base-300 cursor-pointer" onclick="window.location='{% url 'view_event' event.pk %}'">
+
+          <td>{{event.name}}</td>
+          <td>{{event.description}}</td>
+          <td>{{event.location}}</td>
+          <td>{{event.date}}</td>
+          <td>{{event.get_urgency_display}}</td>
+          {% for group in user.groups.all %}
+            {% if group.name == "Admin" %}
+            <td>
+              <a role="button" class="btn btn-primary" type="submit"
+                href="{% url 'edit_event_management' event.pk %}">
+                Update Event
+              </a>
+            </td>
+            {% endif %}
+          {% endfor %} 
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock table_content%}
