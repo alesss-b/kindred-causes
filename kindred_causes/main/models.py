@@ -39,6 +39,9 @@ class Event(Base):
     def __str__(self):
         return "{}: {}".format(self.name, self.description)
     
+    @property
+    def urgency_display(self):
+        return self.get_urgency_display()
      
     @property
     def capacity(self):

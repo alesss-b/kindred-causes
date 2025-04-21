@@ -24,7 +24,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         elif self.request.user.groups.filter(name='Admin').exists():
             context['events'] = Event.objects.filter(admin=self.request.user)
 
-        context['events_fields'] = ["name","description","location","date","admin","urgency"]
+        context['events_fields'] = ["name","description","location","date","admin","urgency_display"]
         context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
         return context
 
