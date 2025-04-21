@@ -79,7 +79,7 @@
     {% if view_type == 'view' %}
         <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Back</a>
     {% else %}
-        <a href="{% url 'event_browser' %}" class="btn btn-soft btn-success">Cancel</a>
+        <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Cancel</a>
         <button type="submit" class="btn btn-soft btn-success">
             {% if view_type == 'update' %} 
                 Save Changes

@@ -30,5 +30,4 @@ urlpatterns = [
     path('skill-management/', views.SkillManagementCreateView.as_view(), name="new_skill_management"),
     path('skill-management/edit/<int:pk>/', views.SkillManagementUpdateView.as_view(), name='edit_skill_management'),
     path('browse_skills/', views.skill_browser, name='skill_browser'),
-    
 ]

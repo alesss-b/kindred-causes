@@ -104,7 +104,12 @@ class EventManagementUpdateView(UpdateView):
     extra_context = {'view_type': 'update'}
 
     def get_success_url(self):
-        return redirect('home')
+        if 'pk' in self.kwargs:
+            kwargs = {'pk': self.kwargs['pk']}
+            return reverse('view_event', kwargs=kwargs)
+        else:
+            return reverse('home')
+
 
 
 class EventDetailView(DetailView):
@@ -134,12 +139,17 @@ class TaskCreateView(CreateView):
     
     
     def form_valid(self, form):
-        form.instance.event = Event.objects.get(id=self.kwargs['event_id'])
+        if 'event_id' in self.kwargs:
+            form.instance.event = Event.objects.get(id=self.kwargs['event_id'])
         return super().form_valid(form)
 
 
     def get_success_url(self):
-        return reverse('home')
+        if 'event_id' in self.kwargs:
+            kwargs = {'pk': self.kwargs['event_id']}
+            return reverse('view_event', kwargs=kwargs)
+        else:
+            return reverse('home')
 
     
 

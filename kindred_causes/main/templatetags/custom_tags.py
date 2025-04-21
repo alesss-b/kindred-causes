@@ -7,8 +7,6 @@ register = template.Library()
 def get_attr(obj, attr):
     attribute = getattr(obj, attr, '')
 
-    print(type(attribute))
-
     if type(attribute) is User:
         return attribute.get_full_name()
 
