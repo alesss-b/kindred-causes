@@ -163,5 +163,10 @@ class UserProfile(Base):
     end_availability = models.DateField(blank=True, null=True) 
     skills = models.ManyToManyField(Skill, blank=True) 
     avatar = models.ForeignKey(AvatarOption, on_delete=models.SET_NULL, blank=True, null=True, related_name="users", verbose_name="Avatar", help_text="The avatar selected by the user.")
+
+    @property
+    def get_skill_names(self):
+        return ', '.join([skill.name for skill in self.skills.all()])
+
     def __str__(self):
         return f"{self.user.username}'s Profile"
