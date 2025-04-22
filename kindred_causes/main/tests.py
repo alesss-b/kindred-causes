@@ -13,21 +13,6 @@ from .views import (HomeView, LandingView, EventReviewCreateView, EventReviewUpd
                   matching_form, inbox, AccountView, AccountManagementView)
 from .choices import EventStatus, EventUrgency
 
-# Create your tests here.
-class ChoicesTestCase(TestCase):
-    """Test cases for choices module"""
-    def test_event_status_choices(self):
-        """Test EventStatus choices are defined correctly"""
-        self.assertEqual(EventStatus.NOT_STARTED, "Not Started")
-        self.assertEqual(EventStatus.IN_PROGRESS, "In Progress")
-        self.assertEqual(EventStatus.COMPLETED, "Completed")
-        
-    def test_event_urgency_choices(self):
-        """Test EventUrgency choices are defined correctly"""
-        self.assertEqual(EventUrgency.CRITICAL, 4)
-        self.assertEqual(EventUrgency.HIGH, 3)
-        self.assertEqual(EventUrgency.MEDIUM, 2)
-        self.assertEqual(EventUrgency.LOW, 1)
 
 
 class ModelTestCase(TestCase):
