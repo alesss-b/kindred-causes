@@ -202,7 +202,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['attendees'] = self.get_object().attendees.all()
-        context['unassigned_users'] = User.objects.all()
+        context['unassigned_users'] = self.get_object().event.attendees.exclude(pk__in=context['attendees'])
         context['attendees_fields'] = ["get_full_name", "profile.get_skill_names"]
         context['attendees_headers'] = ["Full Name", 'Skills']
         return context
