@@ -39,7 +39,9 @@
                     <li>
                         <a class="justify-between w-full" href="{% url 'inbox' %}">
                             Inbox
-                            <span class="badge">2</span>
+                            {% if unread_notifications > 0 %}
+                                <span class="badge badge-primary">{{ unread_notifications }}</span>
+                            {% endif %}
                         </a>
                     </li>
                     <li><a class="w-full">Settings</a></li>
