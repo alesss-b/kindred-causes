@@ -33,14 +33,14 @@
 
 {% block form_buttons %}
     {% if view_type == 'view' %}
-        <a onClick="javascript:history.go(-1);" class="btn btn-soft btn-success">Back</a>
+        <a onClick="javascript:history.go(-1);" class="btn">Back</a>
     {% else %}
-        <a href="{% url 'event_browser' %}" class="btn btn-soft btn-success">Cancel</a>
-        <button type="submit" class="btn btn-soft btn-success">
+        <a href="{% url 'event_browser' %}" class="btn">Cancel</a>
+        <button type="submit" class="btn btn-success">
             {% if view_type == 'update' %} 
                 Save Changes
             {% elif view_type == 'create' %}
-                Create Task
+                Create Notification
             {% endif %}
         </button>
     {% endif %}
