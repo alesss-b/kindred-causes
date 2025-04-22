@@ -41,15 +41,19 @@
                         {{ object.location }}
                     </div>
                     <div class="flex flex-row gap-2 w-full">
-                        <h2 class="font-bold"> Organizer: </h2>
-                        {{ object.admin }}
-                    </div>
-                    <div class="flex flex-row gap-2 w-full">
                         <h2 class="font-bold"> Attendee Count: </h2>
                         {{ object.attendee_count }}
                     </div>
-                    <a href="{% url 'new_task' object.id %}" class="btn">
-                        Add Attendee
+                    <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Required Skills: </h2>
+                        {% for skill in object.skills.all %}
+                            {{ skill.name }} {% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            No skills required
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'matching_form' %}" class="btn">
+                        Assign Attendee
                     </a>
                 </div>
             </div>

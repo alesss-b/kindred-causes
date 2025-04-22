@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, reverse
-from django.http import HttpRequest, HttpResponse
-from django.views.generic.edit import CreateView, UpdateView
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, TemplateView
 from .models import AvatarOption, EventReview, Event, Task, UserProfile, Skill, Notification
-from .forms import EventReviewForm, EventManagementForm, SkillManagementForm, ReadOnlyEventManagementForm, TaskForm, NotificationManagementForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import EventReviewForm, EventForm, SkillManagementForm, ReadOnlyEventForm, TaskForm, NotificationManagementForm
+from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.views import View
 from django.contrib.auth.models import Group
 from django.contrib import messages
@@ -43,12 +43,220 @@ class LandingView(TemplateView):
         if request.user.is_authenticated:
             return redirect('home')
         return super().dispatch(request, *args, **kwargs)
+    
 
-# EventReview Model Forms:
-# class EventReviewDetailView(DetailView):
-#     model = EventReview
-#     template_name = 'event_review_detail.html'
-#     context_object_name = 'event_review'
+# Event views:
+class EventCreateView(AccessMixin, CreateView):
+    """Event Create View
+    Form for creating a new Event.
+
+    Only accessible for Admin group members.
+    """
+    model = Event
+    form_class = EventForm
+    template_name = 'event_form.html'
+    extra_context = {'view_type': 'create'}
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def get_success_url(self):
+        return reverse('home')
+    
+
+class EventDetailView(LoginRequiredMixin, DetailView):
+    """Event Detail View
+    Page showing Event information and child Tasks.
+
+    Requires login to view.
+    """
+    model = Event
+    template_name = 'event_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = Task.objects.filter(event=self.get_object())
+        context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
+        context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
+        return context
+    
+
+class EventUpdateView(AccessMixin, UpdateView):
+    """Event Update View
+    Form for updating an existing Event.
+
+    Only accessible for Admin group members.
+    """
+    model = Event
+    form_class = EventForm
+    template_name = 'event_form.html'
+    extra_context = {'view_type': 'update'}
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        if 'pk' in self.kwargs:
+            kwargs = {'pk': self.kwargs['pk']}
+            return reverse('view_event', kwargs=kwargs)
+        else:
+            return reverse('home')
+
+
+class EventDeleteView(AccessMixin, DeleteView):
+    """Event Delete View
+    Form for deleting an Event.
+
+    Only accessible for Admin group members.
+    """
+    model = Event
+    template_name = 'event_confirm_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('home')
+
+
+# Task views:
+class TaskCreateView(AccessMixin, CreateView):
+    """Task Create View
+    Form for creating a new Task.
+
+    Only accessible for Admin group members.
+    """
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_form.html'
+    extra_context = {'view_type': 'create'}
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if 'event_id' in self.kwargs:
+            context['event'] = Event.objects.get(id=self.kwargs['event_id'])
+            
+        return context
+    
+    
+    def form_valid(self, form):
+        if 'event_id' in self.kwargs:
+            form.instance.event = Event.objects.get(id=self.kwargs['event_id'])
+        return super().form_valid(form)
+
+
+    def get_success_url(self):
+        if 'event_id' in self.kwargs:
+            kwargs = {'pk': self.kwargs['event_id']}
+            return reverse('view_event', kwargs=kwargs)
+        else:
+            return reverse('home')
+
+
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    """Task Detail View
+    Page showing Task information and child Tasks.
+
+    Requires login to view.
+    """
+    model = Task
+    template_name = 'task_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['attendees'] = self.get_object().attendees.all()
+        context['attendees_fields'] = ["first_name","last_name"]
+        context['attendees_headers'] = ["First Name","Last Name"]
+        return context
+
+
+class TaskUpdateView(AccessMixin, UpdateView):
+    """Task Update View
+    Form for updating an existing Task.
+
+    Only accessible for Admin group members.
+    """
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_form.html'
+    extra_context = {'view_type': 'update'}
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        if 'pk' in self.kwargs:
+            kwargs = {'pk': self.kwargs['pk']}
+            return reverse('view_task', kwargs=kwargs)
+        else:
+            return reverse('home')
+ 
+
+class TaskDeleteView(AccessMixin, DeleteView):
+    """Task Delete View
+    Form for deleting an Task.
+
+    Only accessible for Admin group members.
+    """
+    model = Task
+    template_name = 'task_confirm_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('home')
+
 
 class EventReviewCreateView(LoginRequiredMixin, CreateView):
     """ Event Review Create View
@@ -81,105 +289,10 @@ class EventReviewUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return redirect('home')
 
-
-class EventManagementCreateView(CreateView):
-    model = Event
-    form_class = EventManagementForm
-    template_name = 'event_management.html'
-    extra_context = {'view_type': 'create'}
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['user'] = self.request.user
-        return kwargs
-
-    def get_success_url(self):
-        return reverse('home')
-
-
-class EventManagementUpdateView(UpdateView):
-    model = Event
-    form_class = EventManagementForm
-    template_name = 'event_management.html'
-    extra_context = {'view_type': 'update'}
-
-    def get_success_url(self):
-        if 'pk' in self.kwargs:
-            kwargs = {'pk': self.kwargs['pk']}
-            return reverse('view_event', kwargs=kwargs)
-        else:
-            return reverse('home')
-
-
-
-class EventDetailView(DetailView):
-    model = Event
-    template_name = 'event_details.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.filter(event=self.get_object())
-        context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
-        context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
-        return context
     
 
-class TaskCreateView(CreateView):
-    model = Task
-    form_class = TaskForm
-    template_name = 'task_form.html'
-    extra_context = {'view_type': 'create'}
-     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if 'event_id' in self.kwargs:
-            context['event'] = Event.objects.get(id=self.kwargs['event_id'])
-            
-        return context
-    
-    
-    def form_valid(self, form):
-        if 'event_id' in self.kwargs:
-            form.instance.event = Event.objects.get(id=self.kwargs['event_id'])
-        return super().form_valid(form)
 
-
-    def get_success_url(self):
-        if 'event_id' in self.kwargs:
-            kwargs = {'pk': self.kwargs['event_id']}
-            return reverse('view_event', kwargs=kwargs)
-        else:
-            return reverse('home')
-
-
-
-class TaskUpdateView(UpdateView):
-    model = Task
-    form_class = TaskForm
-    template_name = 'task_form.html'
-    extra_context = {'view_type': 'update'}
-
-    def get_success_url(self):
-        if 'pk' in self.kwargs:
-            kwargs = {'pk': self.kwargs['pk']}
-            return reverse('view_task', kwargs=kwargs)
-        else:
-            return reverse('home')
- 
-
-
-class TaskDetailView(DetailView):
-    model = Task
-    template_name = 'task_details.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['attendees'] = self.get_object().attendees.all()
-        context['attendees_fields'] = ["first_name","last_name"]
-        context['attendees_headers'] = ["First Name","Last Name"]
-        return context
-
-class TaskHistoryView(TemplateView):
+class TaskHistoryView(LoginRequiredMixin, TemplateView):
     
     template_name = 'task_history.html'
 
@@ -190,6 +303,16 @@ class TaskHistoryView(TemplateView):
         context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
         context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
+    
+class NotificationCreateView(CreateView):
+        model = Notification
+        form_class = NotificationManagementForm
+        template_name = 'notification_management.html'
+        extra_context = {'view_type': 'create'}
+
+        def get_success_url(self):
+            return redirect('home').url #idk where to redirect yet will change later
+
 
 class SkillManagementCreateView(CreateView):
         model = Skill
@@ -201,7 +324,7 @@ class SkillManagementCreateView(CreateView):
             return redirect('skill_browser').url #idk where to redirect yet will change later
 
 
-class SkillManagementUpdateView(UpdateView):
+class SkillManagementUpdateView(LoginRequiredMixin, UpdateView):
     model = Skill
     form_class = SkillManagementForm
     template_name = 'skill_management.html'
@@ -210,7 +333,8 @@ class SkillManagementUpdateView(UpdateView):
     def get_success_url(self):
         return redirect('skill_browser').url #idk where to redirect yet will change later
 
-class event_browser(TemplateView):
+
+class event_browser(LoginRequiredMixin, TemplateView):
     
     template_name = 'event_browser.html'
 
@@ -220,15 +344,6 @@ class event_browser(TemplateView):
         context['events_fields'] = ["name","description","location","date","admin","urgency_display"]
         context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
         return context
-
-class NotificationCreateView(CreateView):
-        model = Notification
-        form_class = NotificationManagementForm
-        template_name = 'notification_management.html'
-        extra_context = {'view_type': 'create'}
-
-        def get_success_url(self):
-            return redirect('inbox').url #idk where to redirect yet will change later
 
 class NotificationInboxView(TemplateView):
     template_name = 'inbox.html'
@@ -274,35 +389,6 @@ def skill_browser(request: HttpRequest) -> HttpResponse:
     skills = Skill.objects.all()  # fetch all Skill objects
     context: dict = {'skills': skills}  # pass them to the template
     return render(request, 'skill_browser.html', context)
-
-
-def event_preview(request: HttpRequest) -> HttpResponse:
-    """ Event preview page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'event_preview.html', context)
-    
-def event_management(request: HttpRequest) -> HttpResponse:
-    """ Event Management page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'event_management.html', context)
-    
-
-def user_registration(request: HttpRequest) -> HttpResponse:
-    """ User registration page.
-
-    :param HttpRequest reqest: The request from the client's browser.
-    :return HttpReponse: The response to the client.
-    """
-    context: dict = {'test_key': 'test_value'}
-    return render(request, 'user_registration.html', context)
 
 
 def volunteer_history(request: HttpRequest) -> HttpResponse:

@@ -1,0 +1,20 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Event Deletion Form{% endblock page_title %}
+{% block form_title %}
+    <div class="text-error">Delete Event "{{ event.name }}"?</div>
+{% endblock form_title %}
+
+{% block form_action %}
+    {% url 'delete_event' event.id %}
+{% endblock form_action %}
+
+{% block form_content %}
+    This action can not be undone.</br>
+    Are you sure you want to delete the event "{{ event.name }}"?
+{% endblock form_content%}
+
+{% block form_buttons %}
+    <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+    <button type="submit" class="btn btn-outline btn-error">Delete Event Forever</button>
+{% endblock form_buttons %}

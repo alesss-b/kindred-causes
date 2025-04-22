@@ -6,10 +6,10 @@ from django.contrib.messages.storage.fallback import FallbackStorage
 from datetime import datetime, timedelta
 
 from .models import Skill, Event, Task, Notification, AttendeeReview, EventReview
-from .forms import EventReviewForm, EventManagementForm
+from .forms import EventReviewForm, EventForm
 from .views import (HomeView, LandingView, EventReviewCreateView, EventReviewUpdateView,
-                  EventManagementCreateView, EventManagementUpdateView, event_browser,
-                  event_preview, event_management, user_registration, volunteer_history,
+                  EventCreateView, EventUpdateView, event_browser,
+                  event_preview, volunteer_history,
                   matching_form, inbox, AccountView, AccountManagementView)
 from .choices import EventStatus, EventUrgency
 
@@ -205,8 +205,8 @@ class FormTestCase(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn('rating', form.errors)
     
-    def test_event_management_form_valid(self):
-        """Test EventManagementForm with valid data"""
+    def test_event_form_valid(self):
+        """Test EventForm with valid data"""
         form_data = {
             'name': 'New Test Event',
             'description': 'New Test Event Description',
@@ -215,11 +215,11 @@ class FormTestCase(TestCase):
             'date': timezone.now().strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        form = EventManagementForm(data=form_data)
+        form = EventForm(data=form_data)
         self.assertTrue(form.is_valid())
     
-    def test_event_management_form_invalid(self):
-        """Test EventManagementForm with invalid data"""
+    def test_event_form_invalid(self):
+        """Test EventForm with invalid data"""
         # Missing required field 'name'
         form_data = {
             'description': 'New Test Event Description',
@@ -228,7 +228,7 @@ class FormTestCase(TestCase):
             'date': timezone.now().strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        form = EventManagementForm(data=form_data)
+        form = EventForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn('name', form.errors)
         
@@ -241,7 +241,7 @@ class FormTestCase(TestCase):
             'date': timezone.now().strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        form = EventManagementForm(data=form_data)
+        form = EventForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn('urgency', form.errors)
 
@@ -363,11 +363,11 @@ class ViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)  # Redirect to login
         self.assertTrue('/login/' in response.url)
     
-    def test_event_management_create_view(self):
-        """Test EventManagementCreateView"""
-        response = self.client.get(reverse('new_event_management'))
+    def test_event_create_view(self):
+        """Test EventCreateView"""
+        response = self.client.get(reverse('new_event'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'event_management.html')
+        self.assertTemplateUsed(response, 'event_form.html')
         
         # Test POST request
         form_data = {
@@ -378,17 +378,17 @@ class ViewTestCase(TestCase):
             'date': timezone.now().strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        response = self.client.post(reverse('new_event_management'), form_data)
+        response = self.client.post(reverse('new_event'), form_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
         
         # Verify the event was created
         self.assertTrue(Event.objects.filter(name='New Managed Event').exists())
     
-    def test_event_management_update_view(self):
-        """Test EventManagementUpdateView"""
-        response = self.client.get(reverse('edit_event_management', kwargs={'pk': self.event.id}))
+    def test_event_update_view(self):
+        """Test EventUpdateView"""
+        response = self.client.get(reverse('edit_event', kwargs={'pk': self.event.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'event_management.html')
+        self.assertTemplateUsed(response, 'event_form.html')
         
         # Test POST request
         form_data = {
@@ -399,7 +399,7 @@ class ViewTestCase(TestCase):
             'date': (timezone.now() + timedelta(days=7)).strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        response = self.client.post(reverse('edit_event_management', kwargs={'pk': self.event.id}), form_data)
+        response = self.client.post(reverse('edit_event', kwargs={'pk': self.event.id}), form_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
         
         # Verify the event was updated
@@ -414,12 +414,6 @@ class ViewTestCase(TestCase):
         response = self.client.get(reverse('event_browser'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'event_browser.html')
-        self.assertEqual(response.context['test_key'], 'test_value')
-        
-        # Test event_preview view
-        response = self.client.get(reverse('event_preview'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'event_preview.html')
         self.assertEqual(response.context['test_key'], 'test_value')
         
         # Test user_registration view
@@ -533,9 +527,9 @@ class UrlPatternTestCase(TestCase):
         self.assertEqual(reverse('account_management'), '/account_management/')
         
         # Test class-based view URLs
-        self.assertEqual(reverse('new_event_management'), '/event-management/new/')
-        self.assertEqual(reverse('edit_event_management', kwargs={'pk': self.event.id}),
-                         f'/event-management/edit/{self.event.id}/')
+        self.assertEqual(reverse('new_event'), '/event/new/')
+        self.assertEqual(reverse('edit_event', kwargs={'pk': self.event.id}),
+                         f'/event/edit/{self.event.id}/')
         self.assertEqual(reverse('edit_event_review', kwargs={'pk': self.event_review.id}),
                          f'/event-review/edit/{self.event_review.id}/')
         self.assertEqual(reverse('new_event_review'), '/event-review/new/')
@@ -573,7 +567,7 @@ class IntegrationTestCase(TestCase):
             'date': timezone.now().strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        response = self.client.post(reverse('new_event_management'), event_data)
+        response = self.client.post(reverse('new_event'), event_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
         
         # Verify the event was created
@@ -604,7 +598,7 @@ class IntegrationTestCase(TestCase):
             'date': timezone.now().strftime('%Y-%m-%dT%H:%M'),
             'required_skills': self.skill.id
         }
-        response = self.client.post(reverse('edit_event_management', kwargs={'pk': event.id}), update_event_data)
+        response = self.client.post(reverse('edit_event', kwargs={'pk': event.id}), update_event_data)
         self.assertEqual(response.status_code, 302)  # Redirect after successful form submission
         
         # Verify the event was updated

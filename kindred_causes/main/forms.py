@@ -83,7 +83,7 @@ class TaskForm(forms.ModelForm):
     )
 
 
-class EventManagementForm(forms.ModelForm):
+class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'description', 'location', 'admin', 'urgency', 'date']
@@ -159,7 +159,7 @@ class EventManagementForm(forms.ModelForm):
         )
     )
 
-class ReadOnlyEventManagementForm(EventManagementForm):
+class ReadOnlyEventForm(EventForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
