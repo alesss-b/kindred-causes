@@ -84,8 +84,16 @@
             {% for group in user.groups.all %}
                 {% if group.name == 'Admin' %}
                     {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Event Tasks" view_page="view_task" %}
+
                 {% elif group.name == 'Volunteer' %}
                     {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="My Tasks"%}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-span-1">
+            {% for group in user.groups.all %}
+                {% if group.name == 'Admin' %}
+                    {% include "partials/table.html" with records=event_reviews fields=event_reviews_fields headers=event_reviews_headers table_title="Event Reviews" %}
                 {% endif %}
             {% endfor %}
         </div>
