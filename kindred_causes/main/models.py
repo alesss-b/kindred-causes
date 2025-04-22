@@ -156,13 +156,16 @@ class UserProfile(Base):
         help_text="Select your state of residence."
     )  
     zipcode = models.CharField(max_length=10) 
-    email = models.EmailField(max_length=255)
     phone = models.CharField(max_length=15, blank=True, null=True) 
     preferences = models.TextField(blank=True, null=True) 
     start_availability = models.DateField(blank=True, null=True) 
     end_availability = models.DateField(blank=True, null=True) 
     skills = models.ManyToManyField(Skill, blank=True) 
     avatar = models.ForeignKey(AvatarOption, on_delete=models.SET_NULL, blank=True, null=True, related_name="users", verbose_name="Avatar", help_text="The avatar selected by the user.")
+
+    @property
+    def email(self):
+        return self.user.email
 
     @property
     def notification_count(self):

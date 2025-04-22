@@ -10,7 +10,6 @@
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Avatar</legend>
     <select name="avatar" class="select select-accent w-full">
-        <option selected disabled>Select an Avatar</option>
         {% for avatar in avatars %}
             <option value="{{ avatar.id }}" {% if profile.avatar and profile.avatar.id == avatar.id %}selected{% endif %}>
                 {{ avatar.name }}
