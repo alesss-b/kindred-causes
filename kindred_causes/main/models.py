@@ -91,7 +91,7 @@ class Notification(Base):
     is_read = models.BooleanField(default=False)
     # type = models.CharField(max_length=254, null=False, blank=False, verbose_name="Name", help_text="The name of the task.")
     subject = models.CharField(max_length=254, null=False, blank=False, verbose_name="Subject", help_text="The subject of the message.")
-    body = models.CharField(max_length=254,null=False, blank=True, verbose_name="Body", help_text="The content of the message.")
+    body = models.TextField(max_length=254,null=False, blank=True, verbose_name="Body", help_text="The content of the message.")
 
     def __str__(self):
         return self.subject + " " + self.body
