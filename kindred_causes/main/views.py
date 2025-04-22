@@ -795,9 +795,9 @@ class AccountView(LoginRequiredMixin, TemplateView):
             "zipcode": profile.zipcode,
             "email": profile.email,  
             "phone": profile.phone,  
-            # "preferences": profile.preferences,
-            # "start_availability": profile.start_availability,
-            # "end_availability": profile.end_availability,
+            "preferences": profile.preferences,
+            "start_availability": profile.start_availability,
+            "end_availability": profile.end_availability,
             "skills": ", ".join(skill.name for skill in profile.skills.all()),
         })
         return context
