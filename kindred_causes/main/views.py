@@ -77,7 +77,7 @@ class EventCreateView(AccessMixin, CreateView):
 
     def get_success_url(self):
         return reverse('home')
-    
+
 
 class EventDetailView(LoginRequiredMixin, DetailView):
     """Event Detail View
@@ -90,14 +90,20 @@ class EventDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.groups.filter(name='Volunteer').exists():
-            context['tasks'] = self.request.user.tasks.filter(event=self.get_object())
-        elif self.request.user.groups.filter(name='Admin').exists():
-            context['tasks'] = Task.objects.filter(event=self.get_object())
-        context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
-        context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
+        event = self.object
+        context['event'] = event  
+        user = self.request.user
+
+        if user.groups.filter(name='Volunteer').exists():
+            context['tasks'] = user.tasks.filter(event=event)
+        elif user.groups.filter(name='Admin').exists():
+            context['tasks'] = event.tasks.all()
+
+        context['tasks_fields'] = ["name", "description", "attendee_count", "capacity", "location"]
+        context['tasks_headers'] = ["Name", "Description", "Attendees", "Capacity", "Location"]
+
         return context
-    
+
 
 class EventUpdateView(AccessMixin, UpdateView):
     """Event Update View
@@ -154,6 +160,7 @@ class EventDeleteView(AccessMixin, DeleteView):
 def generate_event_report(request, pk):
     event = Event.objects.get(pk=pk)
     tasks = event.tasks.all()
+    reviews = event.event_reviews.all().order_by('-created_at')  # updated
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="event_report_{event.id}.pdf"'
@@ -171,14 +178,13 @@ def generate_event_report(request, pk):
         return y - 18
 
     def get_user_skills(user):
-        """Gather all skills from tasks the user is assigned to."""
         skill_set = set()
         for task in user.tasks.all():
             for skill in task.skills.all():
                 skill_set.add(skill.name)
         return sorted(skill_set)
 
-    # Event Header
+    # Event Summary
     p.setFont("Helvetica-Bold", 16)
     p.drawString(50, y, f"Event Report: {event.name}")
     y -= 30
@@ -192,9 +198,8 @@ def generate_event_report(request, pk):
     y = draw_line(p, y, f"Total Attendees: {event.attendee_count}")
     y -= 10
 
-    # Task Breakdown
+    # Tasks Section
     y = draw_line(p, y, "Tasks", bold=True, size=14)
-
     for task in tasks:
         if y < 120:
             p.showPage()
@@ -204,14 +209,11 @@ def generate_event_report(request, pk):
         y = draw_line(p, y, f"  Description: {task.description}", indent=10)
         y = draw_line(p, y, f"  Location: {task.location}", indent=10)
         y = draw_line(p, y, f"  Capacity: {task.capacity}", indent=10)
-
-        # Required skills
         skills = task.skills.all()
         skills_str = ", ".join([s.name for s in skills]) if skills else "None"
         y = draw_line(p, y, f"  Required Skills: {skills_str}", indent=10)
 
-        # Assigned Users
-        y = draw_line(p, y, f"  Assigned Attendees:", indent=10)
+        y = draw_line(p, y, "  Assigned Attendees:", indent=10)
         assigned_users = task.attendees.all()
         if not assigned_users:
             y = draw_line(p, y, "    (None)", indent=20)
@@ -222,7 +224,6 @@ def generate_event_report(request, pk):
                 skills_str = f" (Skills: {', '.join(user_skills)})" if user_skills else ""
                 y = draw_line(p, y, f"    • {full_name}{skills_str}", indent=20)
 
-                # Previous Events attended by the user (excluding this one)
                 previous_events = user.events.exclude(pk=event.pk).order_by('-date')
                 if previous_events.exists():
                     for prev_event in previous_events:
@@ -238,9 +239,29 @@ def generate_event_report(request, pk):
                     p.showPage()
                     y = height - 50
 
+    # Reviews Section
+    if y < 150:
+        p.showPage()
+        y = height - 50
+
+    y = draw_line(p, y, "Event Reviews", bold=True, size=14)
+
+    if not reviews.exists():
+        y = draw_line(p, y, "No reviews submitted.", indent=10)
+    else:
+        for review in reviews:
+            y = draw_line(p, y, f"- Rating: {review.rating}/5", bold=True, indent=10)
+            y = draw_line(p, y, f"  {review.comments}", indent=10)
+            y -= 5
+
+            if y < 100:
+                p.showPage()
+                y = height - 50
+
     p.showPage()
     p.save()
     return response
+
 
 
 class JoinEventView(LoginRequiredMixin, TemplateView):
@@ -503,21 +524,24 @@ class TaskDeleteView(AccessMixin, DeleteView):
 
 
 class EventReviewCreateView(LoginRequiredMixin, CreateView):
-    """ Event Review Create View
-    Redirects unauthenticated users to login page.
-    """
     login_url = "/login/"
     model = EventReview
     form_class = EventReviewForm
     template_name = 'event_review_form.html'
     extra_context = {'view_type': 'create'}
 
-    def get_success_url(self):
-        return redirect('home')
+    def dispatch(self, request, *args, **kwargs):
+        self.event = Event.objects.get(pk=kwargs['event_pk'])
+        self.extra_context = self.extra_context | {"event": self.event}
+        return super().dispatch(request, *args, **kwargs)
 
-    def form_invalid(self, form):
-        messages.error(self.request, self.error_message)
-        return super().form_invalid(form)
+    def form_valid(self, form):
+        form.instance.event = self.event
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('view_event', args=[self.event.pk])
 
 
 class EventReviewUpdateView(LoginRequiredMixin, UpdateView):

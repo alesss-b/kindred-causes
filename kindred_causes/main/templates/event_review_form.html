@@ -10,17 +10,10 @@
 {% endblock form_title %}
 
 {% block form_action %}
-{% if view_type == 'update' %}
-      {% url 'new_event_review' %}
-   {% elif view_type == 'create' %}
-      {% url 'new_event_review' %}
-   {% endif %}
+  {% url 'new_event_review' event.pk %}
 {% endblock form_action %}
 
 {% block form_content %}
-<div class="form-row">
-   {{ form.event }}
-</div>
 <div class="form-row">
    {{ form.rating }}
 </div>

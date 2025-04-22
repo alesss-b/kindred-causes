@@ -70,6 +70,9 @@
                             Join Event
                         </a>
                     {% else %}
+                        <a href="{% url 'new_event_review' event.pk %}" class="btn">
+                            Review Event
+                        </a>
                         <a href="{% url 'leave_event' object.id %}" class="btn">
                             Leave Event
                         </a>

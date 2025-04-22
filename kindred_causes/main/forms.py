@@ -8,18 +8,19 @@ from .choices import EventUrgency
 class EventReviewForm(forms.ModelForm):
     class Meta:
         model = EventReview
-        fields = ['event', 'rating', 'comments']
+        # fields = ['event', 'rating', 'comments']
+        fields = ['rating', 'comments']
 
-    event = forms.ModelChoiceField(
-        queryset=Event.objects.all(),
-        label="Event",
-        empty_label=None,
-        widget=TailwindSelect(
-            attrs={
-                "placeholder": "Choose related Event",
-            }
-        )
-    )
+    # event = forms.ModelChoiceField(
+    #     queryset=Event.objects.all(),
+    #     label="Event",
+    #     empty_label=None,
+    #     widget=TailwindSelect(
+    #         attrs={
+    #             "placeholder": "Choose related Event",
+    #         }
+    #     )
+    # )
 
     rating = forms.IntegerField(
         widget=TailwindRating()
