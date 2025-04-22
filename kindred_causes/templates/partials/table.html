@@ -11,7 +11,12 @@
         </thead>
         <tbody>
             {% for item in records %}
-                <tr class="hover:bg-base-300 cursor-pointer" onclick="window.location='{% url view_page item.pk %}'">
+                <tr 
+                {% if view_page %}
+                class="hover:bg-base-300 cursor-pointer" 
+                onclick="window.location='{% url view_page item.pk %}'"
+                {% endif %}
+                >
                     {% for field in fields %}
                         <td>{{ item|get_attr:field }}</td>
                     {% endfor %}
