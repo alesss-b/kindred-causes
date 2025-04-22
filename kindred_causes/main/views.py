@@ -304,8 +304,7 @@ class TaskHistoryView(LoginRequiredMixin, TemplateView):
         context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
     
-
-class NotificationCreateView(LoginRequiredMixin, CreateView):
+class NotificationCreateView(CreateView):
         model = Notification
         form_class = NotificationManagementForm
         template_name = 'notification_management.html'
@@ -315,7 +314,7 @@ class NotificationCreateView(LoginRequiredMixin, CreateView):
             return redirect('home').url #idk where to redirect yet will change later
 
 
-class SkillManagementCreateView(LoginRequiredMixin, CreateView):
+class SkillManagementCreateView(CreateView):
         model = Skill
         form_class = SkillManagementForm
         template_name = 'skill_management.html'
@@ -346,7 +345,7 @@ class event_browser(LoginRequiredMixin, TemplateView):
         context['events_headers'] = ["Name","Description","Location","Date","Organizer","Urgency"]
         return context
 
-class NotificationInboxView(LoginRequiredMixin, TemplateView):
+class NotificationInboxView(TemplateView):
     template_name = 'inbox.html'
 
     def get_context_data(self, **kwargs):
@@ -354,21 +353,32 @@ class NotificationInboxView(LoginRequiredMixin, TemplateView):
 
         user = self.request.user
 
-        # Only notifications for events the user is attending
-        notifications = Notification.objects.filter(event__attendees=user).distinct()
+        context['inbox'] = Notification.objects.select_related('event') \
+            .filter(event__attendees=user) \
+            .order_by('-created_at')
 
-        context['notifications'] = notifications
+        context['inbox_fields'] = ["is_read", "event", "subject"]
+        context['inbox_headers'] = ["Read", "Event", "Subject"]
         return context
 
-# def inbox(request: HttpRequest) -> HttpResponse:
-#     """ Notifications inbox page.
 
-#     :param HttpRequest reqest: The request from the client's browser.
-#     :return HttpReponse: The response to the client.
-#     """
-#     context: dict = {'test_key': 'test_value'}
-#     return render(request, 'inbox.html', context)
+class NotificationDetailView(LoginRequiredMixin, DetailView):
+    model = Notification
+    template_name = 'notification_details.html'
+    context_object_name = 'notification'
 
+    def get_queryset(self):
+        # Only allow access to notifications the user is part of
+        return Notification.objects.filter(
+            event__attendees=self.request.user
+        ).select_related('event')
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if not obj.is_read:
+            obj.is_read = True
+            obj.save(update_fields=["is_read"])
+        return obj
 
 def skill_browser(request: HttpRequest) -> HttpResponse:
     """ Skill browser page.

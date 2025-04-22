@@ -1,32 +1,9 @@
-{% extends 'table.html' %}
+{% extends 'root.html' %}
 
 {% block title %}Inbox{% endblock title %}
-{% block table_title %}Inbox{% endblock table_title %}
-{% block table_content %}
 
-<div class="overflow-x-auto border border-base-content/5 bg-base-100 w-5xl">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Read</th>
-        <th>Subject</th>
-        <th>Body</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for notification in notifications %}
-        <tr class="hover:bg-base-300">
-          <td>{{ notification.is_read }}</td>
-          <td>{{ notification.subject }}</td>
-          <td>{{ notification.body }}</td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="3" class="text-center">No notifications found.</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-
-{% endblock table_content %}
+{% block content %}
+    <div class="grow flex justify-around h-fit">
+        {% include "partials/table.html" with records=inbox fields=inbox_fields headers=inbox_headers table_title="My Inbox" view_page="view_notification" %}
+    </div>
+{% endblock content %}
