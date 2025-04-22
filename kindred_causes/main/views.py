@@ -305,20 +305,32 @@ class TaskHistoryView(LoginRequiredMixin, TemplateView):
         return context
     
 class NotificationCreateView(CreateView):
-        model = Notification
-        form_class = NotificationManagementForm
-        template_name = 'notification_management.html'
-        extra_context = {'view_type': 'create'}
+    model = Notification
+    form_class = NotificationManagementForm
+    template_name = 'notification_management.html'
+    extra_context = {'view_type': 'create'}
 
-        def post(self, request, *args, **kwargs):
-            # Get a list of all attendees for the given event
-            # Create a new notification for each attendee as the recipient
-            # Save 
-            # request.POST['recipient'] = request.user Try to update the user in the request to be the person in the requiest 
-            return super().post(request, *args, **kwargs)
-        
-        def get_success_url(self):
-            return redirect('home').url #idk where to redirect yet will change later
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            # Get event, subject, body from form
+            event = form.cleaned_data['event']
+            subject = form.cleaned_data['subject']
+            body = form.cleaned_data['body']
+            # Loop through event attendees and create notifications
+            for attendee in event.attendees.all():
+                Notification.objects.create(
+                    event=event,
+                    recipient=attendee,
+                    subject=subject,
+                    body=body,
+                    is_read=False
+                )
+            return redirect(self.get_success_url())
+        return self.form_invalid(form)
+
+    def get_success_url(self):
+        return redirect('home').url
 
 
 class SkillManagementCreateView(CreateView):
@@ -361,12 +373,13 @@ class NotificationInboxView(TemplateView):
         user = self.request.user
 
         context['inbox'] = Notification.objects.select_related('event') \
-            .filter(event__attendees=user) \
+            .filter(recipient=user) \
             .order_by('-created_at')
 
         context['inbox_fields'] = ["is_read", "event", "subject"]
         context['inbox_headers'] = ["Read", "Event", "Subject"]
         return context
+
 
 
 class NotificationDetailView(LoginRequiredMixin, DetailView):
