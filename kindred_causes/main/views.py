@@ -712,7 +712,7 @@ class AccountView(LoginRequiredMixin, TemplateView):
             "city": profile.city,
             "state": profile.state,
             "zipcode": profile.zipcode,
-            # "email": profile.email,  
+            "email": profile.email,  
             "phone": profile.phone,  
             # "preferences": profile.preferences,
             # "start_availability": profile.start_availability,
