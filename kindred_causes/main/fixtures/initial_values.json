@@ -46,5 +46,161 @@
             "name": "Empathy",
             "description": "Know how to feel"
         }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 1,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Default Avatar 1",
+            "image_url": ""
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 2,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Default Avatar 2",
+            "image_url": "https://example.com/avatar2.png"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 3,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Cat",
+            "image_url": "https://i.imgur.com/2H4Zt9P.jpeg"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 4,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Human",
+            "image_url": "https://i1.sndcdn.com/artworks-x8zI2HVC2pnkK7F5-4xKLyA-t1080x1080.jpg"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 6,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Lelouch",
+            "image_url": "https://i.imgur.com/6lWVIa0.png"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 7,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "SpongeBob",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/SpongeBob_SquarePants_character.png"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 8,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Sunset",
+            "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/db/Dresden.afterglow.700px.jpg"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 9,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Female",
+            "image_url": "https://images.icon-icons.com/3150/PNG/512/user_profile_female_icon_192701.png"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 10,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Male",
+            "image_url": "https://images.icon-icons.com/3150/PNG/512/user_profile_male_icon_192702.png"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 11,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Landscape - Ranch",
+            "image_url": "https://www.boredpanda.com/blog/wp-content/uploads/2017/06/DSC00330-Edit-59391339deded__880.jpg"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 12,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Rainbow Cat",
+            "image_url": "https://assets.foundation.app/es/wD/Qmcg8f4F9cig2JWXunxJcdBe58Q5myYXPmGfuMn1TVeswD/nft.jpg"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 13,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Landscape - Flower",
+            "image_url": "https://static.bhphotovideo.com/explora/sites/default/files/03-shutterstock_97696616.jpg"
+        }
+    },
+    {
+        "model": "main.avataroption",
+        "pk": 14,
+        "fields": {
+            "created_at": "2025-04-22T00:00:00Z",
+            "updated_at": "2025-04-22T00:00:00Z",
+            "created_by": 1,
+            "updated_by": null,
+            "name": "Bird",
+            "image_url": "https://abcbirds.org/wp-content/uploads/2019/01/BOTW-Homepage-Thumbnail_Mountain-Bluebird_Double-Brow-Imagery_Shutterstock.jpg"
+        }
     }
 ]
