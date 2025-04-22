@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin, AccessMixin
 from django.views import View
 from django.contrib.auth.models import Group
 from django.contrib import messages
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -147,6 +149,98 @@ class EventDeleteView(AccessMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('home')
+
+
+def generate_event_report(request, pk):
+    event = Event.objects.get(pk=pk)
+    tasks = event.tasks.all()
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="event_report_{event.id}.pdf"'
+
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
+    y = height - 50
+
+    def draw_line(p, y, txt, font="Helvetica", size=12, bold=False, indent=0):
+        if bold:
+            p.setFont("Helvetica-Bold", size)
+        else:
+            p.setFont(font, size)
+        p.drawString(50 + indent, y, txt)
+        return y - 18
+
+    def get_user_skills(user):
+        """Gather all skills from tasks the user is assigned to."""
+        skill_set = set()
+        for task in user.tasks.all():
+            for skill in task.skills.all():
+                skill_set.add(skill.name)
+        return sorted(skill_set)
+
+    # Event Header
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(50, y, f"Event Report: {event.name}")
+    y -= 30
+
+    y = draw_line(p, y, f"Description: {event.description}")
+    y = draw_line(p, y, f"Location: {event.location}")
+    y = draw_line(p, y, f"Urgency: {event.get_urgency_display()}")
+    if event.date:
+        y = draw_line(p, y, f"Date: {event.date.strftime('%Y-%m-%d %H:%M')}")
+    y = draw_line(p, y, f"Total Capacity: {event.capacity}")
+    y = draw_line(p, y, f"Total Attendees: {event.attendee_count}")
+    y -= 10
+
+    # Task Breakdown
+    y = draw_line(p, y, "Tasks", bold=True, size=14)
+
+    for task in tasks:
+        if y < 120:
+            p.showPage()
+            y = height - 50
+
+        y = draw_line(p, y, f"- {task.name}", bold=True, indent=10)
+        y = draw_line(p, y, f"  Description: {task.description}", indent=10)
+        y = draw_line(p, y, f"  Location: {task.location}", indent=10)
+        y = draw_line(p, y, f"  Capacity: {task.capacity}", indent=10)
+
+        # Required skills
+        skills = task.skills.all()
+        skills_str = ", ".join([s.name for s in skills]) if skills else "None"
+        y = draw_line(p, y, f"  Required Skills: {skills_str}", indent=10)
+
+        # Assigned Users
+        y = draw_line(p, y, f"  Assigned Attendees:", indent=10)
+        assigned_users = task.attendees.all()
+        if not assigned_users:
+            y = draw_line(p, y, "    (None)", indent=20)
+        else:
+            for user in assigned_users:
+                full_name = user.get_full_name() or user.username
+                user_skills = get_user_skills(user)
+                skills_str = f" (Skills: {', '.join(user_skills)})" if user_skills else ""
+                y = draw_line(p, y, f"    • {full_name}{skills_str}", indent=20)
+
+                # Previous Events attended by the user (excluding this one)
+                previous_events = user.events.exclude(pk=event.pk).order_by('-date')
+                if previous_events.exists():
+                    for prev_event in previous_events:
+                        name_date = f"{prev_event.name} ({prev_event.date.strftime('%Y-%m-%d') if prev_event.date else 'No date'})"
+                        y = draw_line(p, y, f"       - {name_date}", indent=30)
+                        if y < 100:
+                            p.showPage()
+                            y = height - 50
+                else:
+                    y = draw_line(p, y, "       - (No previous events)", indent=30)
+
+                if y < 100:
+                    p.showPage()
+                    y = height - 50
+
+    p.showPage()
+    p.save()
+    return response
 
 
 class JoinEventView(LoginRequiredMixin, TemplateView):

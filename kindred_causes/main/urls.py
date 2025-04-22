@@ -29,6 +29,7 @@ urlpatterns = [
     path('event/view/<int:pk>/', views.EventDetailView.as_view(), name='view_event'),
     path('event/edit/<int:pk>/', views.EventUpdateView.as_view(), name='edit_event'),
     path('event/delete/<int:pk>/', views.EventDeleteView.as_view(), name='delete_event'),
+    path('event/<int:pk>/report/', views.generate_event_report, name='generate_event_report'),
 
     path('task/new/<int:event_id>', views.TaskCreateView.as_view(), name='new_task'),
     path('task/view/<int:pk>/', views.TaskDetailView.as_view(), name='view_task'),

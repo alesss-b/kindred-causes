@@ -60,6 +60,9 @@
                             <a href="{% url 'new_task' object.id %}" class="btn">
                                 Add Task
                             </a>
+                            <a href="{% url 'generate_event_report' object.id %}" class="btn">
+                                Generate Report
+                            </a>
                         {% endif %}
                     {% endfor %}
                     {% if user not in object.attendees.all %}
