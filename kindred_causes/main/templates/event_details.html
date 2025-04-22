@@ -59,13 +59,15 @@
                         {% if group.name == 'Admin' %}
                             <a href="{% url 'new_task' object.id %}" class="btn">
                                 Add Task
+                            
                             </a>
-                            <a href="{% url 'generate_event_report_pdf' object.id %}" class="btn">
+                            <a target="blank" href="{% url 'generate_event_report_pdf' object.id %}" class="btn">
                                 Generate Report PDF
                             </a>
-                            <a href="{% url 'generate_event_report_csv' object.id %}" class="btn">
-                                Generate Report CSV
-                            </a>
+                        </a>
+                        <a target="blank" href="{% url 'generate_event_report_csv' object.id %}" class="btn">
+                            Generate Report CSV
+                        </a>
                         {% endif %}
                     {% endfor %}
                     {% if user not in object.attendees.all %}
@@ -87,8 +89,16 @@
             {% for group in user.groups.all %}
                 {% if group.name == 'Admin' %}
                     {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Event Tasks" view_page="view_task" %}
+
                 {% elif group.name == 'Volunteer' %}
                     {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="My Tasks"%}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="col-span-1">
+            {% for group in user.groups.all %}
+                {% if group.name == 'Admin' %}
+                    {% include "partials/table.html" with records=event_reviews fields=event_reviews_fields headers=event_reviews_headers table_title="Event Reviews" %}
                 {% endif %}
             {% endfor %}
         </div>

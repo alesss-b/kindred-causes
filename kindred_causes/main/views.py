@@ -102,9 +102,9 @@ class EventDetailView(LoginRequiredMixin, DetailView):
 
         context['tasks_fields'] = ["name", "description", "attendee_count", "capacity", "location"]
         context['tasks_headers'] = ["Name", "Description", "Attendees", "Capacity", "Location"]
-
-
-
+        context['event_reviews'] = event.event_reviews.all()
+        context['event_reviews_fields'] = ["rating", "comments"]
+        context['event_reviews_headers'] = ["Rating", "Comments"]
         return context
 
 

@@ -21,7 +21,9 @@
 
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar indicator">
-                    <span class="indicator-item status indicator-start status-primary"></span>
+                    {% if unread_notifications > 0 %}
+                        <span class="indicator-item status indicator-start status-primary"></span>
+                    {% endif %}
                     <div class="w-10 rounded-full">
                         {% if profile.avatar %}
                             <img src="{{ profile.avatar.image_url }}" alt="Avatar" class="rounded-full w-10 h-10">
