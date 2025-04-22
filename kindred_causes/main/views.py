@@ -330,7 +330,7 @@ class NotificationCreateView(CreateView):
         return self.form_invalid(form)
 
     def get_success_url(self):
-        return redirect('home').url
+        return redirect('inbox').url
 
 
 class SkillManagementCreateView(CreateView):
