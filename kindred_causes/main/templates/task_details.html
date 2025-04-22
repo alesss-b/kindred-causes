@@ -33,16 +33,18 @@
                         {{ object.description }}
                     </div>
                     <div class="flex flex-row gap-2 w-full">
-                        <h2 class="font-bold"> Capacity: </h2>
-                        {{ object.capacity }}
-                    </div>
-                    <div class="flex flex-row gap-2 w-full">
                         <h2 class="font-bold"> Location: </h2>
                         {{ object.location }}
                     </div>
                     <div class="flex flex-row gap-2 w-full">
+                        <h2 class="font-bold"> Capacity: </h2>
+                        {{ object.capacity }}
+                    </div>
+                    <div class="flex flex-row gap-2 w-full">
                         <h2 class="font-bold"> Attendee Count: </h2>
+                        <div class="{% if object.attendee_count > object.capacity %} text-error {% endif %}">
                         {{ object.attendee_count }}
+                        </div>
                     </div>
                     <div class="flex flex-row gap-2 w-full">
                         <h2 class="font-bold"> Required Skills: </h2>

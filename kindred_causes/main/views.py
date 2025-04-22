@@ -310,6 +310,13 @@ class NotificationCreateView(CreateView):
         template_name = 'notification_management.html'
         extra_context = {'view_type': 'create'}
 
+        def post(self, request, *args, **kwargs):
+            # Get a list of all attendees for the given event
+            # Create a new notification for each attendee as the recipient
+            # Save 
+            # request.POST['recipient'] = request.user Try to update the user in the request to be the person in the requiest 
+            return super().post(request, *args, **kwargs)
+        
         def get_success_url(self):
             return redirect('home').url #idk where to redirect yet will change later
 
