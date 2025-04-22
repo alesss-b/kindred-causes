@@ -11,6 +11,7 @@ from django.contrib.auth.models import Group
 from django.contrib import messages
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import csv
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -102,6 +103,8 @@ class EventDetailView(LoginRequiredMixin, DetailView):
         context['tasks_fields'] = ["name", "description", "attendee_count", "capacity", "location"]
         context['tasks_headers'] = ["Name", "Description", "Attendees", "Capacity", "Location"]
 
+
+
         return context
 
 
@@ -156,8 +159,86 @@ class EventDeleteView(AccessMixin, DeleteView):
     def get_success_url(self):
         return reverse('home')
 
+def export_event_report_csv(request, pk):
+    event = Event.objects.get(pk=pk)
+    tasks = event.tasks.all()
+    reviews = event.event_reviews.all().order_by('-created_at')
 
-def generate_event_report(request, pk):
+    def get_user_skills(user):
+        skill_set = set()
+        for task in user.tasks.all():
+            for skill in task.skills.all():
+                skill_set.add(skill.name)
+        return sorted(skill_set)
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="event_report_{event.id}.csv"'
+
+    writer = csv.writer(response)
+
+    # Section: Event Summary
+    writer.writerow(["Event Summary"])
+    writer.writerow(["Name", event.name])
+    writer.writerow(["Description", event.description])
+    writer.writerow(["Location", event.location])
+    writer.writerow(["Urgency", event.get_urgency_display()])
+    writer.writerow(["Date", event.date.strftime('%Y-%m-%d %H:%M') if event.date else "N/A"])
+    writer.writerow(["Total Capacity", event.capacity])
+    writer.writerow(["Total Attendees", event.attendee_count])
+    writer.writerow([])
+
+    # Section: Tasks
+    writer.writerow(["Tasks"])
+    writer.writerow(["Name", "Description", "Location", "Capacity", "Required Skills", "Assigned Attendees", "Attendee Skills", "Attendee Previous Events"])
+
+    for task in tasks:
+        assigned_users = task.attendees.all()
+        skills = ", ".join([s.name for s in task.skills.all()]) if task.skills.exists() else "None"
+
+        if not assigned_users:
+            writer.writerow([
+                task.name,
+                task.description,
+                task.location,
+                task.capacity,
+                skills,
+                "(None)",
+                "",
+                ""
+            ])
+        else:
+            for user in assigned_users:
+                full_name = user.get_full_name() or user.username
+                user_skills = ", ".join(get_user_skills(user)) or "None"
+                previous_events = user.events.exclude(pk=event.pk).order_by('-date')
+                prev_titles = ", ".join([f"{e.name} ({e.date.strftime('%Y-%m-%d') if e.date else 'No date'})" for e in previous_events]) or "None"
+
+                writer.writerow([
+                    task.name,
+                    task.description,
+                    task.location,
+                    task.capacity,
+                    skills,
+                    full_name,
+                    user_skills,
+                    prev_titles
+                ])
+
+    writer.writerow([])
+
+    # Section: Reviews
+    writer.writerow(["Event Reviews"])
+    writer.writerow(["Rating", "Comments"])
+
+    if not reviews.exists():
+        writer.writerow(["None", "No reviews submitted."])
+    else:
+        for review in reviews:
+            writer.writerow([review.rating, review.comments])
+
+    return response
+
+def generate_event_report_pdf(request, pk):
     event = Event.objects.get(pk=pk)
     tasks = event.tasks.all()
     reviews = event.event_reviews.all().order_by('-created_at')  # updated
