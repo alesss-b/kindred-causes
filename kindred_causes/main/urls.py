@@ -10,6 +10,7 @@ urlpatterns = [
     
     path('notification/new/', views.NotificationCreateView.as_view(), name='new_notification'),
     path('inbox/', views.NotificationInboxView.as_view(), name='inbox'),
+    path('inbox/view/<int:pk>/', views.NotificationDetailView.as_view(), name='view_notification'),
     
     path('account/', views.AccountView.as_view(), name='account'),
     path('volunteer_history/', views.TaskHistoryView.as_view(), name='volunteer_history'),
