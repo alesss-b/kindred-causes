@@ -60,7 +60,7 @@
                             <a href="{% url 'new_task' object.id %}" class="btn">
                                 Add Task
                             </a>
-                            <a href="{% url 'generate_event_report' object.id %}" class="btn">
+                            <a target="blank" href="{% url 'generate_event_report' object.id %}" class="btn">
                                 Generate Report
                             </a>
                         {% endif %}
