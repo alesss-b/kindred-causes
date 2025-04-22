@@ -21,7 +21,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self,*args, **kwargs):
         context = super(HomeView, self).get_context_data(*args,**kwargs)
         if self.request.user.groups.filter(name='Volunteer').exists():
-            context['events'] = Event.objects.filter(admin=self.request.user)
+            context['events'] = self.request.user.events.all()
         elif self.request.user.groups.filter(name='Admin').exists():
             context['events'] = Event.objects.filter(admin=self.request.user)
 
@@ -88,7 +88,10 @@ class EventDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.filter(event=self.get_object())
+        if self.request.user.groups.filter(name='Volunteer').exists():
+            context['tasks'] = self.request.user.tasks.filter(event=self.get_object())
+        elif self.request.user.groups.filter(name='Admin').exists():
+            context['tasks'] = Task.objects.filter(event=self.get_object())
         context['tasks_fields'] = ["name","description","attendee_count","capacity","location"]
         context['tasks_headers'] = ["Name","Description","Attendees","Capacity","Location"]
         return context
@@ -146,6 +149,60 @@ class EventDeleteView(AccessMixin, DeleteView):
         return reverse('home')
 
 
+class JoinEventView(LoginRequiredMixin, TemplateView):
+    """Join Event View
+    Page confirming that user wants to join the event.
+
+    Requires login.
+    """
+    template_name = 'confirm_join_event.html'
+
+    def post(self, request, *args, **kwargs):
+        if 'event_id' in kwargs:
+            event = Event.objects.get(id=self.kwargs['event_id'])
+            event.attendees.add(request.user)
+            event.save()
+        
+        return HttpResponseRedirect(reverse('view_event', kwargs={'pk':event.id}))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if 'event_id' in self.kwargs:
+            context['event'] = Event.objects.get(pk=self.kwargs['event_id'])
+        context['user'] = self.request.user
+        return context
+    
+
+class LeaveEventView(LoginRequiredMixin, TemplateView):
+    """Leave Event View
+    Page confirming that user wants to leave the event.
+
+    Requires login.
+    """
+    template_name = 'confirm_leave_event.html'
+
+    def post(self, request, *args, **kwargs):
+        if 'event_id' in kwargs:
+            event = Event.objects.get(id=self.kwargs['event_id'])
+            event.attendees.remove(request.user)
+            event.save()
+            
+            for task in request.user.tasks.all():
+                task.attendees.remove(request.user)
+                task.save()
+        
+        return HttpResponseRedirect(reverse('view_event', kwargs={'pk':event.id}))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if 'event_id' in self.kwargs:
+            context['event'] = Event.objects.get(pk=self.kwargs['event_id'])
+        context['user'] = self.request.user
+        return context
+
+
 # Task views:
 class TaskCreateView(AccessMixin, CreateView):
     """Task Create View
@@ -190,14 +247,24 @@ class TaskCreateView(AccessMixin, CreateView):
             return reverse('home')
 
 
-class TaskDetailView(LoginRequiredMixin, DetailView):
+class TaskDetailView(AccessMixin, DetailView):
     """Task Detail View
     Page showing Task information and child Tasks.
 
-    Requires login to view.
+    Only accessible for Admin group members.
     """
     model = Task
     template_name = 'task_details.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -212,7 +279,7 @@ class AssignTaskView(AccessMixin, TemplateView):
     """Assign Task View
     Page confirming that user should be assigned to task.
 
-    Requires login to view.
+    Only accessible for Admin group members.
     """
     template_name = 'confirm_assign_task.html'
 
@@ -253,7 +320,7 @@ class RemoveTaskView(AccessMixin, TemplateView):
     """Remove Task View
     Page confirming that user should be unassigned from task.
 
-    Requires login to view.
+    Only accessible for Admin group members.
     """
     template_name = 'confirm_remove_task.html'
 

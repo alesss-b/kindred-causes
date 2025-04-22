@@ -1,0 +1,19 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Confirm Join Event{% endblock page_title %}
+{% block form_title %}
+    <div class="">Join Event "{{ event.name }}"?</div>
+{% endblock form_title %}
+
+{% block form_action %}
+    {% url 'join_event' event.pk %}
+{% endblock form_action %}
+
+{% block form_content %}
+    Are you sure you want to join event "{{event.name}}"?
+{% endblock form_content%}
+
+{% block form_buttons %}
+    <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+    <button type="submit" class="btn btn-success">Join Event</button>
+{% endblock form_buttons %}

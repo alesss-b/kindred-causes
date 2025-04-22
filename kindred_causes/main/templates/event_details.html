@@ -9,12 +9,17 @@
                 <div class="flex justify-between items-center px-2 w-full bg-neutral text-neutral-content">
                     <div class="size-6"></div>
                     <div class="text-2xl font-bold text-center py-2">Event Details</div>
-                    <a class="btn btn-circle btn-ghost" href="{% url 'edit_event' event.pk %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                        </svg>
-                        
-                    </a>
+                    {% for group in user.groups.all %}
+                        {% if group.name == 'Admin' %}
+                            <a class="btn btn-circle btn-ghost" href="{% url 'edit_event' event.pk %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                </svg>
+                            </a>
+                        {% elif group.name == 'Volunteer' %}
+                            <div class="size-6"></div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             
                 <div class="grow w-full p-5 flex flex-col justify-between gap-1">
@@ -50,14 +55,33 @@
                         <h2 class="font-bold"> Urgency: </h2>
                         {{ object.get_urgency_display }}
                     </div>
-                    <a href="{% url 'new_task' object.id %}" class="btn">
-                        Add Task
-                    </a>
+                    {% for group in user.groups.all %}
+                        {% if group.name == 'Admin' %}
+                            <a href="{% url 'new_task' object.id %}" class="btn">
+                                Add Task
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                    {% if user not in object.attendees.all %}
+                        <a href="{% url 'join_event' object.id %}" class="btn">
+                            Join Event
+                        </a>
+                    {% else %}
+                        <a href="{% url 'leave_event' object.id %}" class="btn">
+                            Leave Event
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
         <div class="col-span-2 flex justify-around h-fit">
-            {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Event Tasks" view_page="view_task" %}
+            {% for group in user.groups.all %}
+                {% if group.name == 'Admin' %}
+                    {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="Event Tasks" view_page="view_task" %}
+                {% elif group.name == 'Volunteer' %}
+                    {% include "partials/table.html" with records=tasks fields=tasks_fields headers=tasks_headers table_title="My Tasks"%}
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}

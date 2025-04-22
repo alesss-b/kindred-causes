@@ -1,0 +1,19 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Confirm Leave Event{% endblock page_title %}
+{% block form_title %}
+    <div class="">Leave Event "{{ event.name }}"?</div>
+{% endblock form_title %}
+
+{% block form_action %}
+    {% url 'leave_event' event.pk %}
+{% endblock form_action %}
+
+{% block form_content %}
+    Are you sure you want to leave event "{{event.name}}"?
+{% endblock form_content%}
+
+{% block form_buttons %}
+    <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+    <button type="submit" class="btn btn-error">Leave Event</button>
+{% endblock form_buttons %}
