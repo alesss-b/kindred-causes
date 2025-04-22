@@ -3,9 +3,9 @@
 {% block page_title %}Event Details{% endblock page_title %}
 
 {% block content %}
-    <div class="grow grid grid-cols-3 h-fit gap-5">
-        <div class="col-span-1">
-            <div class="flex flex-col justify-between items-center h-full w-full m-5 overflow-x-auto border border-base-content/5 accent bg-base-100 rounded-2xl">
+    <div class="grow flex flex-row h-fit">
+        <div class="col-span-1 m-5">
+            <div class="flex flex-col justify-between items-center h-full w-full overflow-x-auto border border-base-content/5 accent bg-base-100 rounded-2xl">
                 <div class="flex justify-between items-center px-2 w-full bg-neutral text-neutral-content">
                     <div class="size-6"></div>
                     <div class="text-2xl font-bold text-center py-2">Task Details</div>
@@ -54,14 +54,54 @@
                             No skills required
                         {% endfor %}
                     </div>
-                    <a href="{% url 'matching_form' %}" class="btn">
-                        Assign Attendee
-                    </a>
                 </div>
             </div>
         </div>
-        <div class="col-span-2 flex justify-around h-fit">
-            {% include "partials/table.html" with records=attendees fields=attendees_fields headers=attendees_headers table_title="Assigned Attendees" view_page="view_task" %}
+        <div class="flex justify-around h-fit grow">
+            <div class="h-full w-full m-5 overflow-x-auto border border-base-content/5 accent bg-base-100 rounded-2xl">
+                <div class="text-2xl font-bold w-full text-center py-2 bg-neutral text-neutral-content">Assigned Attendees</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Skills</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in attendees %}
+                            <tr class="hover:bg-base-300 cursor-pointer">
+                                    <td>{{user.get_full_name}}</td>
+                                    <td>{{user.profile.get_skill_names}}</t>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="2">No records found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="flex justify-around h-fit grow">
+            <div class="h-full w-full m-5 overflow-x-auto border border-base-content/5 accent bg-base-100 rounded-2xl">
+                <div class="text-2xl font-bold w-full text-center py-2 bg-neutral text-neutral-content">Unassigned Users</div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Skills</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in unassigned_users %}
+                            <tr class="hover:bg-base-300 cursor-pointer" onclick="window.location='{% url 'assign_user_to_task' user.pk object.pk %}'">
+                                    <td>{{user.get_full_name}}</td>
+                                    <td>{{user.profile.get_skill_names}}</t>
+                            </tr>
+                        {% empty %}
+                            <tr><td colspan="2">No records found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock content %}

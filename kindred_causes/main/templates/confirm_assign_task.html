@@ -1,0 +1,19 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Task Assignment Form{% endblock page_title %}
+{% block form_title %}
+    <div class="">Assign User {{user.get_full_name}} to Task "{{ task.name }}"?</div>
+{% endblock form_title %}
+
+{% block form_action %}
+    {% url 'assign_user_to_task' user.pk task.pk %}
+{% endblock form_action %}
+
+{% block form_content %}
+    Are you sure you want to assign {{user.get_full_name}} the task "{{ task.name }}"?
+{% endblock form_content%}
+
+{% block form_buttons %}
+    <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+    <button type="submit" class="btn btn-success">Assign to Task</button>
+{% endblock form_buttons %}
