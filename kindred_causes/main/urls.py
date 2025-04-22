@@ -16,6 +16,7 @@ urlpatterns = [
     path('matching_form/', views.matching_form, name='matching_form'),
 
     path('assign_user_to_task/<int:user_id>/<int:task_id>', views.AssignTaskView.as_view(), name='assign_user_to_task'),
+    path('remove_user_from_task/<int:user_id>/<int:task_id>', views.RemoveTaskView.as_view(), name='remove_user_from_task'),
 
     path('', views.LandingView.as_view(), name='landing'),
     path('home/', views.HomeView.as_view(), name='home'),

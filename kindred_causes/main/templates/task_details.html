@@ -69,7 +69,7 @@
                     </thead>
                     <tbody>
                         {% for user in attendees %}
-                            <tr class="hover:bg-base-300 cursor-pointer">
+                            <tr class="hover:bg-base-300 cursor-pointer" onclick="window.location='{% url 'remove_user_from_task' user.pk object.pk %}'">
                                     <td>{{user.get_full_name}}</td>
                                     <td>{{user.profile.get_skill_names}}</t>
                             </tr>

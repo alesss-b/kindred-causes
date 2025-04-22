@@ -245,7 +245,47 @@ class AssignTaskView(AccessMixin, TemplateView):
 
         if 'task_id' in self.kwargs:
             context['task'] = Task.objects.get(id=self.kwargs['task_id'])
-        print(context)
+        return context
+    
+
+
+class RemoveTaskView(AccessMixin, TemplateView):
+    """Remove Task View
+    Page confirming that user should be unassigned from task.
+
+    Requires login to view.
+    """
+    template_name = 'confirm_remove_task.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        """Handles authorization
+        """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        if not self.request.user.groups.filter(name="Admin").exists():
+            return HttpResponseRedirect(reverse('home'))
+
+        return super().dispatch(request, *args, **kwargs)
+    
+
+    def post(self, request, *args, **kwargs):
+        if 'user_id' in kwargs and 'task_id' in kwargs:
+            user = User.objects.get(pk=self.kwargs['user_id'])
+            task = Task.objects.get(id=self.kwargs['task_id'])
+            task.attendees.remove(user)
+            task.save()
+        
+        return HttpResponseRedirect(reverse('view_task', kwargs={'pk':task.id}))
+            
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if 'user_id' in self.kwargs:
+            context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+
+        if 'task_id' in self.kwargs:
+            context['task'] = Task.objects.get(id=self.kwargs['task_id'])
         return context
 
 

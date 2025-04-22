@@ -1,0 +1,19 @@
+{% extends 'form.html' %}
+
+{% block page_title %}Task Assignment Form{% endblock page_title %}
+{% block form_title %}
+    <div class="">Remove User {{user.get_full_name}} from Task "{{ task.name }}"?</div>
+{% endblock form_title %}
+
+{% block form_action %}
+    {% url 'remove_user_from_task' user.pk task.pk %}
+{% endblock form_action %}
+
+{% block form_content %}
+    Are you sure you want to remove {{user.get_full_name}} from the task "{{ task.name }}"?
+{% endblock form_content%}
+
+{% block form_buttons %}
+    <a onClick="javascript:history.go(-1);" class="btn">Cancel</a>
+    <button type="submit" class="btn btn-error">Remove from Task</button>
+{% endblock form_buttons %}
