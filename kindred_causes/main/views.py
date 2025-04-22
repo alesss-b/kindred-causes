@@ -682,17 +682,17 @@ class AccountView(LoginRequiredMixin, TemplateView):
 
         context.update({
             "profile": profile,
-            "name": profile.name,
+            # "name": profile.name,
             "address1": profile.address1,
             "address2": profile.address2,
             "city": profile.city,
             "state": profile.state,
             "zipcode": profile.zipcode,
-            "email": profile.email,  
+            # "email": profile.email,  
             "phone": profile.phone,  
-            "preferences": profile.preferences,
-            "start_availability": profile.start_availability,
-            "end_availability": profile.end_availability,
+            # "preferences": profile.preferences,
+            # "start_availability": profile.start_availability,
+            # "end_availability": profile.end_availability,
             "skills": ", ".join(skill.name for skill in profile.skills.all()),
         })
         return context
@@ -714,14 +714,14 @@ class AccountManagementView(LoginRequiredMixin, View):
         profile.city = request.POST.get("city", profile.city)
         profile.state = request.POST.get("state", profile.state)
         profile.zipcode = request.POST.get("zipcode", profile.zipcode)
-        profile.email = request.POST.get("email", profile.email)  
+        # profile.email = request.POST.get("email", profile.email)  
         profile.phone = request.POST.get("phone", profile.phone)  
-        profile.preferences = request.POST.get("preferences", profile.preferences)
-        start_availability = request.POST.get("start_availability", "").strip()
-        end_availability = request.POST.get("end_availability", "").strip()
+        # profile.preferences = request.POST.get("preferences", profile.preferences)
+        # start_availability = request.POST.get("start_availability", "").strip()
+        # end_availability = request.POST.get("end_availability", "").strip()
 
-        profile.start_availability = start_availability if start_availability else profile.start_availability
-        profile.end_availability = end_availability if end_availability else profile.end_availability
+        # profile.start_availability = start_availability if start_availability else profile.start_availability
+        # profile.end_availability = end_availability if end_availability else profile.end_availability
 
         skill_ids = request.POST.getlist("skills")
         skills = Skill.objects.filter(id__in=skill_ids)

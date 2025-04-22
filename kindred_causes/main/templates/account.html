@@ -19,7 +19,10 @@
           <div class="flex flex-col space-y-4 w-full">
               <a href="/account_management" class="btn btn-primary w-2/3 mx-auto">Edit Profile</a>
               <a href="/volunteer_history" class="btn btn-accent w-2/3 mx-auto">Volunteer History</a>
-              <button class="btn btn-secondary w-2/3 mx-auto">Logout</button>
+              <form class="w-2/3 mx-auto" action="{% url 'logout' %}" onclick="this.submit();" method="post">
+                {% csrf_token %}
+                <button type="submit" class="w-full btn btn-secondary mx-auto">Logout</button>
+            </form>
           </div>
         </div>
 
@@ -27,7 +30,7 @@
         <div class="flex flex-col space-y-6">
             
             <!-- Stats -->
-            <div class="stats shadow w-full bg-base-100">
+            {% comment %} <div class="stats shadow w-full bg-base-100">
                 <div class="stat">
                     <div class="stat-title"># Of Users</div>
                     <div class="stat-value">31K</div>
@@ -52,12 +55,18 @@
                 <div class="radial-progress text-secondary" style="--value:80;">Medium</div>
                 <div class="radial-progress text-accent" style="--value:0;">Advance</div>
                 <div class="radial-progress text-error" style="--value:0;">Expert</div>
-            </div>
+            </div> {% endcomment %}
 
             <!-- Account Information -->
             <div class="flex items-center space-x-2">
                 <h2 class="text-2xl font-bold">Account Information</h2>
-                <div class="tooltip tooltip-right" data-tip="This is an Admin/Volunteer Account">
+                {% for group in user.groups.all %}
+                    {% if group.name == "Admin" %}
+                        <div class="tooltip tooltip-right" data-tip="This is an Admin Account">
+                    {% elif group.name == "Volunteer" %}
+                        <div class="tooltip tooltip-right" data-tip="This is an Volunteer Account">
+                    {% endif %}
+                {% endfor%}
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-gray-500 cursor-pointer">
                         <path fill-rule="evenodd" d="M12 2a10 10 0 100 20 10 10 0 000-20zM11 10a1 1 0 012 0v4a1 1 0 01-2 0v-4zm1 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"/>
                     </svg>
@@ -67,10 +76,10 @@
                 <input type="radio" name="accordion-info" checked />
                 <div class="collapse-title text-xl font-medium">Public Information</div>
                 <div class="collapse-content">
-                    <p class="text-lg">Name: {{ name }}</p>
+                    <p class="text-lg">Name: {{ user.get_full_name }}</p>
                     <p class="text-lg">Joined: January 1, 2020</p>
-                    <p class="text-lg">Start of Availability: {{ start_availability }}</p>
-                    <p class="text-lg">End of Availability: {{ end_availability }}</p>
+                    {% comment %} <p class="text-lg">Start of Availability: {{ start_availability }}</p>
+                    <p class="text-lg">End of Availability: {{ end_availability }}</p> {% endcomment %}
                     <p class="text-lg">City: {{ city }}</p>
                     <p class="text-lg">State: {{ state }}</p>
                     <p class="text-lg">Skills: {{ skills }}</p>

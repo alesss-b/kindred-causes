@@ -18,11 +18,6 @@
     </select>
 </fieldset>
 
-<fieldset class="fieldset w-full">
-    <legend class="fieldset-legend ">Name</legend>
-    <input type="text" name="name" class="input w-full" placeholder="Enter Name" value = "{{ profile.name }}" />
-</fieldset>
-
 <!-- Address 1 -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Address 1</legend>
@@ -117,11 +112,6 @@
     <p class="validator-hint">Must be 10 digits</p>
 </fieldset>
 
-
-<fieldset class="fieldset w-full">
-    <legend class="fieldset-legend ">Email <Address></Address></legend>
-    <input type="email" name="email" class="input w-full" placeholder="abc@example.com" value="{{ profile.email }}" maxlength="100" required />
-</fieldset>
     
 <!-- Skills-->
 <fieldset class="fieldset w-full">
@@ -142,7 +132,7 @@
     </details>
 </fieldset>
 
-<!-- Preferences -->
+{% comment %} <!-- Preferences -->
 <fieldset class="fieldset w-full">
     <legend class="fieldset-legend">Preferences</legend>
     <textarea class="textarea h-24 text-wrap w-full" name="preferences" placeholder="Enter your preferences">{{ profile.preferences }}</textarea>
@@ -161,7 +151,7 @@
        <legend class="fieldset-legend">End of Availability</legend>
         <input name="end_availability" type="date" class="input" {% if profile.end_availability %}value="{{ profile.end_availability }}"{% else %}required{% endif %}/>
     </fieldset>
-</div>
+</div> {% endcomment %}
 
 {% endblock form_content %}
 
