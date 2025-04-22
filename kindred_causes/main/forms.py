@@ -82,6 +82,14 @@ class TaskForm(forms.ModelForm):
         })
     )
 
+    skills = forms.ModelMultipleChoiceField(
+        queryset=Skill.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={
+            'class': 'checkbox mr-2',  # style each checkbox
+        }),
+        required=False,
+    )
+
 
 class EventForm(forms.ModelForm):
     class Meta:
