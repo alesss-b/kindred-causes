@@ -26,3 +26,10 @@ def get_attr(obj, attr):
 
 
     return attribute
+
+@register.filter
+def phone_format(value):
+    """Formats a 10-digit phone number as XXX-XXX-XXXX"""
+    if value and len(value) == 10 and value.isdigit():
+        return f"{value[:3]}-{value[3:6]}-{value[6:]}"
+    return value  # fallback if already formatted or invalid
