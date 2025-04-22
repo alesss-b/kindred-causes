@@ -36,10 +36,24 @@
     <fieldset class="fieldset w-full">
         {{form.location}}
     </fieldset>
-
     <fieldset class="fieldset w-full">
-        {{form.skills}}
+        <legend class="fieldset-legend">Skills</legend>
+    
+        <details class="dropdown w-full">
+            <summary class="select w-full">Select Skills</summary>
+            <div class="dropdown-content bg-base-100 rounded-box z-10 w-full max-h-60 overflow-y-auto p-2 shadow">
+                <div class="flex flex-col gap-2">
+                    {% for checkbox in form.skills %}
+                        <label class="flex items-center gap-2 px-2 py-1 hover:bg-base-200 rounded">
+                            {{ checkbox.tag }}
+                            <span>{{ checkbox.choice_label }}</span>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+        </details>
     </fieldset>
+    
 {% endblock form_content%}
 
 {% block form_buttons %}
