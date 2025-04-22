@@ -165,6 +165,10 @@ class UserProfile(Base):
     avatar = models.ForeignKey(AvatarOption, on_delete=models.SET_NULL, blank=True, null=True, related_name="users", verbose_name="Avatar", help_text="The avatar selected by the user.")
 
     @property
+    def notification_count(self):
+        return self.user.notifications.count()
+
+    @property
     def get_skill_names(self):
         return ', '.join([skill.name for skill in self.skills.all()])
 
